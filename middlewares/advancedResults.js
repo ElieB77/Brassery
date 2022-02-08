@@ -30,7 +30,7 @@ const advancedResults = (model, populate) => async (req, res, next) => {
         const sortBy = req.query.sort.split(',').join(' ')
         query = query.sort(sortBy)
     } else {
-        query = query.sort('-createdAt')
+        query = query.sort({ 'createdAt': -1 })
     }
 
     // Pagination
