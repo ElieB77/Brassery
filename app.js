@@ -8,7 +8,6 @@ const errorHandler = require('./middlewares/error');
 const dotenv = require('dotenv')
 const connectDB = require('./config/db')
 
-//uselesscommentarybychristian:)
 // Load env variables
 dotenv.config({ path: './config/config.env' })
 
