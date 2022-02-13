@@ -1,5 +1,14 @@
 const express = require('express')
-const { register, login, getMe } = require('../controllers/authentification')
+const {
+    register,
+    login,
+    logout,
+    getMe,
+    updateDetails,
+    updatePassword,
+    forgotPassword,
+    resetPassword,
+} = require('../controllers/authentification') 
 const router = express.Router()
 const { protect } = require('../middlewares/authentification')
 
@@ -12,7 +21,27 @@ router
     .post(login)
 
 router
+    .route('/logout')
+    .get(logout)
+
+router
     .route('/me')
     .get(protect, getMe)
+
+router
+    .route('/updatedetails')
+    .put(protect, updateDetails)
+
+router
+    .route('/updatepassword')
+    .put(protect, updatePassword)
+
+router
+    .route('/forgotpassword')
+    .post(forgotPassword)
+
+router
+    .route('/resetpassword/:resettoken')
+    .put(resetPassword)
 
 module.exports = router

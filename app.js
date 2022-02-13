@@ -2,6 +2,12 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+const mongoSanitize = require('express-mongo-sanitize')
+const helmet = require('helmet')
+const xss = require('xss-clean')
+const rateLimit = require('express-rate-limit')
+const hpp = require('hpp')
+const cors = require('cors')
 var logger = require('morgan');
 const colors = require('colors');
 const errorHandler = require('./middlewares/error');
@@ -17,6 +23,7 @@ connectDB()
 // Route files
 const bootcamps = require('./routes/bootcamps')
 const authentification = require('./routes/authentification')
+const users = require('./routes/users')
 
 var app = express();
 
@@ -30,9 +37,32 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Sanitize data
+app.use(mongoSanitize())
+
+// Set security headers
+app.use(helmet())
+
+// Prevent XSS attacks
+app.use(xss())
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10 mins
+  max: 100
+})
+app.use(limiter)
+
+// Prevent http param pollution
+app.use(hpp())
+
+// Enable CORS
+app.use(cors())
+
 // Mount routers
 app.use('/api/bootcamps', bootcamps);
 app.use('/api/auth', authentification);
+app.use('/api/users', users);
 
 app.use(errorHandler)
 
