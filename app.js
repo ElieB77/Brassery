@@ -21,7 +21,6 @@ dotenv.config({ path: './config/config.env' })
 connectDB()
 
 // Route files
-const bootcamps = require('./routes/bootcamps')
 const authentification = require('./routes/authentification')
 const users = require('./routes/users')
 
@@ -60,7 +59,6 @@ app.use(hpp())
 app.use(cors())
 
 // Mount routers
-app.use('/api/bootcamps', bootcamps);
 app.use('/api/auth', authentification);
 app.use('/api/users', users);
 

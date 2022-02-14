@@ -49,10 +49,7 @@ exports.login = asyncHandler(async (req, res, next) => {
 // *route   GET /api/v1/auth/logout
 // *access  Private
 exports.logout = asyncHandler(async (req, res, next) => {
-    res.cookie('user', 'none', {
-        expires: new Date(Date.now() + 10 * 1000),
-        httpOnly: true
-    })
+    req.user = null
 
     res.status(200).json({
         success: true,
@@ -185,15 +182,6 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 const sendTokenResponse = (user, statusCode, res) => {
     // Create token
     const token = user.getSignedJwtToken()
-
-    const options = {
-        expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000),
-        httpOnly: true
-    }
-
-    if (process.env.NODE_ENV === 'prod') {
-        options.secure = true
-    }
 
     res
         .status(statusCode)
