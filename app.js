@@ -1,14 +1,14 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
 const mongoSanitize = require('express-mongo-sanitize')
 const helmet = require('helmet')
 const xss = require('xss-clean')
 const rateLimit = require('express-rate-limit')
 const hpp = require('hpp')
 const cors = require('cors')
-var logger = require('morgan');
+const logger = require('morgan');
 const colors = require('colors');
 const errorHandler = require('./middlewares/error');
 const dotenv = require('dotenv')
@@ -24,7 +24,7 @@ connectDB()
 const authentification = require('./routes/authentification')
 const users = require('./routes/users')
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
