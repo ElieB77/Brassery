@@ -7,7 +7,6 @@ const dotenv = require('dotenv')
 dotenv.config({ path: './config/config.env' })
 
 // Load models
-const Bootcamp = require('./models/Bootcamp')
 const User = require('./models/User')
 
 // Connect to DB
@@ -27,13 +26,11 @@ mongoose.connect(
 )
 
 // Read JSON files
-const bootcamps = JSON.parse(fs.readFileSync(`${__dirname}/_data/bootcamps.json`, 'utf-8'))
 const users = JSON.parse(fs.readFileSync(`${__dirname}/_data/users.json`, 'utf-8'))
 
 // Import into DB
 const importData = async () => {
     try {
-        await Bootcamp.create(bootcamps)
         await User.create(users)
         console.log('Data Imported...'.green)
         process.exit();
@@ -45,7 +42,6 @@ const importData = async () => {
 // Delete data
 const deleteData = async () => {
     try {
-        await Bootcamp.deleteMany()
         await User.deleteMany()
         console.log('Data Destroyed...'.red)
         process.exit();
