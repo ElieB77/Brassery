@@ -22,7 +22,7 @@ router
 
 router
     .route('/logout')
-    .get(logout)
+    .get(protect, logout)
 
 router
     .route('/me')
