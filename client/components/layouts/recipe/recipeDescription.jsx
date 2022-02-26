@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 
-export default function ListItem(props) {
+export default function RecipeDescription(props) {
     /* STYLES */
     const styles = StyleSheet.create({
         container: {
@@ -32,7 +32,11 @@ export default function ListItem(props) {
         textContainer: {
             flexWrap: "nowrap",
             width: "72%",
-            flexDirection:"column"
+            flexDirection: "column",
+            elevation: 10,
+            borderWidth: 1,
+            borderColor: "#435E75",
+            marginVertical: 2,
         },
     });
 
