@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import StyleGuide from "../utils/StyleGuide";
 
 export default function List(props) {
     /* STYLES */
@@ -8,9 +9,9 @@ export default function List(props) {
             justifyContent: "center",
             alignItems: "center",
             width: "67%",
-            borderRadius: 8,
-            backgroundColor: "#FFFDFB",
-            elevation: 10,
+            borderRadius: StyleGuide.borderRadius,
+            backgroundColor: StyleGuide.colors.white,
+            elevation: StyleGuide.elevation,
         },
     });
 

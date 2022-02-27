@@ -1,7 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
+import StyleGuide from "../utils/StyleGuide";
 
-export default function RecipeDescription(props) {
+export default function ListItem(props) {
     /* STYLES */
     const styles = StyleSheet.create({
         container: {
@@ -12,39 +13,25 @@ export default function RecipeDescription(props) {
             paddingHorizontal: 20,
             paddingVertical: 10,
             textAlign: "left",
-            borderTopColor: props.topBar ? "rgba(235,187,110,0.3)" : "white",
+            borderTopColor: props.topBar ? StyleGuide.colors.lowOpacity : "white",
             borderTopWidth: 1,
-        },
-        h3: {
-            color: "#435E75",
-            fontStyle: "normal",
-            fontWeight: "bold",
-            fontSize: 14,
-        },
-        p: {
-            color: "#435E75",
-            fontStyle: "normal",
-            fontSize: 10,
         },
         btnContainer: {
             justifyContent: "center",
         },
         textContainer: {
+            color:StyleGuide.colors.secondary,
             flexWrap: "nowrap",
             width: "72%",
-            flexDirection: "column",
-            elevation: 10,
-            borderWidth: 1,
-            borderColor: "#435E75",
-            marginVertical: 2,
+            flexDirection:"column"
         },
     });
 
     return (
         <View style={styles.container}>
             <View style={styles.textContainer}>
-                <Text style={styles.h3}>{props.title}</Text>
-                <Text style={styles.p}>{props.content}</Text>
+                <Text style={StyleGuide.typography.text2}>{props.title}</Text>
+                <Text style={StyleGuide.typography.text3}>{props.content}</Text>
             </View>
             <View style={styles.btnContainer}>
                 <Button title="Btn" />
