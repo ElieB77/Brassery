@@ -3,7 +3,7 @@ import StyleGuide from '../utils/StyleGuide';
 
 const ProgressBar = ({ pourcent }) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, StyleGuide.shadowProp]}>
       <View
         style={{
           backgroundColor: StyleGuide.colors.secondary,

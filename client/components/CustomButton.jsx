@@ -13,7 +13,7 @@ import Timer from './utils/icons/Timer';
 import Brasser from './utils/icons/Brasser';
 import StyleGuide from './utils/StyleGuide';
 
-const CustomButton = ({ onPress, title, type }) => {
+const CustomButton = ({ onPress, title, time, type }) => {
   switch (type) {
     case 'comment':
       return (
@@ -149,12 +149,14 @@ const CustomButton = ({ onPress, title, type }) => {
       );
     case 'time':
       return (
-        <TouchableOpacity
-          style={[styles.containerTime, StyleGuide.shadowProp]}
-          onPress={onPress}
-        >
-          <Close width='12' height='12' color={StyleGuide.colors.primary} />
-          <Text style={styles.textTime}>{title}</Text>
+        <TouchableOpacity style={[styles.containerTime, StyleGuide.shadowProp]}>
+          <Close
+            onPress={onPress}
+            width='12'
+            height='12'
+            color={StyleGuide.colors.primary}
+          />
+          <Text style={styles.textTime}>{time}</Text>
         </TouchableOpacity>
       );
     default:
