@@ -1,21 +1,19 @@
 import { Text, View } from "react-native";
 import LoadFonts from "./components/layouts/LoadFonts";
 import StyleGuide from "./components/utils/StyleGuide";
-import Recipe from "./components/recipeElements/recipe";
-import RecipeItem from "./components/recipeElements/recipeItem";
-import RecipeDescription from "./components/recipeElements/recipeDescription";
+import List from "./components/lists/list";
+import ListItem from "./components/lists/listItem";
 
 const App = () => {
     return (
         <LoadFonts
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
-            <Recipe>
-                <RecipeDescription title="Hello" content="Lorem ipsum" />
-                <RecipeItem key={1} title="Hello" content="Lorem ipsum" />
-                <RecipeItem key={2} title="Hello" content="Lorem ipsum" />
-                <RecipeItem key={3} title="Hello" content="Lorem ipsum" />
-            </Recipe>
+            <List>
+                <ListItem key={1} title="Hello" content="Lorem ipsum" />
+                <ListItem key={2} title="Hello" content="Lorem ipsum" />
+                <ListItem key={3} title="Hello" content="Lorem ipsum" />
+            </List>
         </LoadFonts>
     );
 };
