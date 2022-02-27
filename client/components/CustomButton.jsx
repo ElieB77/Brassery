@@ -132,7 +132,7 @@ const CustomButton = ({ onPress, title, time, type }) => {
           style={[styles.containerBrasser, StyleGuide.shadowProp]}
           onPress={onPress}
         >
-          <Brasser style={{ width: 43, height: 43 }} />
+          <Brasser width='43' height='43' />
           <View style={{ width: '100%', alignItems: 'center' }}>
             <Text style={styles.text}>Brasser !</Text>
           </View>

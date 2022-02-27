@@ -1,14 +1,21 @@
-import { Text, View } from 'react-native';
 import LoadFonts from './components/layouts/LoadFonts'
-import ProgressBar from './components/utils/ProgressBar';
+import Home from './screens/Home'
+import Navbar from './components/layouts/navbar/Navbar';
 
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
 
 const App = () => {
   return (
     <LoadFonts>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ProgressBar pourcent='45' />
-      </View>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Navbar" component={Navbar} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </LoadFonts>
   );
 }
