@@ -1,12 +1,14 @@
 import { Text, View } from 'react-native';
 import LoadFonts from './components/layouts/LoadFonts'
-import StyleGuide from './components/utils/StyleGuide'
+import ProgressBar from './components/utils/ProgressBar';
 
 
 const App = () => {
   return (
     <LoadFonts>
-      <Text style={StyleGuide.typography.text1}>Open up App.js to start working on your app!</Text>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ProgressBar pourcent='45' />
+      </View>
     </LoadFonts>
   );
 }
