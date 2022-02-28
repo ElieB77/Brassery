@@ -29,6 +29,7 @@ const InputText = ({ placeholder, type }) => {
 
 const styles = StyleSheet.create({
   textInput: {
+    fontFamily: 'Manrope_500Medium',
     backgroundColor: StyleGuide.colors.white,
     width: 300,
     borderRadius: StyleGuide.borderRadius,

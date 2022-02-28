@@ -23,6 +23,7 @@ const Header = ({ title, onPress }) => {
 const styles = StyleSheet.create({
   container: {
     width: 325,
+    marginBottom: 25,
     flexDirection: 'row',
     alignItems: 'center',
   },
