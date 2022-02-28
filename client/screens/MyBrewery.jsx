@@ -1,5 +1,8 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React from "react";
+import { View, Text } from "react-native";
+import Recipe from "../components/recipeElements/recipe";
+import RecipeDescription from "../components/recipeElements/recipeDescription";
+import RecipeItem from "../components/recipeElements/recipeItem";
 
 import CustumButton from '../components/CustomButton';
 
