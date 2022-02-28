@@ -1,14 +1,19 @@
-import { Text, View } from 'react-native';
-import LoadFonts from './components/layouts/LoadFonts'
-import StyleGuide from './components/utils/StyleGuide'
-
+import { Text, View } from "react-native";
+import LoadFonts from "./components/layouts/LoadFonts";
+import ProgressBar from "./components/utils/ProgressBar";
+import InputText from "./components/utils/form-elements/Input";
+import CustomButton from "./components/CustomButton";
 
 const App = () => {
   return (
     <LoadFonts>
-      <Text style={StyleGuide.typography.text1}>Open up App.js to start working on your app!</Text>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <InputText type="password" />
+        <InputText type="text" />
+        <InputText type="textarea" />
+      </View>
     </LoadFonts>
   );
-}
+};
 
-export default App
+export default App;
