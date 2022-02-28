@@ -5,8 +5,8 @@ import SignUp from './screens/authentification/SignUp'
 
 import Navbar from './components/layouts/navbar/Navbar';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
 
