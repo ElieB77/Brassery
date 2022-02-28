@@ -1,8 +1,5 @@
 import LoadFonts from './components/layouts/LoadFonts'
-
 import Home from './screens/Home'
-import SignUp from './screens/authentification/SignUp'
-
 import Navbar from './components/layouts/navbar/Navbar';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -16,12 +13,11 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="SignUp" component={SignUp} />
           <Stack.Screen name="Navbar" component={Navbar} />
         </Stack.Navigator>
       </NavigationContainer>
     </LoadFonts>
   );
-};
+}
 
-export default App;
+export default App
