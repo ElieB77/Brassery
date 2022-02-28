@@ -7,7 +7,7 @@ const Home = ({ navigation }) => {
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <CustomButton
         title='Aller sur Login'
-        onPress={() => navigation.navigate('Subscribe')}
+        onPress={() => navigation.navigate('SignUp')}
       />
     </View>
   );
