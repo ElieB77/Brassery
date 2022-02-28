@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-import LoadFonts from "./components/layouts/LoadFonts";
-import Home from "./screens/Home";
-import Navbar from "./components/layouts/navbar/Navbar";
-
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-=======
 import LoadFonts from './components/layouts/LoadFonts'
 
 import Home from './screens/Home'
@@ -15,23 +7,10 @@ import Navbar from './components/layouts/navbar/Navbar';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
->>>>>>> dev
 
 const Stack = createStackNavigator();
 
 const App = () => {
-<<<<<<< HEAD
-    return (
-        <LoadFonts>
-            <NavigationContainer>
-                <Stack.Navigator screenOptions={{ headerShown: false }}>
-                    <Stack.Screen name="Home" component={Home} />
-                    <Stack.Screen name="Navbar" component={Navbar} />
-                </Stack.Navigator>
-            </NavigationContainer>
-        </LoadFonts>
-    );
-=======
   return (
     <LoadFonts>
       <NavigationContainer>
@@ -43,7 +22,6 @@ const App = () => {
       </NavigationContainer>
     </LoadFonts>
   );
->>>>>>> dev
 };
 
 export default App;
