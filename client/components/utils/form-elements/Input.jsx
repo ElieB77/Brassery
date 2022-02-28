@@ -19,11 +19,7 @@ const InputText = ({ placeholder, type }) => {
           placeholder='Mot de passe..'
         />
       );
-<<<<<<< HEAD
-    case 'textarea':
-=======
     case "textArea":
->>>>>>> form-elements
       return (
         <TextInput
           style={[styles.textArea, StyleGuide.shadowProp]}
