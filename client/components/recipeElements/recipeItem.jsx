@@ -1,10 +1,34 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View, Button, Pressable } from "react-native";
+import CustomButton from "../CustomButton";
+import StyleGuide from "../utils/StyleGuide";
 
 export default function RecipeItem(props) {
     /* STATES */
-    const [isExtended, setIsExtended] = useState(false);
+    const [seeMoreBtnText, setSeeMoreBtnText] = useState("voir plus...");
     const [isDone, setIsDone] = useState(false);
+    const [isExtended, setIsExtended] = useState(false);
+    const [limitHeight, setLimitHeight] = useState(true);
+    const [content, setContent] = useState(props.content);
+    let maxWords = 8;
+    useEffect(() => {
+        if (limitHeight) {
+            let contentLength = content.split(" ").length;
+            if (contentLength > maxWords) {
+                let contentTemp = content.split(" ");
+                contentTemp.splice(maxWords, contentLength - maxWords);
+                contentTemp[contentTemp.length] = "...";
+                setContent(contentTemp.join(" "));
+            }
+            setSeeMoreBtnText("voir plus...");
+            setIsExtended(!limitHeight)
+        }
+        if (!limitHeight) {
+            setContent(props.content);
+            setSeeMoreBtnText("voir moins...");
+            setIsExtended(!limitHeight)
+        }
+    }, [limitHeight]);
 
     /* STYLES */
     const styles = StyleSheet.create({
@@ -12,19 +36,8 @@ export default function RecipeItem(props) {
             flexDirection: "row",
             justifyContent: "space-between",
             width: "100%",
-            height: isExtended ? 300 : 110,
+            minHeight: 100,
             marginVertical: 10,
-        },
-        h3: {
-            color: isDone ? "#FFFDFB" : "#435E75",
-            fontStyle: "normal",
-            fontWeight: "bold",
-            fontSize: 14,
-        },
-        p: {
-            color: isDone ? "#FFFDFB" : "#435E75",
-            fontStyle: "normal",
-            fontSize: 12,
         },
         btnContainer: {
             justifyContent: "space-around",
@@ -43,36 +56,51 @@ export default function RecipeItem(props) {
             elevation: 10,
             backgroundColor: isDone ? "#435E75" : "#FFFDFB",
         },
+        text: {
+            color: props.done
+                ? StyleGuide.colors.primary
+                : StyleGuide.colors.secondary,
+        },
     });
-
-    /* PROCESSING */
-    let content = props.content;
-    if (!isExtended) {
-        let maxWords = 10;
-        let contentLength = content.split(" ").length;
-        if (contentLength > maxWords) {
-            content = content.split(" ");
-            content.splice(maxWords, contentLength - maxWords);
-            content[content.length] = "...";
-            content = content.join(" ");
-        }
-    }
 
     return (
         <View style={styles.container}>
             <View style={styles.textContainer}>
-                <Text style={styles.h3}>{props.title}</Text>
-                <Text style={styles.p}>{content}</Text>
+                <Text style={[StyleGuide.typography.text5, styles.text]}>
+                    {props.title}
+                </Text>
+                {content.split(" ").length > maxWords ? (
+                    <Pressable
+                        onPress={() => setLimitHeight(!limitHeight)}
+                    >
+                        <Text
+                            style={[StyleGuide.typography.text3, styles.text]}
+                        >
+                            {content}
+                        </Text>
+                        <Text
+                            style={[
+                                StyleGuide.typography.text3,
+                                StyleGuide.typography.linkText,
+                                styles.text,
+                            ]}
+                        >
+                            {seeMoreBtnText}
+                        </Text>
+                    </Pressable>
+                ) : (
+                    <Text style={[StyleGuide.typography.text3, styles.text]}>
+                        {content}
+                    </Text>
+                )}
             </View>
             {!isExtended ? (
                 <View style={styles.btnContainer}>
-                    <Button title=" + " onPress={() => setIsExtended(true)} />
                     <Button title=" o " onPress={() => setIsDone(!isDone)} />
                 </View>
             ) : (
                 <View style={styles.btnContainer}>
-                    <Button title=" - " onPress={() => setIsExtended(false)} />
-                    <Button title=" c " />
+                    <CustomButton type="comment" />
                     <Button title=" o " onPress={() => setIsDone(!isDone)} />
                 </View>
             )}
