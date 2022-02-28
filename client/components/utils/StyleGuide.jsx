@@ -46,7 +46,7 @@ const StyleGuide = {
   shadowProp: {
     shadowColor: "rgba(0, 0, 0, 0.25)",
     shadowOffset: { width: -2, height: 4 },
-    shadowOffset: { width: 0, height: 0 },
+    shadowOffsetInput: { width: 0, height: 0 },
     shadowOpacity: 0.4,
     shadowRadius: 3,
   },
