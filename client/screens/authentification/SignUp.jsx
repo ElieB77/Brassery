@@ -1,4 +1,7 @@
+import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Header from '../../components/headings/Header';
 import Input from '../../components/utils/form-elements/Input';
@@ -9,21 +12,60 @@ import Google from '../../components/utils/icons/Google';
 
 import StyleGuide from '../../components/utils/StyleGuide';
 
-const SignUp = () => {
+const SignUp = ({ navigation }) => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSignUp = async () => {
+    const rawResponse = await fetch(
+      'http://192.168.1.26:3000/api/auth/register',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `username=${username}&email=${email}&password=${password}`,
+      }
+    );
+
+    const response = await rawResponse.json();
+
+    if (response.token) {
+      AsyncStorage.setItem('user', response.token);
+      navigation.navigate('CreateMyBrassery');
+    } else {
+      console.log(response);
+    }
+  };
+
   return (
     <View style={[StyleGuide.container, { alignItems: 'center' }]}>
       <Header title="S'inscrire" />
       <View style={styles.formContainer}>
         <View style={styles.formInput}>
-          <Input type='text' placeholder="Nom d'utilisateur ..." />
+          <Input
+            type='text'
+            placeholder="Nom d'utilisateur ..."
+            value={username}
+            onChangeText={(val) => setUsername(val)}
+          />
         </View>
         <View style={styles.formInput}>
-          <Input type='text' placeholder='Email ...' />
+          <Input
+            type='text'
+            placeholder='Email ...'
+            value={email}
+            onChangeText={(val) => setEmail(val)}
+          />
         </View>
         <View style={styles.lastInput}>
-          <Input style={styles.formInput} type='password' />
+          <Input
+            style={styles.formInput}
+            type='password'
+            value={password}
+            onChangeText={(val) => setPassword(val)}
+          />
         </View>
-        <CustomButton title='Créer mon compte' />
+        <CustomButton title='Créer mon compte' onPress={() => handleSignUp()} />
       </View>
       <View
         style={{

@@ -1,4 +1,7 @@
+import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Header from '../../components/headings/Header';
 import Input from '../../components/utils/form-elements/Input';
@@ -9,18 +12,48 @@ import Google from '../../components/utils/icons/Google';
 
 import StyleGuide from '../../components/utils/StyleGuide';
 
-const SignIn = () => {
+const SignIn = ({ navigation }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSignIn = async () => {
+    const rawResponse = await fetch('http://192.168.1.26:3000/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `email=${email}&password=${password}`,
+    });
+
+    const response = await rawResponse.json();
+
+    if (response.token) {
+      AsyncStorage.setItem('user', response.token);
+      navigation.navigate('Navbar', { screen: 'MyBrewery' });
+    } else {
+      console.log(response);
+    }
+  };
+
   return (
     <View style={[StyleGuide.container, { alignItems: 'center' }]}>
       <Header title='Se connecter' />
       <View style={styles.formContainer}>
         <View style={styles.formInput}>
-          <Input type='text' placeholder='Email ...' />
+          <Input
+            type='text'
+            placeholder='Email ...'
+            value={email}
+            onChangeText={(val) => setEmail(val)}
+          />
         </View>
         <View style={styles.lastInput}>
-          <Input style={styles.formInput} type='password' />
+          <Input
+            style={styles.formInput}
+            type='password'
+            value={password}
+            onChangeText={(val) => setPassword(val)}
+          />
         </View>
-        <CustomButton title='Se connecter' />
+        <CustomButton title='Se connecter' onPress={() => handleSignIn()} />
       </View>
       <View
         style={{

@@ -1,13 +1,15 @@
 import StyleGuide from "../StyleGuide";
 import { TextInput, StyleSheet } from "react-native";
 
-const InputText = ({ placeholder, type }) => {
+const InputText = ({ placeholder, type, onChangeText, value }) => {
   switch (type) {
     case 'text':
       return (
         <TextInput
           style={[styles.textInput, StyleGuide.shadowProp]}
           placeholder={placeholder}
+          onChangeText={onChangeText}
+          value={value}
         />
       );
     case 'password':
@@ -16,6 +18,8 @@ const InputText = ({ placeholder, type }) => {
           secureTextEntry={true}
           style={[styles.textInput, StyleGuide.shadowProp]}
           placeholder='Mot de passe..'
+          onChangeText={onChangeText}
+          value={value}
         />
       );
     case 'textarea':
@@ -27,6 +31,8 @@ const InputText = ({ placeholder, type }) => {
           placeholderTextColor={placeholder}
           numberOfLines={10}
           multiline={true}
+          onChangeText={onChangeText}
+          value={value}
         />
       );
   }
