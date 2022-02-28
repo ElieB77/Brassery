@@ -1,5 +1,5 @@
-import { View, StyleSheet } from "react-native";
-import StyleGuide from "../utils/StyleGuide";
+import { View, StyleSheet } from 'react-native';
+import StyleGuide from '../utils/StyleGuide';
 
 const ProgressBar = ({ pourcent }) => {
   return (
@@ -7,7 +7,7 @@ const ProgressBar = ({ pourcent }) => {
       <View
         style={{
           backgroundColor: StyleGuide.colors.secondary,
-          height: "100%",
+          height: '100%',
           width: `${pourcent}%`,
           borderRadius: 8,
         }}
@@ -18,7 +18,7 @@ const ProgressBar = ({ pourcent }) => {
 
 const styles = StyleSheet.create({
   container: {
-    position: "relative",
+    position: 'relative',
     width: 300,
     height: 8,
     borderRadius: StyleGuide.borderRadius,
