@@ -64,10 +64,20 @@ const StyleGuide = {
       textDecorationLine: 'underline',
     },
   },
+<<<<<<< HEAD
   textButton: {
     fontSize: 12,
     lineHeight: 16,
     fontFamily: 'Manrope_700Bold',
+=======
+  borderRadius: 8,
+  shadowProp: {
+    shadowColor: "rgba(0, 0, 0, 0.25)",
+    shadowOffset: { width: -2, height: 4 },
+    shadowOffsetInput: { width: 0, height: 0 },
+    shadowOpacity: 0.4,
+    shadowRadius: 3,
+>>>>>>> form-elements
   },
   borderRadius: 8,
   shadowProp: shadow,

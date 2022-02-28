@@ -1,5 +1,6 @@
 import StyleGuide from "../StyleGuide";
-import { TextInput, StyleSheet } from "react-native";
+import { TextInput, StyleSheet, View } from "react-native";
+import Search from "../icons/Search";
 
 const InputText = ({ placeholder, type }) => {
   switch (type) {
@@ -18,7 +19,11 @@ const InputText = ({ placeholder, type }) => {
           placeholder='Mot de passe..'
         />
       );
+<<<<<<< HEAD
     case 'textarea':
+=======
+    case "textArea":
+>>>>>>> form-elements
       return (
         <TextInput
           style={[styles.textArea, StyleGuide.shadowProp]}
@@ -28,6 +33,15 @@ const InputText = ({ placeholder, type }) => {
           numberOfLines={10}
           multiline={true}
         />
+      );
+    case "searchInput":
+      return (
+        <View style={styles.searchInput}>
+          <TextInput style={styles.textInput} placeholder={placeholder} />
+          <View style={styles.searchIcon}>
+            <Search />
+          </View>
+        </View>
       );
   }
 };
@@ -48,6 +62,16 @@ const styles = StyleSheet.create({
     borderRadius: StyleGuide.borderRadius,
     paddingTop: 10,
     paddingLeft: 15,
+  },
+  searchInput: {
+    position: "relative",
+  },
+  searchIcon: {
+    position: "absolute",
+    right: 0,
+    paddingRight: 15,
+    paddingBottom: 10,
+    paddingTop: 10,
   },
 });
 
