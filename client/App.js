@@ -22,6 +22,6 @@ const App = () => {
       </NavigationContainer>
     </LoadFonts>
   );
-}
+};
 
-export default App
+export default App;
