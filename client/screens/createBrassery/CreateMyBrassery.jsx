@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 import { View, Text } from 'react-native';
 
-const Home = ({ navigation }) => {
+const CreateMyBrassery = () => {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Ma Brasserie</Text>
+      <Text>CreateMyBrassery</Text>
     </View>
   );
 };
 
-export default Home;
+export default CreateMyBrassery;

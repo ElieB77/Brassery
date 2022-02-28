@@ -8,10 +8,10 @@ const User = require('../models/User')
 // *route   POST /api/v1/auth/register
 // *access  Public
 exports.register = asyncHandler(async (req, res, next) => {
-    const { name, email, password, role } = req.body
+    const { username, email, password } = req.body
 
     // Create user
-    const newUser = new User({ name, email, password, role })
+    const newUser = new User({ username, email, password })
     const user = await newUser.save()
 
     sendTokenResponse(user, 200, res)

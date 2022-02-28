@@ -29,9 +29,9 @@ const BatchSchema = mongoose.Schema({
 });
 
 const UserSchema = mongoose.Schema({
-    name: {
+    username: {
         type: String,
-        required: [true, "Please add a name"],
+        required: [true, "Please add a username"],
     },
     email: {
         type: String,
@@ -41,11 +41,6 @@ const UserSchema = mongoose.Schema({
             /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
             "Please add a valid email",
         ],
-    },
-    role: {
-        type: String,
-        enum: ["user", "publisher"],
-        default: "user",
     },
     password: {
         type: String,

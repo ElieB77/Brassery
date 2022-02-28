@@ -1,13 +1,15 @@
 import { StyleSheet, View, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import ArrowBack from '../../components/utils/icons/ArrowBack';
 
 import StyleGuide from '../../components/utils/StyleGuide';
 
-const Header = ({ title, onPress }) => {
+const Header = ({ title }) => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <ArrowBack style={{ width: 15 }} onPress={onPress} />
+      <ArrowBack style={{ width: 15 }} onPress={() => navigation.goBack()} />
       <Text
         style={[
           StyleGuide.typography.text1,
