@@ -1,24 +1,24 @@
-import { View } from 'react-native';
+import { View } from "react-native";
 import {
-  Manrope_400Regular,
-  Manrope_500Medium,
-  Manrope_700Bold,
-} from '@expo-google-fonts/manrope';
-import { useFonts } from 'expo-font';
-import AppLoading from 'expo-app-loading';
-
-const LoadFonts = (props) => {
-  let [fontsLoaded] = useFonts({
     Manrope_400Regular,
     Manrope_500Medium,
     Manrope_700Bold,
-  });
+} from "@expo-google-fonts/manrope";
+import { useFonts } from "expo-font";
+import AppLoading from "expo-app-loading";
 
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  }
+const LoadFonts = (props) => {
+    let [fontsLoaded] = useFonts({
+        Manrope_400Regular,
+        Manrope_500Medium,
+        Manrope_700Bold,
+    });
 
-  return <View style={{ flex: 1 }}>{props.children}</View>;
+    if (!fontsLoaded) {
+        return <AppLoading />;
+    }
+
+    return <View style={{ flex: 1 }}>{props.children}</View>;
 };
 
 export default LoadFonts;
