@@ -11,10 +11,15 @@ const Chat = ({value, onPress}) => {
                     placeholder='Your message'
                     value = {value}
                     style= {{
-                        shadowColor: StyleGuide.shadowProp.shadowColor,
-                        shadowOffset: { width: 0, height: 0 },
-                        shadowOpacity: StyleGuide.shadowProp.shadowOpacity,
-                        shadowRadius: StyleGuide.shadowProp.shadowRadius,
+                        shadowColor: '#7F5DF0',
+                        shadowOffset: {
+                        width: 0,
+                        height: 10,
+                        },
+                        shadowOpacity: 0.25,
+                        shadowRadius: 3.5,
+                        elevation: 5,
+                        height: 80,
                     }}
                 />
                 <View style={{flexDirection:'row', justifyContent:'space-between',}}>
