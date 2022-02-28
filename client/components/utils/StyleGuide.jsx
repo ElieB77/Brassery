@@ -37,11 +37,14 @@ const StyleGuide = {
             lineHeight: 14,
             fontFamily: "Manrope_700Bold",
         },
-    },
-    text4: {
-        fontSize: 10,
-        lineHeight: 14,
-        fontFamily: "Manrope_700Bold",
+        text5: {
+            fontSize: 18,
+            lineHeight: 30,
+            fontFamily: "Manrope_700Bold",
+        },
+        linkText: {
+            textDecorationLine: "underline",
+        },
     },
     textButton: {
         fontSize: 12,
@@ -54,7 +57,9 @@ const StyleGuide = {
         shadowOffset: { width: -2, height: 4 },
         shadowOpacity: 0.4,
         shadowRadius: 3,
+        elevation: 10,
     },
+    elevation: 10,
 };
 
 export default StyleGuide;

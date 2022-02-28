@@ -8,7 +8,7 @@ export default function List(props) {
         container: {
             justifyContent: "center",
             alignItems: "center",
-            width: "67%",
+            width: "75%",
             borderRadius: StyleGuide.borderRadius,
             backgroundColor: StyleGuide.colors.white,
             elevation: StyleGuide.elevation,
@@ -16,7 +16,10 @@ export default function List(props) {
     });
 
     const items = props.children.map((child, i) => {
-        return React.cloneElement(child, { topBar: i === 0 ? false : true });
+        return React.cloneElement(child, {
+            last: i === props.children.length - 1 ? true : false,
+            first: i === 0 ? true : false,
+        });
     });
 
     return <View style={styles.container}>{items}</View>;
