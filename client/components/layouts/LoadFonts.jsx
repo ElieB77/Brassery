@@ -18,7 +18,7 @@ const LoadFonts = (props) => {
         return <AppLoading />;
     }
 
-    return <View style={props.style}>{props.children}</View>;
+    return <View style={{ flex: 1 }}>{props.children}</View>;
 };
 
 export default LoadFonts;

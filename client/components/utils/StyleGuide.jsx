@@ -38,9 +38,23 @@ const StyleGuide = {
             fontFamily: "Manrope_700Bold",
         },
     },
+    text4: {
+        fontSize: 10,
+        lineHeight: 14,
+        fontFamily: "Manrope_700Bold",
+    },
+    textButton: {
+        fontSize: 12,
+        lineHeight: 16,
+        fontFamily: "Manrope_700Bold",
+    },
     borderRadius: 8,
-    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
-    elevation: 10,
+    shadowProp: {
+        shadowColor: "rgba(0, 0, 0, 0.25)",
+        shadowOffset: { width: -2, height: 4 },
+        shadowOpacity: 0.4,
+        shadowRadius: 3,
+    },
 };
 
 export default StyleGuide;
