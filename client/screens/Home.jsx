@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import Chat from '../components/Chat';
+import Bubble from '../components/chat/Bubble';
 
 import MyBrewery from './MyBrewery';
 
@@ -12,7 +12,7 @@ const Home = ({ navigation }) => {
         title='Aller sur Ma brasserie'
         onPress={() => navigation.navigate('Navbar', { screen: 'MyBrewery' })}
       /> */}
-      <Chat />
+      <Bubble type='left'/>
     </View>
   );
 };
