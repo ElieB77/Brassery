@@ -9,21 +9,18 @@ import Google from '../../components/utils/icons/Google';
 
 import StyleGuide from '../../components/utils/StyleGuide';
 
-const SignUp = () => {
+const SignIn = () => {
   return (
     <View style={[StyleGuide.container, { alignItems: 'center' }]}>
-      <Header title="S'inscrire" />
+      <Header title='Se connecter' />
       <View style={styles.formContainer}>
-        <View style={styles.formInput}>
-          <Input type='text' placeholder="Nom d'utilisateur ..." />
-        </View>
         <View style={styles.formInput}>
           <Input type='text' placeholder='Email ...' />
         </View>
         <View style={styles.lastInput}>
           <Input style={styles.formInput} type='password' />
         </View>
-        <CustomButton title='Créer mon compte' />
+        <CustomButton title='Se connecter' />
       </View>
       <View
         style={{
@@ -60,7 +57,7 @@ const SignUp = () => {
             { color: StyleGuide.colors.gray, marginRight: 5 },
           ]}
         >
-          J'ai déjà un compte ?
+          Pas de compte ?
         </Text>
         <Text
           style={[
@@ -68,7 +65,7 @@ const SignUp = () => {
             { color: StyleGuide.colors.secondary },
           ]}
         >
-          M’identifier
+          Créer ma brasserie
         </Text>
       </View>
     </View>
@@ -103,4 +100,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUp;
+export default SignIn;

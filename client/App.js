@@ -1,6 +1,7 @@
 import LoadFonts from './components/layouts/LoadFonts'
 
 import Home from './screens/Home'
+import SignIn from './screens/authentification/SignIn'
 import SignUp from './screens/authentification/SignUp'
 
 import Navbar from './components/layouts/navbar/Navbar';
@@ -16,6 +17,7 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="SignIn" component={SignIn} />
           <Stack.Screen name="SignUp" component={SignUp} />
           <Stack.Screen name="Navbar" component={Navbar} />
         </Stack.Navigator>
