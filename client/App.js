@@ -1,5 +1,8 @@
 import LoadFonts from './components/layouts/LoadFonts'
+
 import Home from './screens/Home'
+import Subscribe from './screens/authentification/Subscribe'
+
 import Navbar from './components/layouts/navbar/Navbar';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -13,6 +16,7 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Subscribe" component={Subscribe} />
           <Stack.Screen name="Navbar" component={Navbar} />
         </Stack.Navigator>
       </NavigationContainer>
