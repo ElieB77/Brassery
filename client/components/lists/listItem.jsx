@@ -18,11 +18,11 @@ export default function ListItem(props) {
                 contentTemp[contentTemp.length] = "...";
                 setContent(contentTemp.join(" "));
             }
-            setSeeMoreBtnText("voir plus...");
+            setSeeMoreBtnText("voir plus ↓");
         }
         if (!limitHeight) {
             setContent(props.content);
-            setSeeMoreBtnText("voir moins...");
+            setSeeMoreBtnText("voir moins ↑");
         }
     }, [limitHeight]);
 

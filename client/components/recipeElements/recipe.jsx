@@ -7,7 +7,6 @@ export default function Recipe(props) {
         container: {
             justifyContent: "center",
             alignItems: "center",
-            width: "85%",
         },
     });
 

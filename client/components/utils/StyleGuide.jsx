@@ -1,3 +1,15 @@
+import { Platform } from "react-native";
+
+const shadow =
+    Platform.OS === "ios"
+        ? {
+              shadowColor: "rgba(0, 0, 0, 0.25)",
+              shadowOffset: { width: -2, height: 4 },
+              shadowOpacity: 0.4,
+              shadowRadius: 3,
+          }
+        : { elevation: 10 };
+
 const StyleGuide = {
     colors: {
         primary: "#EBC56E",
@@ -52,14 +64,7 @@ const StyleGuide = {
         fontFamily: "Manrope_700Bold",
     },
     borderRadius: 8,
-    shadowProp: {
-        shadowColor: "rgba(0, 0, 0, 0.25)",
-        shadowOffset: { width: -2, height: 4 },
-        shadowOpacity: 0.4,
-        shadowRadius: 3,
-        elevation: 10,
-    },
-    elevation: 10,
+    shadowProp: shadow,
 };
 
 export default StyleGuide;

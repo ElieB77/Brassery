@@ -181,6 +181,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         width: 45,
         height: 30,
+        elevation: 10,
     },
     containerWithText: {
         backgroundColor: StyleGuide.colors.primary,

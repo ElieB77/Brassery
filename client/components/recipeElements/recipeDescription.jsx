@@ -6,42 +6,27 @@ export default function RecipeDescription(props) {
     /* STYLES */
     const styles = StyleSheet.create({
         container: {
-            flexDirection: "row",
-            justifyContent: "space-between",
-            width: "100%",
-            height: 100,
             paddingHorizontal: 20,
             paddingVertical: 10,
             textAlign: "left",
-            borderTopColor: props.topBar
-                ? StyleGuide.colors.lowOpacity
-                : "white",
-            borderTopWidth: 1,
-        },
-        btnContainer: {
-            justifyContent: "center",
-        },
-        textContainer: {
-            color: StyleGuide.colors.secondary,
-            flexWrap: "nowrap",
-            width: "72%",
-            flexDirection: "column",
-            elevation: 10,
-            borderWidth: 1,
             borderColor: StyleGuide.colors.secondary,
-            marginVertical: 2,
+            borderRadius: StyleGuide.borderRadius,
+            backgroundColor: StyleGuide.colors.secondary,
+            elevation: 10,
+            marginBottom: 30,
         },
+        text: {
+            color:StyleGuide.colors.white
+        },
+        headline: {
+            color:StyleGuide.colors.primary
+        }
     });
 
     return (
         <View style={styles.container}>
-            <View style={styles.textContainer}>
-                <Text style={StyleGuide.typography.text2}>{props.title}</Text>
-                <Text style={StyleGuide.typography.text3}>{props.content}</Text>
-            </View>
-            <View style={styles.btnContainer}>
-                <Button title="Btn" />
-            </View>
+            <Text style={[StyleGuide.typography.text1,styles.headline]}>{props.title}</Text>
+            <Text style={[StyleGuide.typography.text3,styles.text]}>{props.content}</Text>
         </View>
     );
 }

@@ -8,7 +8,6 @@ export default function List(props) {
         container: {
             justifyContent: "center",
             alignItems: "center",
-            width: "75%",
             borderRadius: StyleGuide.borderRadius,
             backgroundColor: StyleGuide.colors.white,
             elevation: StyleGuide.elevation,

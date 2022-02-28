@@ -3,11 +3,12 @@ import { StyleSheet, Text, View, Button, Pressable } from "react-native";
 import CustomButton from "../CustomButton";
 import StyleGuide from "../utils/StyleGuide";
 
+import Checkbox from "../utils/form-elements/Checkbox";
+
 export default function RecipeItem(props) {
     /* STATES */
     const [seeMoreBtnText, setSeeMoreBtnText] = useState("voir plus...");
     const [isDone, setIsDone] = useState(false);
-    const [isExtended, setIsExtended] = useState(false);
     const [limitHeight, setLimitHeight] = useState(true);
     const [content, setContent] = useState(props.content);
     let maxWords = 8;
@@ -20,13 +21,11 @@ export default function RecipeItem(props) {
                 contentTemp[contentTemp.length] = "...";
                 setContent(contentTemp.join(" "));
             }
-            setSeeMoreBtnText("voir plus...");
-            setIsExtended(!limitHeight)
+            setSeeMoreBtnText("voir plus ↓");
         }
         if (!limitHeight) {
             setContent(props.content);
-            setSeeMoreBtnText("voir moins...");
-            setIsExtended(!limitHeight)
+            setSeeMoreBtnText("voir moins ↑");
         }
     }, [limitHeight]);
 
@@ -35,44 +34,41 @@ export default function RecipeItem(props) {
         container: {
             flexDirection: "row",
             justifyContent: "space-between",
-            width: "100%",
             minHeight: 100,
             marginVertical: 10,
         },
         btnContainer: {
             justifyContent: "space-around",
             alignItems: "center",
-            width: "17%",
+            width: "18%",
+            height: 100,
         },
         textContainer: {
             flexWrap: "nowrap",
-            width: "83%",
+            width: "80%",
             flexDirection: "column",
             borderWidth: 1,
             borderColor: "#435E75",
             borderRadius: 8,
             paddingHorizontal: 10,
             paddingVertical: 5,
-            elevation: 10,
             backgroundColor: isDone ? "#435E75" : "#FFFDFB",
         },
         text: {
-            color: props.done
-                ? StyleGuide.colors.primary
+            color: isDone
+                ? StyleGuide.colors.white
                 : StyleGuide.colors.secondary,
         },
     });
 
     return (
         <View style={styles.container}>
-            <View style={styles.textContainer}>
+            <View style={[styles.textContainer, StyleGuide.shadowProp]}>
                 <Text style={[StyleGuide.typography.text5, styles.text]}>
                     {props.title}
                 </Text>
                 {content.split(" ").length > maxWords ? (
-                    <Pressable
-                        onPress={() => setLimitHeight(!limitHeight)}
-                    >
+                    <Pressable onPress={() => setLimitHeight(!limitHeight)}>
                         <Text
                             style={[StyleGuide.typography.text3, styles.text]}
                         >
@@ -94,16 +90,10 @@ export default function RecipeItem(props) {
                     </Text>
                 )}
             </View>
-            {!isExtended ? (
-                <View style={styles.btnContainer}>
-                    <Button title=" o " onPress={() => setIsDone(!isDone)} />
-                </View>
-            ) : (
-                <View style={styles.btnContainer}>
-                    <CustomButton type="comment" />
-                    <Button title=" o " onPress={() => setIsDone(!isDone)} />
-                </View>
-            )}
+            <View style={styles.btnContainer}>
+                <Checkbox isDone={isDone} onPress={() => setIsDone(!isDone)} />
+                <CustomButton type="comment" />
+            </View>
         </View>
     );
 }
