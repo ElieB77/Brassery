@@ -38,7 +38,7 @@ const MashSchema = mongoose.Schema({
 });
 
 const IngredientSchema = mongoose.Schema({
-    hops: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
+    hops: [{ type: mongoose.Schema.Types.ObjectId, ref: "hops" }],
     cultures: [{ type: mongoose.Schema.Types.ObjectId, ref: "cultures" }],
     fermentables: [
         { type: mongoose.Schema.Types.ObjectId, ref: "fermentables" },
