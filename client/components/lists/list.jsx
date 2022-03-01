@@ -10,7 +10,6 @@ export default function List(props) {
             alignItems: "center",
             borderRadius: StyleGuide.borderRadius,
             backgroundColor: StyleGuide.colors.white,
-            elevation: StyleGuide.elevation,
         },
     });
 
@@ -21,5 +20,5 @@ export default function List(props) {
         });
     });
 
-    return <View style={styles.container}>{items}</View>;
+    return <View style={[styles.container,StyleGuide.shadowProp]}>{items}</View>;
 }

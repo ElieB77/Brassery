@@ -90,9 +90,14 @@ export default function ListItem(props) {
                     </Text>
                 )}
             </View>
-            <View style={styles.btnContainer}>
-                <CustomButton type={props.btnType} onPress={props.onPress} />
-            </View>
+            {props.btnType && (
+                <View style={styles.btnContainer}>
+                    <CustomButton
+                        type={props.btnType}
+                        onPress={props.onPress}
+                    />
+                </View>
+            )}
         </View>
     );
 }

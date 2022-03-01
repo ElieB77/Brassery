@@ -20,7 +20,7 @@ const MashStepSchema = mongoose.Schema({
     stepTime: {
         type: Number,
     },
-    notes: { type: mongoose.Schema.Types.ObjectId, ref: "notes" },
+    notes: [{ type: mongoose.Schema.Types.ObjectId, ref: "notes" }],
 });
 
 const MashSchema = mongoose.Schema({
