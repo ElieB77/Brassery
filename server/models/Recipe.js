@@ -156,7 +156,7 @@ const RecipeSchema = mongoose.Schema({
     style: {
         type: String,
     },
-    ingredients: {},
+    ingredients: IngredientSchema,
     mash: MashSchema,
     ingredients: IngredientSchema,
     originalGravity: {
