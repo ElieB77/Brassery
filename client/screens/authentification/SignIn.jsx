@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+import config from '../../config/globalVariables';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import config from '../../config/globalVariables';
 
 import Header from '../../components/headings/Header';
 import Input from '../../components/utils/form-elements/Input';
@@ -13,23 +13,22 @@ import Google from '../../components/utils/icons/Google';
 
 import StyleGuide from '../../components/utils/StyleGuide';
 
-const SignUp = ({ navigation }) => {
-  const [username, setUsername] = useState('');
+const SignIn = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignUp = async () => {
-    const rawResponse = await fetch(`${config.base_url}/api/auth/register`, {
+  const handleSignIn = async () => {
+    const rawResponse = await fetch(`${config.base_url}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `username=${username}&email=${email}&password=${password}`,
+      body: `email=${email}&password=${password}`,
     });
 
     const response = await rawResponse.json();
 
     if (response.token) {
       AsyncStorage.setItem('user', response.token);
-      navigation.navigate('CreateMyBrassery');
+      navigation.navigate('Navbar', { screen: 'MyBrewery' });
     } else {
       console.log(response);
     }
@@ -37,16 +36,8 @@ const SignUp = ({ navigation }) => {
 
   return (
     <View style={[StyleGuide.container, { alignItems: 'center' }]}>
-      <Header title="S'inscrire" />
+      <Header title='Se connecter' />
       <View style={styles.formContainer}>
-        <View style={styles.formInput}>
-          <Input
-            type='text'
-            placeholder="Nom d'utilisateur ..."
-            value={username}
-            onChangeText={(val) => setUsername(val)}
-          />
-        </View>
         <View style={styles.formInput}>
           <Input
             type='text'
@@ -63,7 +54,7 @@ const SignUp = ({ navigation }) => {
             onChangeText={(val) => setPassword(val)}
           />
         </View>
-        <CustomButton title='Créer mon compte' onPress={() => handleSignUp()} />
+        <CustomButton title='Se connecter' onPress={() => handleSignIn()} />
       </View>
       <View
         style={{
@@ -100,16 +91,16 @@ const SignUp = ({ navigation }) => {
             { color: StyleGuide.colors.gray, marginRight: 5 },
           ]}
         >
-          J'ai déjà un compte ?
+          Pas de compte ?
         </Text>
         <Text
           style={[
             StyleGuide.typography.overline,
             { color: StyleGuide.colors.secondary },
           ]}
-          onPress={() => navigation.navigate('SignIn')}
+          onPress={() => navigation.navigate('SignUp')}
         >
-          M’identifier
+          Créer un compte
         </Text>
       </View>
     </View>
@@ -144,4 +135,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUp;
+export default SignIn;

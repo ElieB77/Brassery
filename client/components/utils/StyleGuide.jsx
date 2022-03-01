@@ -64,11 +64,13 @@ const StyleGuide = {
       textDecorationLine: 'underline',
     },
   },
+
   textButton: {
     fontSize: 12,
     lineHeight: 16,
     fontFamily: 'Manrope_700Bold',
   },
+
   borderRadius: 8,
   shadowProp: shadow,
 };
