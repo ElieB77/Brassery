@@ -5,11 +5,31 @@ import Header from '../components/headings/Header';
 import Input from '../components/utils/form-elements/Input';
 import CustomButton from '../components/CustomButton';
 import StyleGuide from '../components/utils/StyleGuide';
+import Geocode from "react-geocode";
 
 const Location = () => {
   
   const [modalVisible, setModalVisible] = useState(false);
   const [adress, setAdress] = useState();
+  const [lat, setLat] = useState();
+  const [lon, setLon] = useState();
+
+
+  Geocode.setApiKey("AIzaSyBYhX2VO2iJV1HVsw_hVc9bNpsrjjGp_dc");
+  Geocode.setRegion("fr");
+  Geocode.setLanguage("fr");
+
+  Geocode.fromAddress(adress).then(
+    (response) => {
+      const { lat, lng } = response.results[0].geometry.location;
+      setLat(lat)
+      setLon(lng)
+    },
+    (error) => {
+      console.error(error);
+    }
+  );
+  console.log(lat, lon);
 
   return (
     <View style={styles.formContainer}>
