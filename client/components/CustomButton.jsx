@@ -212,8 +212,8 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         justifyContent: "center",
         alignItems: "center",
-        width: 45,
-        height: 45,
+        width: 55,
+        height: 55,
     },
     containerTime: {
         backgroundColor: StyleGuide.colors.secondary,

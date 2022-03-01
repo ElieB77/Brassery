@@ -17,7 +17,7 @@ const SignIn = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
   const handleSignIn = async () => {
-    const rawResponse = await fetch('http://192.168.1.26:3000/api/auth/login', {
+    const rawResponse = await fetch('http://192.168.1.22:3000/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `email=${email}&password=${password}`,

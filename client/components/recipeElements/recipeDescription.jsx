@@ -14,6 +14,7 @@ export default function RecipeDescription(props) {
             backgroundColor: StyleGuide.colors.secondary,
             elevation: 10,
             marginBottom: 30,
+            width:"100%"
         },
         text: {
             color:StyleGuide.colors.white

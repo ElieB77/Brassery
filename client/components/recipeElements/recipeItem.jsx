@@ -36,6 +36,7 @@ export default function RecipeItem(props) {
             justifyContent: "space-between",
             minHeight: 100,
             marginVertical: 10,
+            width: "100%",
         },
         btnContainer: {
             justifyContent: "space-around",

@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 export default function Recipe(props) {
     /* STYLES */
@@ -10,5 +10,5 @@ export default function Recipe(props) {
         },
     });
 
-    return <View style={styles.container}>{props.children}</View>;
+    return <View style={[styles.container,{marginBottom:70}]}>{props.children}</View>;
 }
