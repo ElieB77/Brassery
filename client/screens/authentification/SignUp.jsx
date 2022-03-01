@@ -19,7 +19,7 @@ const SignUp = ({ navigation }) => {
 
   const handleSignUp = async () => {
     const rawResponse = await fetch(
-      'http://192.168.1.26:3000/api/auth/register',
+      'http://192.168.10.118:3000/api/auth/register',
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },

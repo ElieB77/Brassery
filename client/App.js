@@ -24,6 +24,9 @@ const store = createStore(combineReducers({ token }));
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
+  // AsyncStorage.clear()
+  // AsyncStorage.removeItem('user')
+
   AsyncStorage.getItem("user", function (error, data) {
     if (data != null) {
       setIsLoggedIn(true)
