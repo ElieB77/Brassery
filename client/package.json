@@ -31,7 +31,10 @@
     "react-native-web": "0.17.1",
     "react-redux": "^7.2.6",
     "redux": "^4.1.2",
-    "undefined": "@expo-google-fonts/"
+    "undefined": "@expo-google-fonts/",
+    "react-native-maps": "0.29.4",
+    "expo-location": "~14.0.1",
+    "expo-permissions": "~13.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
