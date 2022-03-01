@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+import config from '../../config/globalVariables';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -17,7 +18,7 @@ const SignIn = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
   const handleSignIn = async () => {
-    const rawResponse = await fetch('http://192.168.1.26:3000/api/auth/login', {
+    const rawResponse = await fetch(`${config.base_url}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `email=${email}&password=${password}`,
@@ -97,8 +98,9 @@ const SignIn = ({ navigation }) => {
             StyleGuide.typography.overline,
             { color: StyleGuide.colors.secondary },
           ]}
+          onPress={() => navigation.navigate('SignUp')}
         >
-          Créer ma brasserie
+          Créer un compte
         </Text>
       </View>
     </View>
