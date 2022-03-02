@@ -1,26 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
 
 import CustomButton from "../CustomButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const RecipeTimer = ({ onPress }) => {
+    const isFocused = useIsFocused();
+
     // Getting the timer
     const [timer, setTimer] = useState(null);
-
     useEffect(() => {
         AsyncStorage.getItem("timer", function (error, data) {
             if (data) setTimer(data - new Date().getTime());
         });
-    }, [timer]);
+    }, []);
 
     useEffect(() => {
-        let interval = setInterval(() => {
-            setTimer((lastTimerCount) => {
-                lastTimerCount <= 1 && clearInterval(interval);
-                return lastTimerCount - 1;
-            });
-        }, 1000); //each count lasts for a second
+        if (isFocused) {
+            var interval = setInterval(() => {
+                setTimer((lastTimerCount) => {
+                    console.log("🚀 ~ file: recipeTimer.jsx ~ line 24 ~ setTimer ~ lastTimerCount", lastTimerCount)
+                    lastTimerCount < 2000 && clearInterval(interval);
+                    return lastTimerCount - 1000;
+                });
+            }, 1000); //each count lasts for a second
+        }
         //cleanup the interval on complete
         return () => clearInterval(interval);
     }, []);
@@ -29,13 +34,18 @@ const RecipeTimer = ({ onPress }) => {
         <View
             style={{
                 position: "absolute",
-                top: "96%",
+                top: "90%",
                 left: "5%",
             }}
         >
             <CustomButton
                 type="time"
-                time={`${new Date(timer).getMinutes()} : ${new Date(timer).getSeconds() < 10 ? "0" : ""}${new Date(timer).getSeconds()}`}
+                time={`${
+                    new Date(timer).getMinutes() +
+                    60 * (new Date(timer).getHours() - 1)
+                } : ${new Date(timer).getSeconds() < 10 ? "0" : ""}${new Date(
+                    timer
+                ).getSeconds()}`}
                 onPress={() => [onPress(), AsyncStorage.removeItem("timer")]}
             />
         </View>

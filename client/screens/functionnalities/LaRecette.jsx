@@ -73,9 +73,11 @@ const LaRecette = ({ route, navigation }) => {
     const recipeDescription = `${recipe?.description}\nCouleur: ${recipe?.colorEstimate} EBC\nAmertume: ${recipe?.ibuEstimate} IBU\nAlcool: ${recipe?.alcoholByVolume} %\nDensité de départ: ${recipe?.originalGravity}\nDensité de fin: ${recipe?.finalGravity}`;
     if (!recipe) return <View></View>;
     return (
-        <View style={StyleGuide.container}>
-            <Header title={recipe.name} />
-            <ScrollView>
+        <View style={{paddingTop:60, backgroundColor:StyleGuide.colors.white}}>
+            <View style={{left:25}}>
+            <Header  title={recipe.name} />
+            </View>
+            <ScrollView contentContainerStyle={{alignItems:"center",paddingBottom:80}}>
                 <Recipe>
                     <RecipeDescription
                         title={recipe.name}
@@ -199,7 +201,7 @@ const LaRecette = ({ route, navigation }) => {
                             justifyContent: "space-between",
                             position: "absolute",
                             top: "60%",
-                            left: "63%",
+                            left: "60%",
                         }}
                     >
                         <CustomButton type="other" />
@@ -218,8 +220,8 @@ const LaRecette = ({ route, navigation }) => {
             <View
                 style={{
                     position: "absolute",
-                    top: "95%",
-                    left: "95%",
+                    top: "90%",
+                    left: "80%",
                     transform: [
                         { rotate: transparentOverlay ? "45deg" : "0deg" },
                     ],
