@@ -27,6 +27,8 @@ const Location = () => {
         const { lat, lng } = response.results[0].geometry.location;
         setLat(lat)
         setLon(lng)
+        setLatVille(lat)
+        setLonVille(lng)
       },
       (error) => {
         console.error(error);
@@ -90,7 +92,6 @@ const Location = () => {
             </View>
           </View>
         </View>
-
       </Modal>
       <MapView style={styles.map}
           region={{
