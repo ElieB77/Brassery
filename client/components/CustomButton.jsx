@@ -151,9 +151,9 @@ const CustomButton = ({ onPress, title, time, type }) => {
             return (
                 <TouchableOpacity
                     style={[styles.containerTime, StyleGuide.shadowProp]}
+                    onPress={onPress}
                 >
                     <Close
-                        onPress={onPress}
                         width="12"
                         height="12"
                         color={StyleGuide.colors.primary}
@@ -219,12 +219,12 @@ const styles = StyleSheet.create({
         backgroundColor: StyleGuide.colors.secondary,
         borderRadius: StyleGuide.borderRadius,
         flexDirection: "row",
-        justifyContent: "space-evenly",
+        justifyContent: "space-between",
         alignItems: "center",
         paddingTop: 9,
         paddingBottom: 9,
-        paddingLeft: 6,
-        paddingRight: 6,
+        paddingLeft: 16,
+        paddingRight: 21,
         width: 115,
         height: 42,
     },

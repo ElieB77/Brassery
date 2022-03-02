@@ -1,24 +1,49 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
 import Recipe from "../../components/recipeElements/recipe";
 import RecipeItem from "../../components/recipeElements/recipeItem";
 import RecipeDescription from "../../components/recipeElements/recipeDescription";
 import Header from "../../components/headings/Header";
 import CustomButton from "../../components/CustomButton";
+import ActionOverlay from "../../components/overlays/ActionOverlay";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import RecipeTimer from "../../components/recipeElements/RecipeTimer";
+import List from "../../components/lists/list";
+import ListItem from "../../components/lists/listItem";
 
 import StyleGuide from "../../components/utils/StyleGuide";
 
 const LaRecette = ({ route, navigation }) => {
     const [recipe, setRecipe] = useState(null);
     const { recipeId } = route.params;
+    console.log("hello");
 
     // Transparent Overlay when pressing plus btn
     const [transparentOverlay, setTransparentOverlay] = useState(false);
 
+    // Set action overlay to display: "timer", "other", "densimetre", "convert", null
+    const [actionOverlay, setActionOverlay] = useState(null);
+    const displayActionOverlay = (type) => {
+        setTransparentOverlay(false);
+        setActionOverlay(type);
+    };
+    const closeActionOverlay = () => {
+        setActionOverlay(null);
+    };
+    let actionOverlayRender = (
+        <ActionOverlay type={actionOverlay} closeAction={closeActionOverlay} />
+    );
+
+    // Getting any potential timer
+    const [timer, setTimer] = useState(false);
+    AsyncStorage.getItem("timer", function (error, data) {
+        if (data) setTimer(true);
+    });
+
     // Getting the recipe
     useEffect(async () => {
         const rawResponse = await fetch(
-            `http://192.168.1.22:3000/api/recipes/${recipeId}`,
+            `http://192.168.10.117:3000/api/recipes/${recipeId}`,
             {
                 method: "GET",
                 headers: {
@@ -139,12 +164,8 @@ const LaRecette = ({ route, navigation }) => {
             {transparentOverlay && (
                 <View
                     style={{
-                        width: "100%",
-                        height: "100%",
                         backgroundColor: "rgba(255,255,255,0.8)",
-                        position: "absolute",
-                        top: 45,
-                        left: 25,
+                        ...StyleSheet.absoluteFill,
                     }}
                 >
                     <View
@@ -152,23 +173,40 @@ const LaRecette = ({ route, navigation }) => {
                             height: 200,
                             justifyContent: "space-between",
                             position: "absolute",
-                            top:"60%",
-                            left:"65%",
+                            top: "60%",
+                            left: "63%",
                         }}
                     >
                         <CustomButton type="other" />
-                        <CustomButton type="densimetre" />
+                        <CustomButton
+                            type="densimetre"
+                            onPress={() => displayActionOverlay("densimetre")}
+                        />
                         <CustomButton type="convert" />
-                        <CustomButton type="timer" />
+                        <CustomButton
+                            type="timer"
+                            onPress={() => displayActionOverlay("timer")}
+                        />
                     </View>
                 </View>
             )}
-            <View style={{ position: "absolute", top: "95%", left: "95%" }}>
+            <View
+                style={{
+                    position: "absolute",
+                    top: "95%",
+                    left: "95%",
+                    transform: [
+                        { rotate: transparentOverlay ? "45deg" : "0deg" },
+                    ],
+                }}
+            >
                 <CustomButton
                     type="plus"
                     onPress={() => setTransparentOverlay(!transparentOverlay)}
                 />
             </View>
+            {timer && <RecipeTimer onPress={() => setTimer(false)} />}
+            {actionOverlay && actionOverlayRender}
         </View>
     );
 };

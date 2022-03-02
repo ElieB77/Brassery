@@ -13,7 +13,7 @@ export default function RecipeDescription(props) {
             borderRadius: StyleGuide.borderRadius,
             backgroundColor: StyleGuide.colors.secondary,
             elevation: 10,
-            marginBottom: 30,
+            marginBottom: 10,
             width:"100%"
         },
         text: {
