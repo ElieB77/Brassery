@@ -10,6 +10,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import RecipeTimer from "../../components/recipeElements/RecipeTimer";
 import NoteOverlay from "../../components/overlays/noteOverlay";
 
+import config from "../../config/globalVariables";
+
 import StyleGuide from "../../components/utils/StyleGuide";
 
 const LaRecette = ({ route }) => {
@@ -60,7 +62,7 @@ const LaRecette = ({ route }) => {
     // Getting the recipe
     useEffect(async () => {
         const rawResponse = await fetch(
-            `http://192.168.10.117:3000/api/recipes/${recipeId}`,
+            `http://${config.base_url}/api/recipes/${recipeId}`,
             {
                 method: "GET",
                 headers: {
