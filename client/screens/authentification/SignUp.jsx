@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import config from '../../config/globalVariables';
 
 import Header from '../../components/headings/Header';
 import Input from '../../components/utils/form-elements/Input';
@@ -18,20 +19,17 @@ const SignUp = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
   const handleSignUp = async () => {
-    const rawResponse = await fetch(
-      'http://192.168.10.117:3000/api/auth/register',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `username=${username}&email=${email}&password=${password}`,
-      }
-    );
+    const rawResponse = await fetch(`${config.base_url}/api/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `username=${username}&email=${email}&password=${password}`,
+    });
 
     const response = await rawResponse.json();
 
     if (response.token) {
       AsyncStorage.setItem('user', response.token);
-      navigation.navigate('CreateMyBrassery');
+      navigation.navigate('Step1');
     } else {
       console.log(response);
     }
@@ -109,6 +107,7 @@ const SignUp = ({ navigation }) => {
             StyleGuide.typography.overline,
             { color: StyleGuide.colors.secondary },
           ]}
+          onPress={() => navigation.navigate('SignIn')}
         >
           M’identifier
         </Text>

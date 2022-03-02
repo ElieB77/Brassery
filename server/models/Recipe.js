@@ -149,6 +149,17 @@ const FermentationSchema = mongoose.Schema({
     fermentationSteps: [FermentationStepSchema],
 });
 
+const FermentationSchema = mongoose.Schema({
+    name: {
+        type: String,
+        required: [true, "Please add a boil name"],
+    },
+    description: {
+        type: String,
+    },
+    fermentationSteps: [FermentationStepSchema],
+});
+
 const RecipeSchema = mongoose.Schema({
     name: {
         type: String,
@@ -171,7 +182,6 @@ const RecipeSchema = mongoose.Schema({
     },
     ingredients: IngredientSchema,
     mash: MashSchema,
-    ingredients: IngredientSchema,
     originalGravity: {
         type: String,
     },
