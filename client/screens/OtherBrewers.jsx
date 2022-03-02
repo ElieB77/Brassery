@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, StyleSheet, Text, Modal } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
+import config from '../config/globalVariables';
 import Header from '../components/headings/Header';
 import Input from '../components/utils/form-elements/Input';
 import CustomButton from '../components/CustomButton';
@@ -16,10 +17,20 @@ const Location = () => {
   const [lon, setLon] = useState(null);
   const [latVille, setLatVille] = useState(48.866667);
   const [lonVille, setLonVille] = useState(2.333333);
+  const [userList, setUserList] = useState([])
 
   Geocode.setApiKey("AIzaSyBYhX2VO2iJV1HVsw_hVc9bNpsrjjGp_dc");
   Geocode.setRegion("fr");
   Geocode.setLanguage("fr");
+
+  useEffect(()=>{
+    async function findUser() {
+      const reqFind = await fetch(`${config.base_url}/api/users`)
+      const resultFind = await reqFind.json()
+      setUserList(resultFind.data)
+    }
+    findUser()
+  },[])
 
   const sendAdress = () => {
     Geocode.fromAddress(adress).then(
@@ -35,7 +46,6 @@ const Location = () => {
       }
     );
     setModalVisible(!modalVisible);
-    console.log(lat, lon);
   }
 
   const sendVille = () => {
@@ -50,6 +60,14 @@ const Location = () => {
       }
     );
   }
+
+  var userMarker = userList.map((user, i) => {
+    return<Marker 
+        key={i}
+        image={require('../assets/marker2.png')}
+        coordinate={{ latitude: user.localisation.lat, longitude: user.localisation.long }}
+    />
+  });
 
   return (
     <View style={styles.formContainer}>
@@ -101,6 +119,7 @@ const Location = () => {
             longitudeDelta: 0.0421,
           }}
       >
+        {userMarker}
         {(lat && lon) && <Marker 
           coordinate={{latitude: lat, longitude: lon}}
           image={require('../assets/marker.png')}
