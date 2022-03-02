@@ -1,5 +1,18 @@
 const mongoose = require("mongoose");
 
+const NoteSchema = mongoose.Schema({
+    name: {
+        type: String,
+    },
+    content: {
+        type: String,
+    },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
+    createdAt: {
+        type: Date,
+    },
+});
+
 const MashStepSchema = mongoose.Schema({
     name: {
         type: String,
@@ -20,7 +33,7 @@ const MashStepSchema = mongoose.Schema({
     stepTime: {
         type: Number,
     },
-    notes: [{ type: mongoose.Schema.Types.ObjectId, ref: "notes" }],
+    notes: [NoteSchema],
 });
 
 const MashSchema = mongoose.Schema({
@@ -79,7 +92,7 @@ const BoilStepSchema = mongoose.Schema({
     endGravity: {
         type: Number,
     },
-    notes: { type: mongoose.Schema.Types.ObjectId, ref: "notes" },
+    notes: [NoteSchema],
 });
 
 const BoilSchema = mongoose.Schema({
@@ -122,7 +135,7 @@ const FermentationStepSchema = mongoose.Schema({
     endGravity: {
         type: Number,
     },
-    notes: { type: mongoose.Schema.Types.ObjectId, ref: "notes" },
+    notes: [NoteSchema],
 });
 
 const FermentationSchema = mongoose.Schema({

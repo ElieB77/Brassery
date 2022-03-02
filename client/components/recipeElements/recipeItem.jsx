@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Button, Pressable } from "react-native";
 import CustomButton from "../CustomButton";
 import StyleGuide from "../utils/StyleGuide";
+import NoteOverlay from "../overlays/noteOverlay";
 
 import Checkbox from "../utils/form-elements/Checkbox";
 
@@ -11,6 +12,8 @@ export default function RecipeItem(props) {
     const [isDone, setIsDone] = useState(false);
     const [limitHeight, setLimitHeight] = useState(true);
     const [content, setContent] = useState(props.content);
+
+    // Limit the number of words displayed
     let maxWords = 8;
     useEffect(() => {
         if (limitHeight) {
@@ -36,6 +39,7 @@ export default function RecipeItem(props) {
             justifyContent: "space-between",
             minHeight: 100,
             marginVertical: 10,
+            width: "100%",
         },
         btnContainer: {
             justifyContent: "space-around",
@@ -92,7 +96,10 @@ export default function RecipeItem(props) {
             </View>
             <View style={styles.btnContainer}>
                 <Checkbox isDone={isDone} onPress={() => setIsDone(!isDone)} />
-                <CustomButton type="comment" />
+                <CustomButton
+                    type="comment"
+                    onPress={() => props.openNotes(props.cat, props.position)}
+                />
             </View>
         </View>
     );

@@ -8,3 +8,8 @@ const Recipe = require('../models/Recipe')
 exports.getRecipes = asyncHandler(async (req, res, next) => {
     res.status(200).json(res.advancedResults)
 })
+
+exports.getRecipe = asyncHandler(async (req, res, next) => {
+    const recipe = await Recipe.findById(req.params.id);
+    res.status(200).json(recipe);
+});
