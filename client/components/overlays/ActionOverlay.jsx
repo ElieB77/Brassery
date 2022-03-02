@@ -13,10 +13,6 @@ export default function TimerOverlay({ type, closeAction }) {
     // Conversion densité
     const [grUnit, setgrUnit] = useState("Densité");
     const [grValue, setGrValue] = useState(0);
-    console.log(
-        "🚀 ~ file: actionOverlay.jsx ~ line 16 ~ TimerOverlay ~ grValue",
-        grValue
-    );
 
     // Correction gravity
     const [gravity, setGravity] = useState("");
