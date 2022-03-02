@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import React from "react";
+import { StyleSheet, View, Text, ScrollView } from "react-native";
 import StyleGuide from "../utils/StyleGuide";
 import CustomButton from "../CustomButton";
 import List from "../lists/list";
 import ListItem from "../lists/listItem";
 
 export default function TimerOverlay({ notesData, closeAction }) {
-    console.log("🚀 ~ file: noteOverlay.jsx ~ line 9 ~ TimerOverlay ~ notesData", notesData)
     /* STYLES */
     const styles = StyleSheet.create({
         container: {
@@ -20,6 +19,7 @@ export default function TimerOverlay({ notesData, closeAction }) {
             backgroundColor: StyleGuide.colors.white,
             justifyContent: "center",
             alignItems: "center",
+            maxHeight: 600,
         },
         titleContainer: {
             flexDirection: "row",
@@ -32,9 +32,6 @@ export default function TimerOverlay({ notesData, closeAction }) {
             margin: 15,
             justifyContent: "center",
             alignItems: "center",
-        },
-        input: {
-            margin: 5,
         },
         btnContainer: {
             margin: 15,
@@ -52,8 +49,13 @@ export default function TimerOverlay({ notesData, closeAction }) {
                     <CustomButton type="close" onPress={() => closeAction()} />
                     <Text style={StyleGuide.typography.text5}>Notes</Text>
                 </View>
-                <CustomButton type="add" onPress={() => closeAction()} />
                 <List>{allItems}</List>
+                <View style={styles.btnContainer}>
+                    <CustomButton
+                        type="addNote"
+                        onPress={() => closeAction()}
+                    />
+                </View>
             </View>
         </View>
     );

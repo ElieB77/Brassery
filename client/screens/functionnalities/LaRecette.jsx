@@ -23,7 +23,6 @@ const LaRecette = ({ route, navigation }) => {
     const [noteOverlay, setNoteOverlay] = useState(null);
     const [notesData, setNotesData] = useState([]);
     const displayNoteOverlay = (cat, position) => {
-        console.log(recipe["mash"]["mashSteps"][0]);
         setTransparentOverlay(false);
         setNoteOverlay(true);
         setNotesData(recipe[cat][`${cat}Steps`][position].notes);
@@ -138,6 +137,9 @@ const LaRecette = ({ route, navigation }) => {
                                 title={step.name}
                                 content={textToDisplay}
                                 key={i}
+                                cat="boil"
+                                position={i}
+                                openNotes={displayNoteOverlay}
                             />
                         );
                     })}
@@ -176,6 +178,9 @@ const LaRecette = ({ route, navigation }) => {
                                 title={step.name}
                                 content={textToDisplay}
                                 key={i}
+                                cat="fermentation"
+                                position={i}
+                                openNotes={displayNoteOverlay}
                             />
                         );
                     })}

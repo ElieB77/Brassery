@@ -1,15 +1,16 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ScrollView, StatusBar } from "react-native";
 import StyleGuide from "../utils/StyleGuide";
 
 export default function List(props) {
     /* STYLES */
     const styles = StyleSheet.create({
         container: {
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: StyleGuide.borderRadius,
             backgroundColor: StyleGuide.colors.white,
+            borderRadius:StyleGuide.borderRadius,
+            flexGrow: 0,
+            minHeight: 120,
+            maxHeight: 400,
         },
     });
 
@@ -20,5 +21,20 @@ export default function List(props) {
         });
     });
 
-    return <View style={[styles.container,StyleGuide.shadowProp]}>{items}</View>;
+    return (
+        <View
+            style={{
+                flexGrow: 0,
+            }}
+        >
+            <ScrollView
+                style={[styles.container, StyleGuide.shadowProp]}
+                contentContainerStyle={{
+                    flexGrow: 0,
+                }}
+            >
+                {items}
+            </ScrollView>
+        </View>
+    );
 }
