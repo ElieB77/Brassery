@@ -23,6 +23,8 @@ connectDB()
 // Route files
 const authentification = require('./routes/authentification')
 const users = require('./routes/users')
+const recipes = require('./routes/recipes')
+const materials = require('./routes/materials')
 
 const app = express();
 
@@ -61,6 +63,8 @@ app.use(cors())
 // Mount routers
 app.use('/api/auth', authentification);
 app.use('/api/users', users);
+app.use('/api/recipes', recipes);
+app.use('/api/materials', materials);
 
 app.use(errorHandler)
 

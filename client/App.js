@@ -4,7 +4,12 @@ import LoadFonts from './components/layouts/LoadFonts'
 import Home from './screens/Home'
 import SignIn from './screens/authentification/SignIn'
 import SignUp from './screens/authentification/SignUp'
-import CreateMyBrassery from './screens/createBrassery/CreateMyBrassery'
+import Step1 from './screens/createBrassery/steps/Step1'
+import Step2 from './screens/createBrassery/steps/Step2'
+import Step3 from './screens/createBrassery/steps/Step3'
+import Step4 from './screens/createBrassery/steps/Step4'
+import Step5 from './screens/createBrassery/steps/Step5'
+import Step6 from './screens/createBrassery/steps/Step6'
 
 import Navbar from './components/layouts/navbar/Navbar';
 
@@ -24,7 +29,7 @@ const store = createStore(combineReducers({ token }));
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-  // AsyncStorage.clear()
+  //AsyncStorage.clear()
   // AsyncStorage.removeItem('user')
 
   AsyncStorage.getItem("user", function (error, data) {
@@ -43,11 +48,18 @@ const App = () => {
                   <Stack.Screen name="Home" component={Home} />
                   <Stack.Screen name="SignIn" component={SignIn} />
                   <Stack.Screen name="SignUp" component={SignUp} />
-                  <Stack.Screen name="CreateMyBrassery" component={CreateMyBrassery} />
                   <Stack.Screen name="Navbar" component={Navbar} />
                 </>
               ) : (
-                <Stack.Screen name="Navbar" component={Navbar} />
+                  <>
+                    <Stack.Screen name="Step1" component={Step1} />
+                    <Stack.Screen name="Step2" component={Step2} />
+                    <Stack.Screen name="Step3" component={Step3} />
+                    <Stack.Screen name="Step4" component={Step4} />
+                    <Stack.Screen name="Step5" component={Step5} />
+                    <Stack.Screen name="Step6" component={Step6} />
+                    <Stack.Screen name="Navbar" component={Navbar} />
+                  </>
               )
             }
         </Stack.Navigator>
