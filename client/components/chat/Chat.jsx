@@ -19,8 +19,8 @@ const Chat = ({value, onPress}) => {
                     }, StyleGuide.shadowProp]}/>
                 <View style={{flexDirection:'row', justifyContent:'space-between', alignItems: 'center', position: 'absolute', right:5}}>
                     <Pressable onPress={onPress} style={{margin: 15}}>
-                    <Gallery />
-                        </Pressable>
+                        <Gallery />
+                    </Pressable>
                     <Pressable onPress={onPress} style={{margin: 15}}>
                         <Import />
                     </Pressable>

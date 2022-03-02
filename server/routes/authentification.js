@@ -24,6 +24,16 @@ router
     .route('/logout')
     .get(protect, logout)
 
+// router
+//     .route('/getRecipes')
+//     .get(getRecipes)
+// // Route pour récuperer les recettes dans la BDD 
+
+// router
+//     .route('/getRecipesByFilter')
+//     .post(getRecipesByFilter)
+// // Route pour récuperer les recettes en fonction des filtres de l'utilisateur 
+
 router
     .route('/me')
     .get(protect, getMe)
