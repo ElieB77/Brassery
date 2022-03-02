@@ -5,21 +5,35 @@ import RecipeItem from "../../components/recipeElements/recipeItem";
 import RecipeDescription from "../../components/recipeElements/recipeDescription";
 import Header from "../../components/headings/Header";
 import CustomButton from "../../components/CustomButton";
-import ActionOverlay from "../../components/overlays/ActionOverlay";
+import ActionOverlay from "../../components/overlays/actionOverlay";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import RecipeTimer from "../../components/recipeElements/RecipeTimer";
-import List from "../../components/lists/list";
-import ListItem from "../../components/lists/listItem";
+import RecipeTimer from "../../components/recipeElements/recipeTimer";
+import NoteOverlay from "../../components/overlays/noteOverlay";
 
 import StyleGuide from "../../components/utils/StyleGuide";
 
 const LaRecette = ({ route, navigation }) => {
     const [recipe, setRecipe] = useState(null);
     const { recipeId } = route.params;
-    console.log("hello");
 
     // Transparent Overlay when pressing plus btn
     const [transparentOverlay, setTransparentOverlay] = useState(false);
+
+    // Notes overlay when clicking notes btn
+    const [noteOverlay, setNoteOverlay] = useState(null);
+    const [notesData, setNotesData] = useState([]);
+    const displayNoteOverlay = (cat, position) => {
+        console.log(recipe["mash"]["mashSteps"][0]);
+        setTransparentOverlay(false);
+        setNoteOverlay(true);
+        setNotesData(recipe[cat][`${cat}Steps`][position].notes);
+    };
+    const closeNoteOverlay = () => {
+        setNoteOverlay(null);
+    };
+    let noteOverlayRender = (
+        <NoteOverlay type={noteOverlay} closeAction={closeNoteOverlay} notesData={notesData} />
+    );
 
     // Set action overlay to display: "timer", "other", "densimetre", "convert", null
     const [actionOverlay, setActionOverlay] = useState(null);
@@ -86,12 +100,16 @@ const LaRecette = ({ route, navigation }) => {
                         title={recipe.mash.name}
                         content={recipe.mash.description}
                     />
-                    {recipe.mash.mashSteps.map((step) => {
+                    {recipe.mash.mashSteps.map((step, i) => {
                         const textToDisplay = `${step.description}\n${step.stepTemperature}°C pendant ${step.stepTime} minutes.`;
                         return (
                             <RecipeItem
                                 title={step.name}
                                 content={textToDisplay}
+                                key={i}
+                                cat="mash"
+                                position={i}
+                                openNotes={displayNoteOverlay}
                             />
                         );
                     })}
@@ -113,12 +131,13 @@ const LaRecette = ({ route, navigation }) => {
                         title={recipe.boil.name}
                         content={recipe.boil.description}
                     />
-                    {recipe.boil.boilSteps.map((step) => {
+                    {recipe.boil.boilSteps.map((step, i) => {
                         const textToDisplay = `${step.description}\n${step.endTemperature}°C pendant ${step.stepTime} minutes.\nDensité de départ: ${step.startGravity}\nDensité de fin: ${step.endGravity}`;
                         return (
                             <RecipeItem
                                 title={step.name}
                                 content={textToDisplay}
+                                key={i}
                             />
                         );
                     })}
@@ -140,7 +159,7 @@ const LaRecette = ({ route, navigation }) => {
                         title={recipe.fermentation.name}
                         content={recipe.fermentation.description}
                     />
-                    {recipe.fermentation.fermentationSteps.map((step) => {
+                    {recipe.fermentation.fermentationSteps.map((step, i) => {
                         const textToDisplay = `${
                             step.description ? `${step.description}\n` : ""
                         }Durée: ${
@@ -156,6 +175,7 @@ const LaRecette = ({ route, navigation }) => {
                             <RecipeItem
                                 title={step.name}
                                 content={textToDisplay}
+                                key={i}
                             />
                         );
                     })}
@@ -207,6 +227,7 @@ const LaRecette = ({ route, navigation }) => {
             </View>
             {timer && <RecipeTimer onPress={() => setTimer(false)} />}
             {actionOverlay && actionOverlayRender}
+            {noteOverlay && noteOverlayRender}
         </View>
     );
 };
