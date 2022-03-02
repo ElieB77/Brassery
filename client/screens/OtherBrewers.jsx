@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { View, StyleSheet, Text, Modal } from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 import Header from '../components/headings/Header';
 import Input from '../components/utils/form-elements/Input';
 import CustomButton from '../components/CustomButton';
@@ -11,25 +11,43 @@ const Location = () => {
   
   const [modalVisible, setModalVisible] = useState(false);
   const [adress, setAdress] = useState();
-  const [lat, setLat] = useState();
-  const [lon, setLon] = useState();
-
+  const [ville, setVille] = useState('');
+  const [lat, setLat] = useState(null);
+  const [lon, setLon] = useState(null);
+  const [latVille, setLatVille] = useState(null);
+  const [lonVille, setLonVille] = useState(null);
 
   Geocode.setApiKey("AIzaSyBYhX2VO2iJV1HVsw_hVc9bNpsrjjGp_dc");
   Geocode.setRegion("fr");
   Geocode.setLanguage("fr");
 
-  Geocode.fromAddress(adress).then(
-    (response) => {
-      const { lat, lng } = response.results[0].geometry.location;
-      setLat(lat)
-      setLon(lng)
-    },
-    (error) => {
-      console.error(error);
-    }
-  );
-  console.log(lat, lon);
+  const sendAdress = () => {
+    Geocode.fromAddress(adress).then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        setLat(lat)
+        setLon(lng)
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+    setModalVisible(!modalVisible);
+    console.log(lat, lon);
+  }
+
+  const sendVille = () => {
+    Geocode.fromAddress(ville).then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        setLatVille(lat)
+        setLonVille(lng)
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
 
   return (
     <View style={styles.formContainer}>
@@ -37,7 +55,9 @@ const Location = () => {
       <View style={styles.formInput}>
         <Input
             type='searchInput'
-            placeholder='Ville, adresse...'
+            placeholder='Ville'
+            onChangeText={(value) => setVille(value)}
+            onPress={() => sendVille()}
         />
       </View>
       <Modal
@@ -65,7 +85,7 @@ const Location = () => {
             <CustomButton 
                 type='Convert' 
                 title='Valider'
-                onPress={() => setModalVisible(!modalVisible)}
+                onPress={() => sendAdress()}
             />
             </View>
           </View>
@@ -74,12 +94,17 @@ const Location = () => {
       </Modal>
       <MapView style={styles.map}
           initialRegion={{
-          latitude: 48.866667,  
-          longitude: 2.333333,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-          }} 
-      />
+            latitude: 48.866667,
+            longitude: 2.333333,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+      >
+        {(lat && lon) && <Marker 
+          coordinate={{latitude: lat, longitude: lon}}
+          image={require('../assets/marker.png')}
+        />}
+      </MapView>  
       <View style={styles.button}>
         <CustomButton 
         type='Convert' 

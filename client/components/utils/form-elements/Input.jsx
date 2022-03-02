@@ -1,8 +1,8 @@
 import StyleGuide from "../StyleGuide";
-import { TextInput, StyleSheet, View } from "react-native";
+import { TextInput, StyleSheet, View, Pressable } from "react-native";
 import Search from "../icons/Search";
 
-const InputText = ({ placeholder, type, onChangeText, value }) => {
+const InputText = ({ placeholder, type, onChangeText, value, onPress }) => {
   switch (type) {
     case 'text':
       return (
@@ -39,9 +39,11 @@ const InputText = ({ placeholder, type, onChangeText, value }) => {
     case "searchInput":
       return (
         <View style={styles.searchInput}>
-          <TextInput style={styles.textInput} placeholder={placeholder} />
+          <TextInput style={styles.textInput} placeholder={placeholder} onChangeText={onChangeText}/>
           <View style={styles.searchIcon}>
-            <Search />
+            <Pressable onPress={onPress}>
+              <Search />
+            </Pressable>
           </View>
         </View>
       );
