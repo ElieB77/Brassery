@@ -3,11 +3,6 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const LocalisationSchema = mongoose.Schema({
-    lat: { type: Number },
-    long: { type: Number },
-});
-
 const GravitySchema = mongoose.Schema({
     name: { type: String },
     value: { type: Number },
@@ -57,7 +52,13 @@ const UserSchema = mongoose.Schema({
     avatar: {
         type: String,
     },
-    localisation: LocalisationSchema,
+    localisation: {
+        lat: { 
+            type: Number,
+            default: 0 
+        },
+        long: { type: Number, default: 0 },
+    },
     materials: [{ type: mongoose.Schema.Types.ObjectId, ref: "materials" }],
     likedRecipes: [{ type: mongoose.Schema.Types.ObjectId, ref: "recipes" }],
     batches: [BatchSchema],
