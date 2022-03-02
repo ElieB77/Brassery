@@ -23,12 +23,13 @@ const InputText = ({ placeholder, type, onChangeText, value }) => {
           value={value}
         />
       );
-    case "textArea":
+    case 'textArea':
       return (
         <TextInput
           style={[styles.textArea, StyleGuide.shadowProp]}
-          underlineColorAndroid="transparent"
-          placeholder="Type something"
+
+          underlineColorAndroid='transparent'
+          placeholder='Écrivez quelque chose'
           placeholderTextColor={placeholder}
           numberOfLines={10}
           multiline={true}
@@ -36,7 +37,7 @@ const InputText = ({ placeholder, type, onChangeText, value }) => {
           value={value}
         />
       );
-    case "searchInput":
+    case 'searchInput':
       return (
         <View style={styles.searchInput}>
           <TextInput style={styles.textInput} placeholder={placeholder} />
@@ -53,6 +54,7 @@ const styles = StyleSheet.create({
     fontFamily: "Manrope_500Medium",
     backgroundColor: StyleGuide.colors.white,
     width: 300,
+    height: 45,
     borderRadius: StyleGuide.borderRadius,
     padding: 10,
     paddingLeft: 15,
@@ -66,10 +68,10 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
   },
   searchInput: {
-    position: "relative",
+    position: 'relative',
   },
   searchIcon: {
-    position: "absolute",
+    position: 'absolute',
     right: 0,
     paddingRight: 15,
     paddingBottom: 10,
