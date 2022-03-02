@@ -62,7 +62,6 @@ const LaRecette = ({ route }) => {
     // Getting the recipe
     useEffect(async () => {
         AsyncStorage.getItem("user", async function (error, data) {
-            console.log("🚀 ~ file: LaRecette.jsx ~ line 67 ~ recipeId", config.base_url)
             const rawResponse = await fetch(
                 `${config.base_url}/api/recipes/${recipeId}`,
                 {
