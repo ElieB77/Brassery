@@ -1,11 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import StyleGuide from "../utils/StyleGuide";
 import Input from "../utils/form-elements/Input";
 import CustomButton from "../CustomButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Dropdown from "../utils/form-elements/Dropdown";
 
 export default function TimerOverlay({ type, closeAction }) {
+    /* STATES */
+    const [overlayType, setOverlayType] = useState(type);
+
+    // Conversion densité
+    const [grUnit, setgrUnit] = useState("Densité");
+    const [grValue, setGrValue] = useState(0);
+    console.log(
+        "🚀 ~ file: actionOverlay.jsx ~ line 16 ~ TimerOverlay ~ grValue",
+        grValue
+    );
+
+    // Correction gravity
+    const [gravity, setGravity] = useState("");
+    const [startTemp, setStartTemp] = useState("");
+    const [calcTemp, setCalcTemp] = useState("");
+
     /* STYLES */
     const styles = StyleSheet.create({
         container: {
@@ -44,11 +61,12 @@ export default function TimerOverlay({ type, closeAction }) {
         results,
         buttons = null;
 
-    switch (type) {
+    switch (overlayType) {
         case "timer":
             const [timerDuration, setTimerDuration] = useState(null);
             const launchTimer = () => {
-                const endTimerDate = new Date().getTime() + timerDuration * 60000;
+                const endTimerDate =
+                    new Date().getTime() + timerDuration * 60000;
                 AsyncStorage.setItem("timer", endTimerDate.toString());
                 closeAction();
             };
@@ -72,20 +90,70 @@ export default function TimerOverlay({ type, closeAction }) {
             );
             break;
         case "convert":
-            title = "Ajouter un timer";
+            title = "Convertisseurs";
+            buttons = (
+                <View style={styles.inputContainer}>
+                    <View style={styles.inputContainer}>
+                        <CustomButton
+                            title={"Couleur"}
+                            onPress={() => setOverlayType("colorConvert")}
+                        />
+                    </View>
+                    <View style={styles.inputContainer}>
+                        <CustomButton
+                            title={"Densité"}
+                            onPress={() => setOverlayType("gravityConvert")}
+                        />
+                    </View>
+                </View>
+            );
+            break;
+        case "gravityConvert":
+            title = "Conversion - Densité";
+            let grDen = grValue;
+            let grPlato = grValue;
+            if (grUnit === "Densité") {
+                grPlato = (
+                    (258.6 * (grDen / 1000 - 1)) /
+                        (0.12 + (0.88 * grDen) / 1000)
+                ).toFixed(2);
+            }
+            if (grUnit === "Plato")
+                grDen = Math.floor(
+                    (1 + grPlato / (258.6 - 0.88 * grPlato)) * 1000
+                );
+            if (grUnit && grValue)
+                results = (
+                    <Text
+                        style={[
+                            StyleGuide.typography.text2,
+                            { marginVertical: 10 },
+                        ]}
+                    >
+                        {`Densité: ${grDen}\nDegré plato: ${grPlato}`}
+                    </Text>
+                );
             buttons = (
                 <View style={styles.inputContainer}>
                     <View style={styles.input}>
-                        <Input type="text" placeholder="Temps en minutes" />
+                        <Input
+                            type="text"
+                            placeholder="Unité de mesure"
+                            onChangeText={(e) => setgrUnit(e)}
+                        />
+                    </View>
+                    <View style={styles.input}>
+                        <Input
+                            type="text"
+                            placeholder="Valeur mesurée"
+                            onChangeText={(e) => setGrValue(e)}
+                        />
                     </View>
                 </View>
             );
             break;
         case "densimetre":
             title = "Correcteur du densimètre";
-            const [gravity, setGravity] = useState("");
-            const [startTemp, setStartTemp] = useState("");
-            const [calcTemp, setCalcTemp] = useState("");
             const calc = Math.floor(
                 Number(gravity) +
                     0.00352871 *

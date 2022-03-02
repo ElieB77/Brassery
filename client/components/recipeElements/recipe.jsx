@@ -7,9 +7,13 @@ export default function Recipe(props) {
         container: {
             justifyContent: "center",
             alignItems: "center",
-            width:"90%",
+            width: "90%",
         },
     });
 
-    return <View style={[styles.container,{marginBottom:70}]}>{props.children}</View>;
+    return (
+        <View style={[styles.container, { marginBottom: 70, marginTop: 10 }]}>
+            {props.children}
+        </View>
+    );
 }

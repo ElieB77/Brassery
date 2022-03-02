@@ -20,14 +20,16 @@ const RecipeTimer = ({ onPress }) => {
         if (isFocused) {
             var interval = setInterval(() => {
                 setTimer((lastTimerCount) => {
-                    console.log("🚀 ~ file: recipeTimer.jsx ~ line 24 ~ setTimer ~ lastTimerCount", lastTimerCount)
                     lastTimerCount < 2000 && clearInterval(interval);
                     return lastTimerCount - 1000;
                 });
             }, 1000); //each count lasts for a second
         }
         //cleanup the interval on complete
-        return () => clearInterval(interval);
+        return () => {
+            clearInterval(interval);
+            AsyncStorage.removeItem("timer");
+        };
     }, []);
 
     return (

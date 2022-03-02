@@ -12,7 +12,7 @@ import NoteOverlay from "../../components/overlays/noteOverlay";
 
 import StyleGuide from "../../components/utils/StyleGuide";
 
-const LaRecette = ({ route, navigation }) => {
+const LaRecette = ({ route }) => {
     const [recipe, setRecipe] = useState(null);
     const { recipeId } = route.params;
 
@@ -31,7 +31,11 @@ const LaRecette = ({ route, navigation }) => {
         setNoteOverlay(null);
     };
     let noteOverlayRender = (
-        <NoteOverlay type={noteOverlay} closeAction={closeNoteOverlay} notesData={notesData} />
+        <NoteOverlay
+            type={noteOverlay}
+            closeAction={closeNoteOverlay}
+            notesData={notesData}
+        />
     );
 
     // Set action overlay to display: "timer", "other", "densimetre", "convert", null
@@ -73,11 +77,18 @@ const LaRecette = ({ route, navigation }) => {
     const recipeDescription = `${recipe?.description}\nCouleur: ${recipe?.colorEstimate} EBC\nAmertume: ${recipe?.ibuEstimate} IBU\nAlcool: ${recipe?.alcoholByVolume} %\nDensité de départ: ${recipe?.originalGravity}\nDensité de fin: ${recipe?.finalGravity}`;
     if (!recipe) return <View></View>;
     return (
-        <View style={{paddingTop:60, backgroundColor:StyleGuide.colors.white}}>
-            <View style={{left:25}}>
-            <Header  title={recipe.name} />
+        <View
+            style={{ paddingTop: 60, backgroundColor: StyleGuide.colors.white }}
+        >
+            <View style={{ left: 25 }}>
+                <Header title={recipe.name} />
             </View>
-            <ScrollView contentContainerStyle={{alignItems:"center",paddingBottom:80}}>
+            <ScrollView
+                contentContainerStyle={{
+                    alignItems: "center",
+                    paddingBottom: 80,
+                }}
+            >
                 <Recipe>
                     <RecipeDescription
                         title={recipe.name}
@@ -209,7 +220,10 @@ const LaRecette = ({ route, navigation }) => {
                             type="densimetre"
                             onPress={() => displayActionOverlay("densimetre")}
                         />
-                        <CustomButton type="convert" />
+                        <CustomButton
+                            type="convert"
+                            onPress={() => displayActionOverlay("convert")}
+                        />
                         <CustomButton
                             type="timer"
                             onPress={() => displayActionOverlay("timer")}
