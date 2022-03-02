@@ -80,7 +80,6 @@ const Dropdown = ({ item, onPress, getValue, title }) => {
         </View>
       </Pressable>
 
-
       {iconRotation && (
         <View
           style={[

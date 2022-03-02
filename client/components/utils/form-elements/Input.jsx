@@ -25,16 +25,16 @@ const InputText = ({ placeholder, type, onChangeText, value }) => {
             );
         case "textArea":
             return (
-                <TextInput
-                    style={[styles.textArea, StyleGuide.shadowProp]}
-                    underlineColorAndroid="transparent"
-                    placeholder="Type something"
-                    placeholderTextColor={placeholder}
-                    numberOfLines={10}
-                    multiline={true}
-                    onChangeText={onChangeText}
-                    value={value}
-                />
+              <TextInput
+                style={[styles.textArea, StyleGuide.shadowProp]}
+                underlineColorAndroid='transparent'
+                placeholder='Écrivez quelque chose'
+                placeholderTextColor={placeholder}
+                numberOfLines={10}
+                multiline={true}
+                onChangeText={onChangeText}
+                value={value}
+              />
             );
         case "searchInput":
             return (

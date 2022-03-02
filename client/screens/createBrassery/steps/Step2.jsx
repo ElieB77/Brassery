@@ -48,6 +48,7 @@ const Step2 = ({ navigation }) => {
       <View
         style={{
           height: 570,
+          width: 300,
           marginBottom: 30,
           alignItems: 'center',
           justifyContent: 'center',
