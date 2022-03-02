@@ -5,9 +5,9 @@ import RecipeItem from "../../components/recipeElements/recipeItem";
 import RecipeDescription from "../../components/recipeElements/recipeDescription";
 import Header from "../../components/headings/Header";
 import CustomButton from "../../components/CustomButton";
-import ActionOverlay from "../../components/overlays/actionOverlay";
+import ActionOverlay from "../../components/overlays/ActionOverlay";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import RecipeTimer from "../../components/recipeElements/recipeTimer";
+import RecipeTimer from "../../components/recipeElements/RecipeTimer";
 import NoteOverlay from "../../components/overlays/noteOverlay";
 
 import StyleGuide from "../../components/utils/StyleGuide";
