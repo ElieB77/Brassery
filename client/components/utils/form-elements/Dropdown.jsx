@@ -1,4 +1,5 @@
 import StyleGuide from "../StyleGuide";
+
 import { StyleSheet, View, Text, Pressable, ScrollView } from 'react-native';
 import RightChevron from '../icons/RightChevron';
 import React, { useState } from 'react';
@@ -11,6 +12,7 @@ const Dropdown = ({ item, onPress, getValue, title }) => {
   let listItemStyle = iconRotation
     ? styles.listContainer
     : styles.hideListContainer;
+
 
   item = item || [];
 
@@ -64,6 +66,7 @@ const Dropdown = ({ item, onPress, getValue, title }) => {
           <Text
             style={[
               StyleGuide.typography.text3,
+
               isGray && {
                 color: StyleGuide.typography.text3,
               },
@@ -76,6 +79,7 @@ const Dropdown = ({ item, onPress, getValue, title }) => {
           <RightChevron />
         </View>
       </Pressable>
+
 
       {iconRotation && (
         <View
