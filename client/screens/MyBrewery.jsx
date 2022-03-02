@@ -8,7 +8,6 @@ const Home = ({ navigation }) => {
         <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
-            <Text>Ma Brasserie</Text>
             <CustomButton
                 title="Aller sur La Recette"
                 onPress={() =>
