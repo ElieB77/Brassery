@@ -61,18 +61,21 @@ const LaRecette = ({ route }) => {
 
     // Getting the recipe
     useEffect(async () => {
-        const rawResponse = await fetch(
-            `http://${config.base_url}/api/recipes/${recipeId}`,
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-            }
-        );
-
-        const result = await rawResponse.json();
-        setRecipe(result);
+        AsyncStorage.getItem("user", async function (error, data) {
+            console.log("🚀 ~ file: LaRecette.jsx ~ line 67 ~ recipeId", config.base_url)
+            const rawResponse = await fetch(
+                `${config.base_url}/api/recipes/${recipeId}`,
+                {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${data}`,
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                }
+            );
+            const result = await rawResponse.json();
+            setRecipe(result);
+        });
     }, [recipeId]);
 
     // Specific description of the recipe

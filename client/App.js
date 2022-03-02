@@ -30,7 +30,7 @@ const store = createStore(combineReducers({ token }));
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // AsyncStorage.clear()
+   // AsyncStorage.clear()
   // AsyncStorage.removeItem('user')
 
   AsyncStorage.getItem("user", function (error, data) {
@@ -56,6 +56,10 @@ const App = () => {
                   <Stack.Screen name="Step4" component={Step4} />
                   <Stack.Screen name="Step5" component={Step5} />
                   <Stack.Screen name="Step6" component={Step6} />
+                  <Stack.Screen
+                        name="LaRecette"
+                        component={LaRecette}
+                    />
                   <Stack.Screen name="Navbar" component={Navbar} />
                 </>
               ) : (
