@@ -14,8 +14,8 @@ const Location = () => {
   const [ville, setVille] = useState('');
   const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
-  const [latVille, setLatVille] = useState(null);
-  const [lonVille, setLonVille] = useState(null);
+  const [latVille, setLatVille] = useState(48.866667);
+  const [lonVille, setLonVille] = useState(2.333333);
 
   Geocode.setApiKey("AIzaSyBYhX2VO2iJV1HVsw_hVc9bNpsrjjGp_dc");
   Geocode.setRegion("fr");
@@ -93,9 +93,9 @@ const Location = () => {
 
       </Modal>
       <MapView style={styles.map}
-          initialRegion={{
-            latitude: 48.866667,
-            longitude: 2.333333,
+          region={{
+            latitude: latVille,
+            longitude: lonVille,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}

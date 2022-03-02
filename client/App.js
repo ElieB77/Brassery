@@ -5,7 +5,6 @@ import LoadFonts from "./components/layouts/LoadFonts";
 import Home from './screens/Home'
 import SignIn from './screens/authentification/SignIn'
 import SignUp from './screens/authentification/SignUp'
-import CreateMyBrassery from "./screens/createBrassery/CreateMyBrassery";
 import Step1 from './screens/createBrassery/steps/Step1'
 import Step2 from './screens/createBrassery/steps/Step2'
 import Step3 from './screens/createBrassery/steps/Step3'
