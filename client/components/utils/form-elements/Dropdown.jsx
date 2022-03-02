@@ -1,14 +1,24 @@
 import StyleGuide from "../StyleGuide";
-import { StyleSheet, View, Text, Pressable, FlatList } from "react-native";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 import RightChevron from "../icons/RightChevron";
 import React, { useState } from "react";
 
-const Dropdown = ({ item }) => {
+const Dropdown = ({ item, placeholder }) => {
   const [iconRotation, setIconRotation] = useState(false);
   let iconCustomStyle = iconRotation ? styles.iconRotate : styles.icon;
   let listItemStyle = iconRotation
     ? styles.listContainer
     : styles.hideListContainer;
+
+  let beerType = item.map((beer, i) => {
+    return (
+      <View key={i} style={styles.listItemContainer}>
+        <Text style={[styles.listItem, StyleGuide.typography.text3]}>
+          {beer}
+        </Text>
+      </View>
+    );
+  });
 
   return (
     <View style={styles.container}>
@@ -18,26 +28,20 @@ const Dropdown = ({ item }) => {
         }
       >
         <View style={styles.dropdown}>
-          <Text style={StyleGuide.typography.text3}>Dropdown</Text>
+          <Text
+            style={[
+              StyleGuide.typography.text3,
+              { color: StyleGuide.colors.gray },
+            ]}
+          >
+            {placeholder}
+          </Text>
         </View>
         <View style={iconCustomStyle}>
           <RightChevron />
         </View>
       </Pressable>
-
-      <View style={listItemStyle}>
-        <View style={styles.listItemContainer}>
-          <Text style={[styles.listItem, StyleGuide.typography.text3]}>
-            First Item
-          </Text>
-        </View>
-        <View style={styles.hr} />
-        <View style={styles.listItemContainer}>
-          <Text style={[styles.listItem, StyleGuide.typography.text3]}>
-            Second Item
-          </Text>
-        </View>
-      </View>
+      <View style={listItemStyle}>{beerType}</View>
     </View>
   );
 };

@@ -4,7 +4,7 @@ import Search from "../icons/Search";
 
 const InputText = ({ placeholder, type, onChangeText, value }) => {
   switch (type) {
-    case 'text':
+    case "text":
       return (
         <TextInput
           style={[styles.textInput, StyleGuide.shadowProp]}
@@ -13,12 +13,12 @@ const InputText = ({ placeholder, type, onChangeText, value }) => {
           value={value}
         />
       );
-    case 'password':
+    case "password":
       return (
         <TextInput
           secureTextEntry={true}
           style={[styles.textInput, StyleGuide.shadowProp]}
-          placeholder='Mot de passe..'
+          placeholder="Mot de passe.."
           onChangeText={onChangeText}
           value={value}
         />
@@ -27,8 +27,8 @@ const InputText = ({ placeholder, type, onChangeText, value }) => {
       return (
         <TextInput
           style={[styles.textArea, StyleGuide.shadowProp]}
-          underlineColorAndroid='transparent'
-          placeholder='Type something'
+          underlineColorAndroid="transparent"
+          placeholder="Type something"
           placeholderTextColor={placeholder}
           numberOfLines={10}
           multiline={true}
@@ -50,7 +50,7 @@ const InputText = ({ placeholder, type, onChangeText, value }) => {
 
 const styles = StyleSheet.create({
   textInput: {
-    fontFamily: 'Manrope_500Medium',
+    fontFamily: "Manrope_500Medium",
     backgroundColor: StyleGuide.colors.white,
     width: 300,
     borderRadius: StyleGuide.borderRadius,
