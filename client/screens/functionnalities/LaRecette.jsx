@@ -3,12 +3,14 @@ import { View, Text, ScrollView, StyleSheet } from "react-native";
 import Recipe from "../../components/recipeElements/recipe";
 import RecipeItem from "../../components/recipeElements/recipeItem";
 import RecipeDescription from "../../components/recipeElements/recipeDescription";
+import RecipeIngredients from "../../components/recipeElements/recipeIngredients";
 import Header from "../../components/headings/Header";
 import CustomButton from "../../components/CustomButton";
 import ActionOverlay from "../../components/overlays/actionOverlay";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import RecipeTimer from "../../components/recipeElements/RecipeTimer";
+import RecipeTimer from "../../components/recipeElements/recipeTimer";
 import NoteOverlay from "../../components/overlays/noteOverlay";
+import IngredientsOverlay from "../../components/overlays/ingredientsOverlay";
 
 import config from "../../config/globalVariables";
 
@@ -23,13 +25,11 @@ const LaRecette = ({ route }) => {
 
     // Notes overlay when clicking notes btn
     const [noteOverlay, setNoteOverlay] = useState(null);
-    const [notesData, setNotesData] = useState([]);
     const [notesCat, setNotesCat] = useState("");
     const [notesPosition, setNotesPosition] = useState(0);
     const displayNoteOverlay = (cat, position) => {
         setTransparentOverlay(false);
         setNoteOverlay(true);
-        setNotesData(recipe[cat][`${cat}Steps`][position].notes);
         setNotesCat(cat);
         setNotesPosition(position);
     };
@@ -43,6 +43,23 @@ const LaRecette = ({ route }) => {
             recipe={recipe?._id}
             section={notesCat}
             position={notesPosition}
+        />
+    );
+
+    // Ingredients overlay
+    const [ingredientOverlay, setIngredientOverlay] = useState(null);
+    const openIngredientsOverlay = (e) => {
+        setIngredientOverlay(e);
+    };
+    const closeIngredientOverlay = () => {
+        setIngredientOverlay(null);
+    };
+    let ingredientOverlayRender = (
+        <IngredientsOverlay
+            type={ingredientOverlay}
+            closeAction={closeIngredientOverlay}
+            recipe={recipe?._id}
+            ingredient={ingredientOverlay}
         />
     );
 
@@ -84,7 +101,7 @@ const LaRecette = ({ route }) => {
     }, [recipeId]);
 
     // Specific description of the recipe
-    const recipeDescription = `${recipe?.description}\nCouleur: ${recipe?.colorEstimate} EBC\nAmertume: ${recipe?.ibuEstimate} IBU\nAlcool: ${recipe?.alcoholByVolume} %\nDensité de départ: ${recipe?.originalGravity}\nDensité de fin: ${recipe?.finalGravity}`;
+    const recipeDescription = `${recipe?.description}\n\nCouleur: ${recipe?.colorEstimate} EBC\nAmertume: ${recipe?.ibuEstimate} IBU\nAlcool: ${recipe?.alcoholByVolume} %\nDensité de départ: ${recipe?.originalGravity}\nDensité de fin: ${recipe?.finalGravity}`;
     if (!recipe) return <View></View>;
     return (
         <View
@@ -104,6 +121,7 @@ const LaRecette = ({ route }) => {
                         title={recipe.name}
                         content={recipeDescription}
                     />
+                    <RecipeIngredients open={openIngredientsOverlay} />
                     <View
                         style={[
                             StyleGuide.divider,
@@ -262,6 +280,7 @@ const LaRecette = ({ route }) => {
             {timer && <RecipeTimer onPress={() => setTimer(false)} />}
             {actionOverlay && actionOverlayRender}
             {noteOverlay && noteOverlayRender}
+            {ingredientOverlay && ingredientOverlayRender}
         </View>
     );
 };
