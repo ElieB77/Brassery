@@ -90,6 +90,18 @@ const CustomButton = ({ onPress, title, time, type, border }) => {
           </View>
         </TouchableOpacity>
       );
+    case 'addNote':
+    return (
+        <TouchableOpacity
+        style={[styles.containerWithText, StyleGuide.shadowProp]}
+        onPress={onPress}
+        >
+        <Add />
+        <View style={{ width: '100%', alignItems: 'center' }}>
+            <Text style={styles.text}>Ajouter une note</Text>
+        </View>
+        </TouchableOpacity>
+    );
     case 'other':
       return (
         <TouchableOpacity
