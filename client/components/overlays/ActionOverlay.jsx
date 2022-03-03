@@ -24,11 +24,6 @@ export default function TimerOverlay({ type, closeAction }) {
     const [startTemp, setStartTemp] = useState("");
     const [calcTemp, setCalcTemp] = useState("");
 
-    // Get Dropdown value
-    const getValue = (e) => {
-        console.log(e);
-    };
-
     /* STYLES */
     const styles = StyleSheet.create({
         container: {

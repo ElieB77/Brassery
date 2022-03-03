@@ -24,10 +24,14 @@ const LaRecette = ({ route }) => {
     // Notes overlay when clicking notes btn
     const [noteOverlay, setNoteOverlay] = useState(null);
     const [notesData, setNotesData] = useState([]);
+    const [notesCat, setNotesCat] = useState("");
+    const [notesPosition, setNotesPosition] = useState(0);
     const displayNoteOverlay = (cat, position) => {
         setTransparentOverlay(false);
         setNoteOverlay(true);
         setNotesData(recipe[cat][`${cat}Steps`][position].notes);
+        setNotesCat(cat);
+        setNotesPosition(position);
     };
     const closeNoteOverlay = () => {
         setNoteOverlay(null);
@@ -36,7 +40,9 @@ const LaRecette = ({ route }) => {
         <NoteOverlay
             type={noteOverlay}
             closeAction={closeNoteOverlay}
-            notesData={notesData}
+            recipe={recipe?._id}
+            section={notesCat}
+            position={notesPosition}
         />
     );
 
