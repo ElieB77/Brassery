@@ -1,5 +1,5 @@
 const express = require("express");
-const { getRecipe, getRecipes } = require("../controllers/recipes");
+const { getRecipe, getRecipes, insertNote } = require("../controllers/recipes");
 const router = express.Router();
 const Recipe = require("../models/Recipe");
 
@@ -12,5 +12,7 @@ router.use(protect);
 router.route("/").get(advancedResults(Recipe), getRecipes);
 
 router.route("/:id").get(getRecipe);
+
+router.route("/:id/addNote/:section/:position").post(insertNote);
 
 module.exports = router;

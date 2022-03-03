@@ -5,7 +5,7 @@ import RecipeItem from "../../components/recipeElements/recipeItem";
 import RecipeDescription from "../../components/recipeElements/recipeDescription";
 import Header from "../../components/headings/Header";
 import CustomButton from "../../components/CustomButton";
-import ActionOverlay from "../../components/overlays/ActionOverlay";
+import ActionOverlay from "../../components/overlays/actionOverlay";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import RecipeTimer from "../../components/recipeElements/RecipeTimer";
 import NoteOverlay from "../../components/overlays/noteOverlay";
@@ -24,10 +24,14 @@ const LaRecette = ({ route }) => {
     // Notes overlay when clicking notes btn
     const [noteOverlay, setNoteOverlay] = useState(null);
     const [notesData, setNotesData] = useState([]);
+    const [notesCat, setNotesCat] = useState("");
+    const [notesPosition, setNotesPosition] = useState(0);
     const displayNoteOverlay = (cat, position) => {
         setTransparentOverlay(false);
         setNoteOverlay(true);
         setNotesData(recipe[cat][`${cat}Steps`][position].notes);
+        setNotesCat(cat);
+        setNotesPosition(position);
     };
     const closeNoteOverlay = () => {
         setNoteOverlay(null);
@@ -36,7 +40,9 @@ const LaRecette = ({ route }) => {
         <NoteOverlay
             type={noteOverlay}
             closeAction={closeNoteOverlay}
-            notesData={notesData}
+            recipe={recipe?._id}
+            section={notesCat}
+            position={notesPosition}
         />
     );
 
@@ -219,7 +225,10 @@ const LaRecette = ({ route }) => {
                             left: "60%",
                         }}
                     >
-                        <CustomButton type="other" />
+                        <CustomButton
+                            type="other"
+                            onPress={() => displayActionOverlay("options")}
+                        />
                         <CustomButton
                             type="densimetre"
                             onPress={() => displayActionOverlay("densimetre")}
