@@ -1,3 +1,4 @@
+
 import React, {useEffect, useState} from 'react';
 import { View, StyleSheet, Text, Modal } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
@@ -7,6 +8,7 @@ import Input from '../components/utils/form-elements/Input';
 import CustomButton from '../components/CustomButton';
 import StyleGuide from '../components/utils/StyleGuide';
 import Geocode from "react-geocode";
+
 
 const Location = () => {
   
@@ -70,6 +72,7 @@ const Location = () => {
   });
 
   return (
+
     <View style={styles.formContainer}>
       <Header title='Autres brasseurs'/>
       <View style={styles.formInput}>
