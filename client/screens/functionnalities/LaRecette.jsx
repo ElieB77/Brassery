@@ -225,7 +225,10 @@ const LaRecette = ({ route }) => {
                             left: "60%",
                         }}
                     >
-                        <CustomButton type="other" />
+                        <CustomButton
+                            type="other"
+                            onPress={() => displayActionOverlay("options")}
+                        />
                         <CustomButton
                             type="densimetre"
                             onPress={() => displayActionOverlay("densimetre")}

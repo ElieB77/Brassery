@@ -250,6 +250,18 @@ export default function TimerOverlay({ type, closeAction }) {
                 </View>
             );
             break;
+        case "options":
+            title = "Autres";
+            buttons = (
+                <View style={styles.inputContainer}>
+                    <View style={styles.input}>
+                        <CustomButton
+                            title="Supprimer ce brassin"
+                        />
+                    </View>
+                </View>
+            );
+            break;
     }
 
     return (
