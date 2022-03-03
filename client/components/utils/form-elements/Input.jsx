@@ -1,8 +1,9 @@
 import StyleGuide from "../StyleGuide";
-import { TextInput, StyleSheet, View } from "react-native";
+import { TextInput, StyleSheet, View, Pressable } from "react-native";
 import Search from "../icons/Search";
 
-const InputText = ({ placeholder, type, onChangeText, value }) => {
+
+const InputText = ({ placeholder, type, onChangeText, value, onPress }) => {
   switch (type) {
     case "text":
       return (
@@ -40,43 +41,45 @@ const InputText = ({ placeholder, type, onChangeText, value }) => {
     case 'searchInput':
       return (
         <View style={styles.searchInput}>
-          <TextInput style={styles.textInput} placeholder={placeholder} />
+          <TextInput style={styles.textInput} placeholder={placeholder} onChangeText={onChangeText}/>
           <View style={styles.searchIcon}>
-            <Search />
+            <Pressable onPress={onPress}>
+              <Search />
+            </Pressable>
           </View>
         </View>
       );
   }
+
 };
 
 const styles = StyleSheet.create({
-  textInput: {
-    fontFamily: "Manrope_500Medium",
-    backgroundColor: StyleGuide.colors.white,
-    width: 300,
-    height: 45,
-    borderRadius: StyleGuide.borderRadius,
-    padding: 10,
-    paddingLeft: 15,
-  },
-  textArea: {
-    backgroundColor: StyleGuide.colors.white,
-    width: 300,
-    height: 180,
-    borderRadius: StyleGuide.borderRadius,
-    paddingTop: 10,
-    paddingLeft: 15,
-  },
-  searchInput: {
-    position: 'relative',
-  },
-  searchIcon: {
-    position: 'absolute',
-    right: 0,
-    paddingRight: 15,
-    paddingBottom: 10,
-    paddingTop: 10,
-  },
+    textInput: {
+        fontFamily: "Manrope_500Medium",
+        backgroundColor: StyleGuide.colors.white,
+        width: 300,
+        borderRadius: StyleGuide.borderRadius,
+        padding: 10,
+        paddingLeft: 15,
+    },
+    textArea: {
+        backgroundColor: StyleGuide.colors.white,
+        width: 300,
+        height: 180,
+        borderRadius: StyleGuide.borderRadius,
+        paddingTop: 10,
+        paddingLeft: 15,
+    },
+    searchInput: {
+        position: "relative",
+    },
+    searchIcon: {
+        position: "absolute",
+        right: 0,
+        paddingRight: 15,
+        paddingBottom: 10,
+        paddingTop: 10,
+    },
 });
 
 export default InputText;

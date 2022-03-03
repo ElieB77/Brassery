@@ -56,13 +56,13 @@ const Dropdown = ({ item, onPress, getValue, title }) => {
   });
 
   return (
-    <View style={[styles.container, { position: 'relative' }]}>
+    <View style={[styles.container, { position: 'relative' },StyleGuide.shadowProp]}>
       <Pressable
         onPress={() =>
           iconRotation ? setIconRotation(false) : setIconRotation(true)
         }
       >
-        <View style={styles.dropdown}>
+        <View style={[styles.dropdown,StyleGuide.shadowProp]}>
           <Text
             style={[
               StyleGuide.typography.text3,
@@ -79,7 +79,6 @@ const Dropdown = ({ item, onPress, getValue, title }) => {
           <RightChevron />
         </View>
       </Pressable>
-
 
       {iconRotation && (
         <View
@@ -114,10 +113,6 @@ const styles = StyleSheet.create({
     borderRadius: StyleGuide.borderRadius,
     padding: 10,
     paddingLeft: 15,
-    shadowColor: StyleGuide.shadowProp.shadowColor,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: StyleGuide.shadowProp.shadowOpacity,
-    shadowRadius: StyleGuide.shadowProp.shadowRadius,
     marginBottom: 10,
   },
   icon: {
@@ -143,10 +138,6 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     borderRadius: StyleGuide.borderRadius,
-    shadowColor: StyleGuide.shadowProp.shadowColor,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: StyleGuide.shadowProp.shadowOpacity,
-    shadowRadius: StyleGuide.shadowProp.shadowRadius,
     backgroundColor: StyleGuide.colors.white,
     borderWidth: 0.2,
   },

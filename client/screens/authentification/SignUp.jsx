@@ -29,7 +29,7 @@ const SignUp = ({ navigation }) => {
 
     if (response.token) {
       AsyncStorage.setItem('user', response.token);
-      navigation.navigate('CreateMyBrassery');
+      navigation.navigate('Step1');
     } else {
       console.log(response);
     }

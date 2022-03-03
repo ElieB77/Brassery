@@ -1,20 +1,17 @@
-const express = require('express');
-const {
-    getRecipes,
-} = require('../controllers/recipes')
-
-const Recipe = require('../models/Recipe')
-
+const express = require("express");
+const { getRecipe, getRecipes, insertNote } = require("../controllers/recipes");
 const router = express.Router();
+const Recipe = require("../models/Recipe");
 
-const advancedResults = require('../middlewares/advancedResults')
-const { protect } = require('../middlewares/authentification')
+const advancedResults = require("../middlewares/advancedResults");
+const { protect } = require("../middlewares/authentification");
 
-router.use(protect)
+router.use(protect);
 
-router
-    .route('/')
-    .get(advancedResults(Recipe), getRecipes)
+router.route("/").get(advancedResults(Recipe), getRecipes);
 
+router.route("/:id").get(getRecipe);
 
-module.exports = router
+router.route("/:id/addNote/:section/:position").post(insertNote);
+
+module.exports = router;
