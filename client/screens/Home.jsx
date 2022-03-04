@@ -28,11 +28,11 @@ const Home = ({ navigation, saveToken }) => {
       }}
     >
       <CustomButton
-        title='Aller sur Sign In'
+        title='Se connecter'
         onPress={() => navigation.navigate('SignIn')}
       />
       <CustomButton
-        title='Aller sur Sign Up'
+        title="S'inscire"
         onPress={() => navigation.navigate('SignUp')}
       />
     </View>
