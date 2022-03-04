@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
 import StyleGuide from '../../../components/utils/StyleGuide';
 
@@ -11,28 +12,53 @@ import Header from '../../../components/headings/Header';
 
 import config from '../../../config/globalVariables';
 
-const Step6 = ({ navigation }) => {
+const Step6 = ({ navigation, token, user }) => {
   const [userName, setUserName] = useState('');
 
   useEffect(() => {
-    AsyncStorage.getItem('user', function (error, data) {
-      if (data != null) {
-        async function loadData() {
-          const rawResponse = await fetch(`${config.base_url}/api/auth/me`, {
-            headers: {
-              Authorization: `Bearer ${data}`,
-            },
-          });
+    async function sendData() {
+      const data = new FormData();
 
-          const response = await rawResponse.json();
+      data.append('avatar', {
+        uri: user.avatar,
+        type: 'image/jpeg',
+        name: `user_picture_user_avatar.jpg`,
+      });
+      data.append('installationPhoto', {
+        uri: user.avatar,
+        type: 'image/jpeg',
+        name: `user_picture_installation_photo.jpg`,
+      });
+      data.append('brewedYet', `${user.brewedYet}`);
+      data.append('favoriteBeer', user.favoriteBeer);
+      data.append('localisation', JSON.stringify(user.localisation));
+      data.append('brewedDescription', user.brewedDescription);
+      data.append('materials', JSON.stringify(user.materials));
 
-          if (response.data) {
-            setUserName(response.data.username.split(' ')[0]);
-          }
-        }
-        loadData();
+      await fetch(`${config.base_url}/api/auth/updateDetails`, {
+        method: 'put',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: data,
+      });
+    }
+
+    async function loadData() {
+      const rawResponse = await fetch(`${config.base_url}/api/auth/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const response = await rawResponse.json();
+
+      if (response.data) {
+        setUserName(response.data.username.split(' ')[0]);
       }
-    });
+    }
+    loadData();
+    sendData();
   }, []);
 
   return (
@@ -70,4 +96,9 @@ const Step6 = ({ navigation }) => {
   );
 };
 
-export default Step6;
+function mapStateToProps(state) {
+  console.log(state);
+  return { token: state.token, user: state.user };
+}
+
+export default connect(mapStateToProps, null)(Step6);

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { View } from 'react-native';
 import StyleGuide from '../../../components/utils/StyleGuide';
 
@@ -7,18 +8,24 @@ import ProgressBar from '../../../components/utils/ProgressBar';
 
 import Header from '../../../components/headings/Header';
 
-const Step1 = ({ navigation }) => {
+const Step1 = ({ navigation, updatebrewedYetUser }) => {
   const [alreadyBrewed, setAlreadyBrewed] = useState(false);
   const [notBrewed, setNotBrewed] = useState(false);
 
   const handleAlreadyBrewed = () => {
     setAlreadyBrewed(true);
     setNotBrewed(false);
+    updatebrewedYetUser(true);
   };
 
   const handleNotBrewed = () => {
     setNotBrewed(true);
     setAlreadyBrewed(false);
+    updatebrewedYetUser(false);
+  };
+
+  const nextStep = () => {
+    navigation.navigate('Step2');
   };
 
   return (
@@ -46,14 +53,19 @@ const Step1 = ({ navigation }) => {
         />
       </View>
       <View style={{ alignSelf: 'flex-end', marginBottom: 35 }}>
-        <CustomButton
-          type='next'
-          onPress={() => navigation.navigate('Step2')}
-        />
+        <CustomButton type='next' onPress={() => nextStep()} />
       </View>
       <ProgressBar pourcent={(1 * 100) / 6} />
     </View>
   );
 };
 
-export default Step1;
+function mapDispatchToProps(dispatch) {
+  return {
+    updatebrewedYetUser: (brewedYet) => {
+      dispatch({ type: 'updatebrewedYetUser', brewedYet });
+    },
+  };
+}
+
+export default connect(null, mapDispatchToProps)(Step1);

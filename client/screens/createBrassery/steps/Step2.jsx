@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
 import StyleGuide from '../../../components/utils/StyleGuide';
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import CustomButton from '../../../components/CustomButton';
 import ProgressBar from '../../../components/utils/ProgressBar';
@@ -12,34 +11,36 @@ import Header from '../../../components/headings/Header';
 
 import config from '../../../config/globalVariables';
 
-const Step2 = ({ navigation }) => {
+const Step2 = ({ navigation, token, updateFavoriteBeertUser }) => {
   const [recipes, setRecipes] = useState([]);
+  const [beer, setBeer] = useState(null);
 
   useEffect(() => {
-    AsyncStorage.getItem('user', function (error, data) {
-      if (data != null) {
-        async function loadData() {
-          const rawResponse = await fetch(`${config.base_url}/api/recipes`, {
-            headers: {
-              Authorization: `Bearer ${data}`,
-            },
-          });
+    async function loadData() {
+      const rawResponse = await fetch(`${config.base_url}/api/recipes`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-          const response = await rawResponse.json();
+      const response = await rawResponse.json();
 
-          if (response.data) {
-            response.data.map((item) => {
-              setRecipes((prevState) => [...prevState, item.name]);
-            });
-          }
-        }
-        loadData();
+      if (response.data) {
+        response.data.map((item) => {
+          setRecipes((prevState) => [...prevState, item.name]);
+        });
       }
-    });
+    }
+    loadData();
   }, []);
 
   const getValue = (element) => {
-    console.log(element);
+    setBeer(element);
+  };
+
+  const nextStep = () => {
+    updateFavoriteBeertUser(beer);
+    navigation.navigate('Step3');
   };
 
   return (
@@ -62,14 +63,24 @@ const Step2 = ({ navigation }) => {
         <Dropdown item={recipes} title='Choisir ma bière' getValue={getValue} />
       </View>
       <View style={{ alignSelf: 'flex-end', marginBottom: 35 }}>
-        <CustomButton
-          type='next'
-          onPress={() => navigation.navigate('Step3')}
-        />
+        <CustomButton type='next' onPress={() => nextStep()} />
       </View>
       <ProgressBar pourcent={(2 * 100) / 6} />
     </View>
   );
 };
 
-export default Step2;
+function mapDispatchToProps(dispatch) {
+  return {
+    updateFavoriteBeertUser: (favoriteBeer) => {
+      dispatch({ type: 'updateFavoriteBeertUser', favoriteBeer });
+    },
+  };
+}
+
+function mapStateToProps(state) {
+  console.log(state);
+  return { token: state.token };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Step2);

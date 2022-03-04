@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import config from '../../config/globalVariables';
 
+import { connect } from 'react-redux';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Header from '../../components/headings/Header';
@@ -13,7 +15,7 @@ import Google from '../../components/utils/icons/Google';
 
 import StyleGuide from '../../components/utils/StyleGuide';
 
-const SignIn = ({ navigation }) => {
+const SignIn = ({ navigation, saveToken }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -28,6 +30,7 @@ const SignIn = ({ navigation }) => {
 
     if (response.token) {
       AsyncStorage.setItem('user', response.token);
+      saveToken(response.token);
       navigation.navigate('Navbar', { screen: 'MyBrewery' });
     } else {
       console.log(response);
@@ -135,4 +138,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignIn;
+function mapDispatchToProps(dispatch) {
+  return {
+    saveToken: (token) => {
+      dispatch({ type: 'addToken', token });
+    },
+  };
+}
+
+export default connect(null, mapDispatchToProps)(SignIn);

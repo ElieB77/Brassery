@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { connect } from 'react-redux';
 import { View, Text, StyleSheet } from 'react-native';
 import StyleGuide from '../../../components/utils/StyleGuide';
 
@@ -9,8 +10,9 @@ import Header from '../../../components/headings/Header';
 
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
+import Next from '../../../components/utils/icons/Next';
 
-const Step3 = ({ navigation }) => {
+const Step3 = ({ navigation, updateLocalisationUser }) => {
   const [currentLatitude, setCurrentLatitude] = useState(0);
   const [currentLongitude, setCurrentLongitude] = useState(0);
 
@@ -42,6 +44,15 @@ const Step3 = ({ navigation }) => {
   }, []);
 
   const mapRef = useRef(null);
+
+  const nextStep = () => {
+    const localisation = {
+      lat: currentLatitude,
+      long: currentLongitude,
+    };
+    updateLocalisationUser(localisation);
+    navigation.navigate('Step4');
+  };
 
   return (
     <View style={[StyleGuide.container, { alignItems: 'center' }]}>
@@ -80,10 +91,7 @@ const Step3 = ({ navigation }) => {
         </View>
       </View>
       <View style={{ alignSelf: 'flex-end', marginBottom: 35 }}>
-        <CustomButton
-          type='next'
-          onPress={() => navigation.navigate('Step4')}
-        />
+        <CustomButton type='next' onPress={() => nextStep()} />
       </View>
       <ProgressBar pourcent={(3 * 100) / 6} />
     </View>
@@ -104,4 +112,17 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Step3;
+function mapDispatchToProps(dispatch) {
+  return {
+    updateLocalisationUser: (localisation) => {
+      dispatch({ type: 'updateLocalisationUser', localisation });
+    },
+  };
+}
+
+function mapStateToProps(state) {
+  console.log(state);
+  return { user: state.user };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Step3);

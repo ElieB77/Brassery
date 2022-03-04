@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, View, Text } from 'react-native';
 
 import CustomButton from '../../../components/CustomButton';
@@ -9,48 +10,44 @@ import ListItem from '../../../components/lists/listItem';
 
 import config from '../../../config/globalVariables';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import StyleGuide from '../../../components/utils/StyleGuide';
 
-const BrowseTools = ({ closeBrowseTool }) => {
+const BrowseTools = ({ closeBrowseTool, token, updateMaterials }) => {
+  const [error, setError] = useState(null);
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
   const [word, setWord] = useState(null);
   const [category, setCategory] = useState(null);
   const [brand, setBrand] = useState(null);
   const [searchItems, setSearchItems] = useState([]);
+  const [materials, setMaterials] = useState([]);
 
   useEffect(() => {
-    AsyncStorage.getItem('user', function (error, data) {
-      if (data != null) {
-        async function loadData() {
-          const rawResponse = await fetch(`${config.base_url}/api/materials`, {
-            headers: {
-              Authorization: `Bearer ${data}`,
-            },
-          });
+    async function loadData() {
+      const rawResponse = await fetch(`${config.base_url}/api/materials`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-          const response = await rawResponse.json();
+      const response = await rawResponse.json();
 
-          const newCategoriesTab = [];
-          const newBrandsTab = [];
+      const newCategoriesTab = [];
+      const newBrandsTab = [];
 
-          if (response.data) {
-            response.data.map((item) => {
-              newCategoriesTab.push(item.type);
-              newBrandsTab.push(item.brand);
-            });
-          }
-          const uniqueCategoriesTab = [...new Set(newCategoriesTab)];
-          const uniqueBrandsTab = [...new Set(newBrandsTab)];
-
-          setCategories(uniqueCategoriesTab);
-          setBrands(uniqueBrandsTab);
-        }
-        loadData();
+      if (response.data) {
+        response.data.map((item) => {
+          newCategoriesTab.push(item.type);
+          newBrandsTab.push(item.brand);
+        });
       }
-    });
+      const uniqueCategoriesTab = [...new Set(newCategoriesTab)];
+      const uniqueBrandsTab = [...new Set(newBrandsTab)];
+
+      setCategories(uniqueCategoriesTab);
+      setBrands(uniqueBrandsTab);
+    }
+    loadData();
   }, []);
 
   const getCategory = (element) => {
@@ -61,8 +58,19 @@ const BrowseTools = ({ closeBrowseTool }) => {
     setBrand(element);
   };
 
+  const getMaterial = (element) => {
+    if (materials.find((el) => el.title === element.title)) {
+      let newMaterials = [...materials];
+      newMaterials.filter((el) => el.title !== element.title);
+      setMaterials(newMaterials);
+    } else {
+      setMaterials((prevState) => [...prevState, element]);
+    }
+  };
+
   // Add Arguments
-  const search = () => {
+  const search = async () => {
+    setError('');
     let request;
 
     if (!word && !category && !brand) {
@@ -81,41 +89,50 @@ const BrowseTools = ({ closeBrowseTool }) => {
       request = `${config.base_url}/api/materials?brand=${brand}&name=${word}`;
     }
 
-    AsyncStorage.getItem('user', async function (error, data) {
-      if (data != null) {
-        const rawResponse = await fetch(request, {
-          headers: {
-            Authorization: `Bearer ${data}`,
-          },
-        });
-
-        const response = await rawResponse.json();
-        if (response.data) {
-          const searchTab = [];
-
-          response.data.map((item, index) => {
-            return searchTab.push(
-              <ListItem
-                key={index}
-                title={item.name}
-                content={item.description}
-                btnType='add'
-              />
-            );
-          });
-
-          setSearchItems(searchTab);
-        }
-      }
+    const rawResponse = await fetch(request, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
+
+    const response = await rawResponse.json();
+    if (response.data) {
+      const searchTab = [];
+      if (response.data.length < 1) {
+        setError("Aucun matériel n'a été trouvé");
+      }
+      response.data.map((item, index) => {
+        return searchTab.push(
+          <ListItem
+            key={index}
+            title={item.name}
+            content={item.description}
+            btnType='add'
+            getValue={getMaterial}
+          />
+        );
+      });
+
+      setSearchItems(searchTab);
+    }
+  };
+
+  const closeOverlay = () => {
+    updateMaterials(materials);
+    closeBrowseTool();
   };
 
   return (
-    <View style={[styles.container, { width: 400, height: 1200 }]}>
+    <View
+      style={[
+        styles.container,
+        { width: 400, height: 1200, position: 'absolute', zIndex: 1000 },
+      ]}
+    >
       <View
         style={{ alignItems: 'center', flexDirection: 'row', paddingLeft: 45 }}
       >
-        <CustomButton type='close' onPress={() => closeBrowseTool()} />
+        <CustomButton type='close' onPress={() => closeOverlay()} />
         <Text
           style={[
             StyleGuide.typography.text3,
@@ -172,6 +189,7 @@ const BrowseTools = ({ closeBrowseTool }) => {
           </View>
         </View>
         <View style={styles.divider}></View>
+
         {searchItems.length > 0 && (
           <View style={{ width: 300, alignItems: 'center', marginTop: 25 }}>
             <List>{searchItems}</List>
@@ -203,4 +221,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BrowseTools;
+function mapDispatchToProps(dispatch) {
+  return {
+    updateMaterials: (materials) => {
+      dispatch({ type: 'updateMaterials', materials });
+    },
+  };
+}
+
+function mapStateToProps(state) {
+  return { token: state.token };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BrowseTools);

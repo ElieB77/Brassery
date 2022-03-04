@@ -15,6 +15,7 @@ import Step6 from './screens/createBrassery/steps/Step6'
 import Navbar from "./components/layouts/navbar/Navbar";
 
 import token from "./reducers/authentification";
+import user from "./reducers/user";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -25,7 +26,7 @@ import { createStore, combineReducers } from "redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createStackNavigator();
-const store = createStore(combineReducers({ token }));
+const store = createStore(combineReducers({ token, user }));
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -35,12 +36,12 @@ const App = () => {
 
   AsyncStorage.getItem("user", function (error, data) {
     if (data != null) {
-      setIsLoggedIn(true);
+      setIsLoggedIn(false);
     }
   });
+
   return (
     <Provider store={store}>
-
     <LoadFonts>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -56,26 +57,19 @@ const App = () => {
                   <Stack.Screen name="Step4" component={Step4} />
                   <Stack.Screen name="Step5" component={Step5} />
                   <Stack.Screen name="Step6" component={Step6} />
-                  <Stack.Screen
-                        name="LaRecette"
-                        component={LaRecette}
-                    />
+                  <Stack.Screen name="LaRecette" component={LaRecette} />
                   <Stack.Screen name="Navbar" component={Navbar} />
                 </>
               ) : (
                 <>
                     <Stack.Screen name="Navbar" component={Navbar} />
-                    <Stack.Screen
-                        name="LaRecette"
-                        component={LaRecette}
-                    />
+                    <Stack.Screen name="LaRecette" component={LaRecette} />
                   </>
               )
             }
         </Stack.Navigator>
       </NavigationContainer>
-    </LoadFonts>
-
+      </LoadFonts>
     </Provider>
   );
 
