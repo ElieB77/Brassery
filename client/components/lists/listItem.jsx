@@ -10,7 +10,7 @@ export default function ListItem(props) {
     const [content, setContent] = useState(props.content);
     let maxWords = 8;
     useEffect(() => {
-        if (limitHeight) {
+        if (limitHeight && content) {
             let contentLength = content.split(" ").length;
             if (contentLength > maxWords) {
                 let contentTemp = content.split(" ");
@@ -67,7 +67,7 @@ export default function ListItem(props) {
                 <Text style={[StyleGuide.typography.text5, styles.text]}>
                     {props.title}
                 </Text>
-                {content.split(" ").length > maxWords ? (
+                {content?.split(" ").length > maxWords ? (
                     <Pressable onPress={() => setLimitHeight(!limitHeight)}>
                         <Text
                             style={[StyleGuide.typography.text3, styles.text]}

@@ -16,7 +16,7 @@ import config from "../../config/globalVariables";
 
 import StyleGuide from "../utils/StyleGuide";
 
-const Recipe = ({ id, readOnly }) => {
+const Recipe = ({ id, readOnly, navigation }) => {
     // Controllers
     const getStepStatus = (section, position) => {
         return batch?.stepsStatus.filter(

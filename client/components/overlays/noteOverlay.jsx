@@ -87,7 +87,7 @@ export default function TimerOverlay({
         },
     });
 
-    const allItems = notesData.map((note, i) => {
+    const allItems = notesData?.map((note, i) => {
         return <ListItem content={note.content} title={note.name} key={i} />;
     });
 
