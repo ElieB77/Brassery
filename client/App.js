@@ -12,6 +12,7 @@ import Step3 from "./screens/createBrassery/steps/Step3";
 import Step4 from "./screens/createBrassery/steps/Step4";
 import Step5 from "./screens/createBrassery/steps/Step5";
 import Step6 from "./screens/createBrassery/steps/Step6";
+import Resources from "./screens/Resources";
 
 import Navbar from "./components/layouts/navbar/Navbar";
 
@@ -48,6 +49,10 @@ const App = () => {
                             <>
                                 <Stack.Screen name="Home" component={Home} />
                                 <Stack.Screen
+                                    name="Resources"
+                                    component={Resources}
+                                />
+                                <Stack.Screen
                                     name="SignIn"
                                     component={SignIn}
                                 />
@@ -76,6 +81,10 @@ const App = () => {
                                 <Stack.Screen
                                     name="Navbar"
                                     component={Navbar}
+                                />
+                                <Stack.Screen
+                                    name="Resources"
+                                    component={Resources}
                                 />
                                 <Stack.Screen name="Batch" component={Batch} />
                                 <Stack.Screen

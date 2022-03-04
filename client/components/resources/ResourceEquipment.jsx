@@ -1,16 +1,16 @@
 import React from "react";
 import { View, Text, StyleSheet, Pressable, ScrollView } from "react-native";
-import StyleGuide from "../../components/utils/StyleGuide";
-import Header from "../../components/headings/Header";
-import Input from "../../components/utils/form-elements/Input";
-import Dropdown from "../../components/utils/form-elements/Dropdown";
-import List from "../../components/lists/list";
-import ListItem from "../../components/lists/listItem";
+import StyleGuide from "../utils/StyleGuide";
+import Header from "../headings/Header";
+import Input from "../utils/form-elements/Input";
+import Dropdown from "../utils/form-elements/Dropdown";
+import List from "../lists/list";
+import ListItem from "../lists/listItem";
 
 const ResourceEquipment = (props) => {
   return (
     <View style={[StyleGuide.container, { alignItems: "center" }]}>
-      <Header title="Ressources" />
+      <Header title="Resources" />
       {/* Navigation */}
       <View style={styles.btnGroup}>
         <Pressable onPress={() => props.changeResource("recipes")}>
@@ -59,17 +59,15 @@ const ResourceEquipment = (props) => {
       </View>
       {/* List */}
       <View style={{ width: 300, marginTop: 50 }}>
-        <ScrollView>
-          <List>
-            <ListItem title="test" content="test" btnType="next" />
-            <ListItem title="test" content="test" btnType="next" />
-            <ListItem title="test" content="test" btnType="next" />
-            <ListItem title="test" content="test" btnType="next" />
-            <ListItem title="test" content="test" btnType="next" />
-            <ListItem title="test" content="test" btnType="next" />
-            <ListItem title="test" content="test" btnType="next" />
-          </List>
-        </ScrollView>
+        <List>
+        <ListItem title="test" content="test" btnType="next" />
+        <ListItem title="test" content="test" btnType="next" />
+        <ListItem title="test" content="test" btnType="next" />
+        <ListItem title="test" content="test" btnType="next" />
+        <ListItem title="test" content="test" btnType="next" />
+        <ListItem title="test" content="test" btnType="next" />
+        <ListItem title="test" content="test" btnType="next" />
+        </List>
       </View>
     </View>
   );
@@ -90,11 +88,6 @@ const styles = StyleSheet.create({
   },
   btnGroupText: {
     color: StyleGuide.colors.secondary,
-    borderColor: "rgba(255,0,0,1)",
-    borderWidth: 0,
-    borderTopWidth: 2,
-    borderBottomWidth: 2,
-    borderStyle: "dashed",
   },
   filterContainer: {
     marginTop: 30,
