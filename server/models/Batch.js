@@ -1,17 +1,15 @@
 const mongoose = require("mongoose");
 
 const StepsStatus = mongoose.Schema({
-    section: { type: String },
-    position: { type: Number },
-    isDone: { type: Boolean },
+    section: String ,
+    position: Number ,
+    isDone: Boolean ,
 });
 
 const BatchModel = mongoose.Schema({
     recipe: { type: mongoose.Schema.Types.ObjectId, ref: "recipes" },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
-    createdAt: {
-        type: Date,
-    },
+    createdAt: Date,
     stepsStatus: [StepsStatus],
     /* ex: 
     [
