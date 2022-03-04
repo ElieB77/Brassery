@@ -4,7 +4,6 @@ import Recipe from "../../components/recipeElements/recipe";
 import CustomButton from "../../components/CustomButton";
 
 const Recette = ({ route, navigation }) => {
-console.log("🚀 ~ file: Recipe.jsx ~ line 7 ~ Recette ~ navigation", navigation)
     const { recipeId } = route.params;
 
     return (

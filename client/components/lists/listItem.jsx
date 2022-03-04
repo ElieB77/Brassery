@@ -25,63 +25,63 @@ export default function ListItem(props) {
             setContent(props.content);
             setSeeMoreBtnText("voir moins ↑");
         }
-        setSeeMoreBtnText('voir plus ↓');
-      if (!limitHeight) {
-        setContent(props.content);
-        setSeeMoreBtnText('voir moins ↑');
-      }
+        setSeeMoreBtnText("voir plus ↓");
+        if (!limitHeight) {
+            setContent(props.content);
+            setSeeMoreBtnText("voir moins ↑");
+        }
     }, [limitHeight]);
 
     /* STYLES */
     const styles = StyleSheet.create({
-      container: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '100%',
-        minHeight: 100,
-        paddingHorizontal: 20,
-        paddingVertical: 10,
-        textAlign: 'left',
-        borderTopColor: StyleGuide.colors.lowOpacity,
-        borderTopWidth: !props.first ? 1 : 0,
-        borderBottomRightRadius: props.last ? StyleGuide.borderRadius : 0,
-        borderBottomLeftRadius: props.last ? StyleGuide.borderRadius : 0,
-        borderTopRightRadius: props.first ? StyleGuide.borderRadius : 0,
-        borderTopLeftRadius: props.first ? StyleGuide.borderRadius : 0,
-        backgroundColor:
-          props.reverseColor || selected
-            ? StyleGuide.colors.secondary
-            : StyleGuide.colors.white,
-      },
-      btnContainer: {
-        justifyContent: 'center',
-      },
-      textContainer: {
-        flexWrap: 'nowrap',
-        width: '72%',
-        flexDirection: 'column',
-      },
-      text: {
-        color:
-          props.reverseColor || selected
-            ? StyleGuide.colors.primary
-            : StyleGuide.colors.secondary,
-      },
+        container: {
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: "100%",
+            minHeight: 100,
+            paddingHorizontal: 20,
+            paddingVertical: 10,
+            textAlign: "left",
+            borderTopColor: StyleGuide.colors.lowOpacity,
+            borderTopWidth: !props.first ? 1 : 0,
+            borderBottomRightRadius: props.last ? StyleGuide.borderRadius : 0,
+            borderBottomLeftRadius: props.last ? StyleGuide.borderRadius : 0,
+            borderTopRightRadius: props.first ? StyleGuide.borderRadius : 0,
+            borderTopLeftRadius: props.first ? StyleGuide.borderRadius : 0,
+            backgroundColor:
+                props.reverseColor || selected
+                    ? StyleGuide.colors.secondary
+                    : StyleGuide.colors.white,
+        },
+        btnContainer: {
+            justifyContent: "center",
+        },
+        textContainer: {
+            flexWrap: "nowrap",
+            width: "72%",
+            flexDirection: "column",
+        },
+        text: {
+            color:
+                props.reverseColor || selected
+                    ? StyleGuide.colors.primary
+                    : StyleGuide.colors.secondary,
+        },
     });
 
     const handleClick = () => {
-      if (!selected) {
-        setSelected(true);
-      } else {
-        setSelected(false);
-      }
+        if (!selected) {
+            setSelected(true);
+        } else {
+            setSelected(false);
+        }
 
-      const element = {
-        title: props.title,
-        content: props.content,
-      };
+        const element = {
+            title: props.title,
+            content: props.content,
+        };
 
-      props.getValue(element);
+        props.getValue(element);
     };
 
     return (
@@ -116,20 +116,11 @@ export default function ListItem(props) {
             {props.btnType && (
                 <View style={styles.btnContainer}>
                     <CustomButton
-                        type={props.btnType}
-                        onPress={props.onPress}
+                        type={selected ? "minus" : props.btnType}
+                        onPress={props.getValue ? () => handleClick() : props.onPress}
                     />
                 </View>
             )}
         </View>
-        {props.btnType && (
-          <View style={styles.btnContainer}>
-            <CustomButton
-              type={selected ? 'minus' : props.btnType}
-              onPress={props.getValue ? () => handleClick() : onPress}
-            />
-          </View>
-        )}
-      </View>
     );
 }
