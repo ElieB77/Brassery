@@ -12,7 +12,7 @@ const Home = ({ navigation }) => {
                 title="Punk IPA - Batch 🧪"
                 onPress={() =>
                     navigation.navigate("Batch", {
-                        batchId: "6220deee5223412400e58be6",
+                        batchId: "6221fc885223412400e58d54",
                     })
                 }
             />
@@ -20,7 +20,7 @@ const Home = ({ navigation }) => {
                 title="Punk IPA - Recipe 🧪"
                 onPress={() =>
                     navigation.navigate("Recipe", {
-                        recipeId: "621dd788d5669c587bb066b3",
+                        recipeId: "6221fc055223412400e58d53",
                     })
                 }
             />

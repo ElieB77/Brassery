@@ -154,7 +154,11 @@ const Recipe = ({ id, readOnly }) => {
                     />
                     {recipe.mash.mashSteps.map((step, i) => {
                         if (!batch) return;
-                        const textToDisplay = `${step.description}\n${step.stepTemperature}°C pendant ${step.stepTime} minutes.`;
+                        const textToDisplay = `${step.description}${
+                            step.type === "Concassage"
+                                ? ""
+                                : `\n\n${step.stepTemperature}°C pendant ${step.stepTime} minutes.`
+                        }`;
                         return (
                             <RecipeItem
                                 title={step.name}
@@ -189,7 +193,7 @@ const Recipe = ({ id, readOnly }) => {
                     />
                     {recipe.boil.boilSteps.map((step, i) => {
                         if (!batch) return;
-                        const textToDisplay = `${step.description}\n${step.endTemperature}°C pendant ${step.stepTime} minutes.\nDensité de départ: ${step.startGravity}\nDensité de fin: ${step.endGravity}`;
+                        const textToDisplay = `${step.description}\n\n${step.endTemperature}°C pendant ${step.stepTime} minutes.\nDensité de départ: ${step.startGravity}\nDensité de fin: ${step.endGravity}`;
                         return (
                             <RecipeItem
                                 title={step.name}
@@ -225,7 +229,7 @@ const Recipe = ({ id, readOnly }) => {
                     {recipe.fermentation.fermentationSteps.map((step, i) => {
                         if (!batch) return;
                         const textToDisplay = `${
-                            step.description ? `${step.description}\n` : ""
+                            step.description ? `${step.description}\n\n` : ""
                         }Durée: ${
                             step.stepTime
                         } jours.\nTempérature de départ: ${
