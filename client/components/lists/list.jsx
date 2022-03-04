@@ -14,14 +14,12 @@ export default function List(props) {
         },
     });
 
-    const items =
-      props.children &&
-      props.children.map((child, i) => {
-        return React.cloneElement(child, {
-          last: i === props.children.length - 1 ? true : false,
-          first: i === 0 ? true : false,
-        });
+    const items = props.children?.map((child, i) => {
+      return React.cloneElement(child, {
+        last: i === props.children.length - 1 ? true : false,
+        first: i === 0 ? true : false,
       });
+    })
 
     return (
         <View

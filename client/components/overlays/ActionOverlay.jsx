@@ -11,8 +11,13 @@ export default function TimerOverlay({ type, closeAction }) {
     const [overlayType, setOverlayType] = useState(type);
 
     // Conversion densité
-    const [grUnit, setgrUnit] = useState("Densité");
-    const [grValue, setGrValue] = useState(0);
+    const [denValue, setDenValue] = useState("");
+    const [platoValue, setPlatoValue] = useState("");
+
+    // Conversion color
+    const [ebcValue, setEbcValue] = useState("");
+    const [srmValue, setSrmValue] = useState("");
+    const [lovibondValue, setLovibondValue] = useState("");
 
     // Correction gravity
     const [gravity, setGravity] = useState("");
@@ -106,43 +111,95 @@ export default function TimerOverlay({ type, closeAction }) {
             break;
         case "gravityConvert":
             title = "Conversion - Densité";
-            let grDen = grValue;
-            let grPlato = grValue;
-            if (grUnit === "Densité") {
-                grPlato = (
-                    (258.6 * (grDen / 1000 - 1)) /
-                        (0.12 + (0.88 * grDen) / 1000)
-                ).toFixed(2);
-            }
-            if (grUnit === "Plato")
-                grDen = Math.floor(
-                    (1 + grPlato / (258.6 - 0.88 * grPlato)) * 1000
-                );
-            if (grUnit && grValue)
-                results = (
-                    <Text
-                        style={[
-                            StyleGuide.typography.text2,
-                            { marginVertical: 10 },
-                        ]}
-                    >
-                        {`Densité: ${grDen}\nDegré plato: ${grPlato}`}
-                    </Text>
-                );
             buttons = (
                 <View style={styles.inputContainer}>
                     <View style={styles.input}>
                         <Input
                             type="text"
-                            placeholder="Unité de mesure"
-                            onChangeText={(e) => setgrUnit(e)}
+                            placeholder="Valeur en Degré de densité"
+                            onChangeText={(e) => [
+                                setDenValue(e),
+                                setPlatoValue(
+                                    e
+                                        ? (
+                                              (258.6 * (e / 1000 - 1)) /
+                                              (0.12 + (0.88 * e) / 1000)
+                                          ).toFixed(2)
+                                        : ""
+                                ),
+                            ]}
+                            value={denValue}
                         />
                     </View>
                     <View style={styles.input}>
                         <Input
                             type="text"
-                            placeholder="Valeur mesurée"
-                            onChangeText={(e) => setGrValue(e)}
+                            placeholder="Valeur en Plato"
+                            onChangeText={(e) => [
+                                setPlatoValue(e),
+                                setDenValue(
+                                    e
+                                        ? Math.floor(
+                                              (1 + e / (258.6 - 0.88 * e)) *
+                                                  1000
+                                          ).toString()
+                                        : ""
+                                ),
+                            ]}
+                            value={platoValue}
+                        />
+                    </View>
+                </View>
+            );
+            break;
+        case "colorConvert":
+            title = "Conversion - Couleur";
+            buttons = (
+                <View style={styles.inputContainer}>
+                    <View style={styles.input}>
+                        <Input
+                            type="text"
+                            placeholder="Valeur en EBC"
+                            onChangeText={(e) => [
+                                setEbcValue(e),
+                                setSrmValue(e ? (e * 0.508).toFixed(2) : ""),
+                                setLovibondValue(
+                                    e
+                                        ? ((e * 0.508 + 0.76) / 1.3546).toFixed(
+                                              2
+                                          )
+                                        : ""
+                                ),
+                            ]}
+                            value={ebcValue}
+                        />
+                    </View>
+                    <View style={styles.input}>
+                        <Input
+                            type="text"
+                            placeholder="Valeur en SRM"
+                            onChangeText={(e) => [
+                                setSrmValue(e),
+                                setEbcValue(e ? (e * 1.97).toFixed(2) : ""),
+                                setLovibondValue(
+                                    e ? ((e + 0.76) / 1.3546).toFixed(2) : ""
+                                ),
+                            ]}
+                            value={srmValue}
+                        />
+                    </View>
+                    <View style={styles.input}>
+                        <Input
+                            type="text"
+                            placeholder="Valeur en °Lovibond"
+                            onChangeText={(e) => [
+                                setLovibondValue(e),
+                                setEbcValue(
+                                    ((1.3546 * e - 0.76) * 1.97).toFixed(2)
+                                ),
+                                setSrmValue((1.3546 * e - 0.76).toFixed(2)),
+                            ]}
+                            value={lovibondValue}
                         />
                     </View>
                 </View>
@@ -188,6 +245,18 @@ export default function TimerOverlay({ type, closeAction }) {
                             type="text"
                             placeholder="Température de calibrage"
                             onChangeText={(e) => setCalcTemp(e)}
+                        />
+                    </View>
+                </View>
+            );
+            break;
+        case "options":
+            title = "Autres";
+            buttons = (
+                <View style={styles.inputContainer}>
+                    <View style={styles.input}>
+                        <CustomButton
+                            title="Supprimer ce brassin"
                         />
                     </View>
                 </View>

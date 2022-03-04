@@ -6,13 +6,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View, Text } from 'react-native';
 import StyleGuide from '../../utils/StyleGuide';
 
-import MyBrewery from '../../../screens/MyBrewery';
-import OtherBrewers from '../../../screens/OtherBrewers';
-import Ressources from '../../../screens/Ressources';
+import MyBrewery from "../../../screens/MyBrewery";
+import OtherBrewers from "../../../screens/OtherBrewers";
+import Resources from "../../../screens/Resources";
 
-import BrasserieIcon from '../../utils/icons/Brasserie';
-import LocationIcon from '../../utils/icons/Location';
-import RessourcesIcon from '../../utils/icons/Ressources';
+import BrasserieIcon from "../../utils/icons/Brasserie";
+import LocationIcon from "../../utils/icons/Location";
+import ResourcesIcon from "../../utils/icons/Resources";
 
 const Tab = createBottomTabNavigator();
 
@@ -106,12 +106,12 @@ const Navbar = ({ saveToken }) => {
         }}
       />
       <Tab.Screen
-        name='Ressources'
-        component={Ressources}
+        name='Resources'
+        component={Resources}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center' }}>
-              <RessourcesIcon
+              <ResourcesIcon
                 color={
                   focused
                     ? StyleGuide.colors.secondary
@@ -129,7 +129,7 @@ const Navbar = ({ saveToken }) => {
                   },
                 ]}
               >
-                Ressources
+                Resources
               </Text>
             </View>
           ),

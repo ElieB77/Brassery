@@ -1,3 +1,4 @@
+
 import React, {useEffect, useState} from 'react';
 import { View, StyleSheet, Text, Modal } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
@@ -8,13 +9,14 @@ import CustomButton from '../components/CustomButton';
 import StyleGuide from '../components/utils/StyleGuide';
 import Geocode from "react-geocode";
 
+
 const Location = () => {
   
   const [modalVisible, setModalVisible] = useState(false);
   const [adress, setAdress] = useState();
   const [ville, setVille] = useState('');
-  const [lat, setLat] = useState(null);
-  const [lon, setLon] = useState(null);
+  const [lat, setLat] = useState(48.866667);
+  const [lon, setLon] = useState(2.333333);
   const [latVille, setLatVille] = useState(48.866667);
   const [lonVille, setLonVille] = useState(2.333333);
   const [userList, setUserList] = useState([])
@@ -70,6 +72,7 @@ const Location = () => {
   });
 
   return (
+
     <View style={styles.formContainer}>
       <Header title='Autres brasseurs'/>
       <View style={styles.formInput}>

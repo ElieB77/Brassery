@@ -1,18 +1,26 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 
 import CustomButton from "../components/CustomButton";
 
 const Home = ({ navigation }) => {
     return (
         <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+            style={{ flex: 1, justifyContent: "space-around", alignItems: "center" }}
         >
             <CustomButton
-                title="Aller sur La Recette"
+                title="Batch 🧪"
                 onPress={() =>
-                    navigation.navigate("LaRecette", {
-                        recipeId: "621dd788d5669c587bb066b3",
+                    navigation.navigate("Batch", {
+                        batchId: "6221fc885223412400e58d54",
+                    })
+                }
+            />
+            <CustomButton
+                title="Recipe 🧪"
+                onPress={() =>
+                    navigation.navigate("Recipe", {
+                        recipeId: "6221fc055223412400e58d53",
                     })
                 }
             />

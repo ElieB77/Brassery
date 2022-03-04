@@ -11,16 +11,21 @@ export default function ListItem(props) {
     const [content, setContent] = useState(props.content);
     let maxWords = 8;
     useEffect(() => {
-      if (limitHeight) {
-        let contentLength = content.split(' ').length;
-        if (contentLength > maxWords) {
-          let contentTemp = content.split(' ');
-          contentTemp.splice(maxWords, contentLength - maxWords);
-          contentTemp[contentTemp.length] = '...';
-          setContent(contentTemp.join(' '));
+        if (limitHeight && content) {
+            let contentLength = content.split(" ").length;
+            if (contentLength > maxWords) {
+                let contentTemp = content.split(" ");
+                contentTemp.splice(maxWords, contentLength - maxWords);
+                contentTemp[contentTemp.length] = "...";
+                setContent(contentTemp.join(" "));
+            }
+            setSeeMoreBtnText("voir plus ↓");
+        }
+        if (!limitHeight) {
+            setContent(props.content);
+            setSeeMoreBtnText("voir moins ↑");
         }
         setSeeMoreBtnText('voir plus ↓');
-      }
       if (!limitHeight) {
         setContent(props.content);
         setSeeMoreBtnText('voir moins ↑');
@@ -80,31 +85,42 @@ export default function ListItem(props) {
     };
 
     return (
-      <View style={styles.container}>
-        <View style={styles.textContainer}>
-          <Text style={[StyleGuide.typography.text5, styles.text]}>
-            {props.title}
-          </Text>
-          {content.split(' ').length > maxWords ? (
-            <Pressable onPress={() => setLimitHeight(!limitHeight)}>
-              <Text style={[StyleGuide.typography.text3, styles.text]}>
-                {content}
-              </Text>
-              <Text
-                style={[
-                  StyleGuide.typography.text3,
-                  StyleGuide.typography.linkText,
-                  styles.text,
-                ]}
-              >
-                {seeMoreBtnText}
-              </Text>
-            </Pressable>
-          ) : (
-            <Text style={[StyleGuide.typography.text3, styles.text]}>
-              {content}
-            </Text>
-          )}
+        <View style={styles.container}>
+            <View style={styles.textContainer}>
+                <Text style={[StyleGuide.typography.text5, styles.text]}>
+                    {props.title}
+                </Text>
+                {content?.split(" ").length > maxWords ? (
+                    <Pressable onPress={() => setLimitHeight(!limitHeight)}>
+                        <Text
+                            style={[StyleGuide.typography.text3, styles.text]}
+                        >
+                            {content}
+                        </Text>
+                        <Text
+                            style={[
+                                StyleGuide.typography.text3,
+                                StyleGuide.typography.linkText,
+                                styles.text,
+                            ]}
+                        >
+                            {seeMoreBtnText}
+                        </Text>
+                    </Pressable>
+                ) : (
+                    <Text style={[StyleGuide.typography.text3, styles.text]}>
+                        {content}
+                    </Text>
+                )}
+            </View>
+            {props.btnType && (
+                <View style={styles.btnContainer}>
+                    <CustomButton
+                        type={props.btnType}
+                        onPress={props.onPress}
+                    />
+                </View>
+            )}
         </View>
         {props.btnType && (
           <View style={styles.btnContainer}>

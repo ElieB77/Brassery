@@ -1,17 +1,39 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Button, Pressable } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import CustomButton from "../CustomButton";
 import StyleGuide from "../utils/StyleGuide";
-import NoteOverlay from "../overlays/noteOverlay";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import config from "../../config/globalVariables";
 
 import Checkbox from "../utils/form-elements/Checkbox";
 
 export default function RecipeItem(props) {
     /* STATES */
-    const [seeMoreBtnText, setSeeMoreBtnText] = useState("voir plus...");
-    const [isDone, setIsDone] = useState(false);
+    const [seeMoreBtnText, setSeeMoreBtnText] = useState("voir plus ↓");
     const [limitHeight, setLimitHeight] = useState(true);
     const [content, setContent] = useState(props.content);
+    const [isDone, setIsDone] = useState(props.stepStatus);
+
+    const isDoneAction = () => {
+        setIsDone(!isDone)
+        AsyncStorage.getItem("user", async function (error, data) {
+            await fetch(
+                `${config.base_url}/api/batches/update/${props.batchId}`,
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${data}`,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        section: props.cat,
+                        position: props.position,
+                        isDone: !isDone,
+                    }),
+                }
+            );
+        });
+    };
 
     // Limit the number of words displayed
     let maxWords = 8;
@@ -95,7 +117,9 @@ export default function RecipeItem(props) {
                 )}
             </View>
             <View style={styles.btnContainer}>
-                <Checkbox isDone={isDone} onPress={() => setIsDone(!isDone)} />
+                {!props.readOnly && (
+                    <Checkbox isDone={isDone} onPress={() => isDoneAction()} />
+                )}
                 <CustomButton
                     type="comment"
                     onPress={() => props.openNotes(props.cat, props.position)}
