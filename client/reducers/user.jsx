@@ -22,7 +22,8 @@ export default function (user = {}, action) {
       return updateBrewedDescription;
     case 'updateInstallationDescription':
       let updateInstallationDescription = { ...user };
-      updateInstallationDescription.description = action.description;
+      updateInstallationDescription.updateInstallationDescription =
+        action.installationDescription;
       return updateInstallationDescription;
     case 'updateInstallationPhoto':
       let updateInstallationPhoto = { ...user };

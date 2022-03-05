@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
 import StyleGuide from '../../../components/utils/StyleGuide';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import CustomButton from '../../../components/CustomButton';
 import ProgressBar from '../../../components/utils/ProgressBar';
+import Spinner from '../../../components/utils/Spinner';
 
 import Header from '../../../components/headings/Header';
 
@@ -14,6 +13,10 @@ import config from '../../../config/globalVariables';
 
 const Step6 = ({ navigation, token, user }) => {
   const [userName, setUserName] = useState('');
+  const [message, setMessage] = useState(
+    'Veuillez patienter, nous enregistrons vos informations... Fermez les yeux et comptez 25 secondes 😝'
+  );
+  const [isGood, setIsGood] = useState(false);
 
   useEffect(() => {
     async function sendData() {
@@ -24,24 +27,37 @@ const Step6 = ({ navigation, token, user }) => {
         type: 'image/jpeg',
         name: `user_picture_user_avatar.jpg`,
       });
-      data.append('installationPhoto', {
-        uri: user.avatar,
+      data.append('installationPicture', {
+        uri: user.photo,
         type: 'image/jpeg',
         name: `user_picture_installation_photo.jpg`,
       });
       data.append('brewedYet', `${user.brewedYet}`);
       data.append('favoriteBeer', user.favoriteBeer);
       data.append('localisation', JSON.stringify(user.localisation));
-      data.append('brewedDescription', user.brewedDescription);
+      data.append('brewedDescription', user.description);
+      data.append(
+        'installationDescription',
+        user.updateInstallationDescription
+      );
       data.append('materials', JSON.stringify(user.materials));
 
-      await fetch(`${config.base_url}/api/auth/updateDetails`, {
-        method: 'put',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: data,
-      });
+      const rawResponse = await fetch(
+        `${config.base_url}/api/auth/updateOnboarding`,
+        {
+          method: 'put',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: data,
+        }
+      );
+
+      const response = await rawResponse.json();
+
+      if (response.data) {
+        setIsGood(true);
+      }
     }
 
     async function loadData() {
@@ -64,33 +80,62 @@ const Step6 = ({ navigation, token, user }) => {
   return (
     <View style={[StyleGuide.container, { alignItems: 'center' }]}>
       <Header title='Création brasserie' />
-      <View
-        style={{
-          width: '100%',
-          height: 570,
-          marginBottom: 30,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Text
-          style={[
-            StyleGuide.typography.text2,
-            { textAlign: 'center', marginBottom: 20 },
-          ]}
+      {isGood ? (
+        <>
+          <View
+            style={{
+              width: '100%',
+              height: 570,
+              marginBottom: 30,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Text
+              style={[
+                StyleGuide.typography.text2,
+                { textAlign: 'center', marginBottom: 20 },
+              ]}
+            >
+              Bienvenue {userName} !
+            </Text>
+            <Text
+              style={[StyleGuide.typography.text2, { textAlign: 'center' }]}
+            >
+              🎉
+            </Text>
+          </View>
+          <View style={{ alignSelf: 'flex-end', marginBottom: 35 }}>
+            <CustomButton
+              type='next'
+              onPress={() =>
+                navigation.navigate('Navbar', { sreen: 'MyBrewery' })
+              }
+            />
+          </View>
+        </>
+      ) : (
+        <View
+          style={{
+            width: '100%',
+            height: 570,
+            marginBottom: 30,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
         >
-          Bienvenue {userName} !
-        </Text>
-        <Text style={[StyleGuide.typography.text2, { textAlign: 'center' }]}>
-          🎉
-        </Text>
-      </View>
-      <View style={{ alignSelf: 'flex-end', marginBottom: 35 }}>
-        <CustomButton
-          type='next'
-          onPress={() => navigation.navigate('Navbar', { sreen: 'MyBrewery' })}
-        />
-      </View>
+          <Text
+            style={{
+              color: StyleGuide.colors.green,
+              marginBottom: 30,
+              textAlign: 'center',
+            }}
+          >
+            {message}
+          </Text>
+        </View>
+      )}
+
       <ProgressBar pourcent={(6 * 100) / 6} />
     </View>
   );
