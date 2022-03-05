@@ -5,6 +5,7 @@ const {
     logout,
     getMe,
     updateDetails,
+    updateOnboarding,
     updatePassword,
     forgotPassword,
     resetPassword,
@@ -24,16 +25,6 @@ router
     .route('/logout')
     .get(protect, logout)
 
-// router
-//     .route('/getRecipes')
-//     .get(getRecipes)
-// // Route pour récuperer les recettes dans la BDD 
-
-// router
-//     .route('/getRecipesByFilter')
-//     .post(getRecipesByFilter)
-// // Route pour récuperer les recettes en fonction des filtres de l'utilisateur 
-
 router
     .route('/me')
     .get(protect, getMe)
@@ -41,6 +32,10 @@ router
 router
     .route('/updatedetails')
     .put(protect, updateDetails)
+
+router
+    .route('/updateOnboarding')
+    .put(protect, updateOnboarding)
 
 router
     .route('/updatepassword')
