@@ -27,7 +27,7 @@ const Step2 = ({ navigation, token, updateFavoriteBeertUser }) => {
 
       if (response.data) {
         response.data.map((item) => {
-          setRecipes((prevState) => [...prevState, item.name]);
+          setRecipes((prevState) => [...prevState, item.name.toUpperCase()]);
         });
       }
     }

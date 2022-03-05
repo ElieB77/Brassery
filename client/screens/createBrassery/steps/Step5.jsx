@@ -22,7 +22,7 @@ const Step5 = ({
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [showTools, setShowTools] = useState(false);
-  const [description, setDescription] = useState('');
+  const [installationDescription, setInstallationDescription] = useState('');
   const [picture, setPicture] = useState(null);
   const [materials, setMaterials] = useState([]);
 
@@ -46,7 +46,7 @@ const Step5 = ({
 
   const nextStep = () => {
     updateInstallationPhoto(picture);
-    updateInstallationDescription(description);
+    updateInstallationDescription(installationDescription);
     navigation.navigate('Step6');
   };
 
@@ -93,8 +93,8 @@ const Step5 = ({
           <View style={{ marginBottom: 45 }}>
             <Input
               type='textArea'
-              onChangeText={(val) => setDescription(val)}
-              value={description}
+              onChangeText={(val) => setInstallationDescription(val)}
+              value={installationDescription}
             />
           </View>
           <View style={{ marginBottom: 45 }}>
@@ -151,8 +151,11 @@ const Step5 = ({
 
 function mapDispatchToProps(dispatch) {
   return {
-    updateInstallationDescription: (description) => {
-      dispatch({ type: 'updateInstallationDescription', description });
+    updateInstallationDescription: (installationDescription) => {
+      dispatch({
+        type: 'updateInstallationDescription',
+        installationDescription,
+      });
     },
     updateInstallationPhoto: (photo) => {
       dispatch({ type: 'updateInstallationPhoto', photo });
