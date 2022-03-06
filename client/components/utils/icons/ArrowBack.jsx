@@ -1,23 +1,25 @@
 import * as React from 'react';
 import Svg, { Path } from 'react-native-svg';
-import StyleGuide from '../StyleGuide';
 
-const Add = (props) => {
+const ArrowBack = (props) => {
   return (
     <Svg
-      width={18}
-      height={18}
+      width={8}
+      height={19}
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
       {...props}
     >
       <Path
-        d='M1 8.488h14.976M8.488 1v14.976'
-        stroke={props.color ? props.color : StyleGuide.colors.secondary}
+        d='m9 .937-8 9.392 8 9.393'
+        stroke='#435E75'
+        strokeWidth={1.2}
+        strokeMiterlimit={10}
         strokeLinecap='round'
+        strokeLinejoin='round'
       />
     </Svg>
   );
 };
 
-export default Add;
+export default ArrowBack;

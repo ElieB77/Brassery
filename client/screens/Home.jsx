@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import CustomButton from '../components/CustomButton';
 
-const Home = ({ navigation, saveToken }) => {
+const Home = ({ navigation, saveToken, token }) => {
   useEffect(() => {
     function saveTokenToReducer() {
       AsyncStorage.getItem('user', function (error, data) {
@@ -23,17 +23,23 @@ const Home = ({ navigation, saveToken }) => {
     <View
       style={{
         flex: 1,
-        justifyContent: 'space-around',
+        justifyContent: 'space-evenly',
         alignItems: 'center',
       }}
     >
       <CustomButton
-        title='Se connecter'
-        onPress={() => navigation.navigate('SignIn')}
-      />
-      <CustomButton
-        title="S'inscire"
+        title='Accéder à ma brasserie'
         onPress={() => navigation.navigate('SignUp')}
+      />
+
+      <CustomButton
+        title='Les brasseurs aux alentours'
+        onPress={() => navigation.navigate('SignUp')}
+      />
+
+      <CustomButton
+        title='Les ressources'
+        onPress={() => navigation.navigate('Resources')}
       />
     </View>
   );
@@ -47,4 +53,8 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(Home);
+function mapStateToProps(state) {
+  return { token: state.token };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -65,12 +65,11 @@ const StyleGuide = {
     linkText: {
       textDecorationLine: 'underline',
     },
-  },
-
-  textButton: {
-    fontSize: 12,
-    lineHeight: 16,
-    fontFamily: 'Manrope_700Bold',
+    textButton: {
+      fontSize: 12,
+      lineHeight: 16,
+      fontFamily: 'Manrope_700Bold',
+    },
   },
 
   borderRadius: 8,
