@@ -363,12 +363,11 @@ const Recipe = ({ id, readOnly, navigation }) => {
                 <View
                     style={{
                         position: "absolute",
-                        top: "87%",
-                        left: "32%",
+                        top: "89%",
+                        left: "33%",
                         transform: [{ scale: 0.9 }],
                         flexDirection: "row",
-                        width: "65%",
-                        justifyContent: "space-between",
+                        justifyContent: "center",
                         alignItems: "center",
                     }}
                 >
@@ -380,6 +379,21 @@ const Recipe = ({ id, readOnly, navigation }) => {
                             })
                         }
                     />
+                </View>
+            )}
+
+            {readOnly && (
+                <View
+                    style={{
+                        position: "absolute",
+                        top: "91%",
+                        left: "5%",
+                        transform: [{ scale: 0.9 }],
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
                     <CustomButton
                         outline={likeOutline}
                         type="liker"
