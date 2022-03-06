@@ -49,6 +49,7 @@ const Navbar = ({ saveToken }) => {
         name='Ma brasserie'
         component={MyBrewery}
         options={{
+          tabBarStyle: { display: 'none' },
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center' }}>
               <BrasserieIcon

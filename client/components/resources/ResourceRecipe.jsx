@@ -13,154 +13,115 @@ const ResourceRecipe = (props) => {
     const [bitternessRange, setBitternessRange] = useState("50%");
 
     return (
-        <View style={[StyleGuide.container, { alignItems: "center" }]}>
-            <Header title="Resources" />
-            {/* Navigation */}
-            <View style={styles.btnGroup}>
-                <Pressable onPress={() => props.changeResource("recipes")}>
-                    <Text
-                        style={[
-                            StyleGuide.typography.text3,
-                            styles.btnGroupText,
-                            { textDecorationLine: "underline" },
-                        ]}
-                    >
-                        Recettes
-                    </Text>
-                </Pressable>
-                <Pressable onPress={() => props.changeResource("ingredients")}>
-                    <Text
-                        style={[
-                            StyleGuide.typography.text3,
-                            styles.btnGroupText,
-                        ]}
-                    >
-                        Ingrédients
-                    </Text>
-                </Pressable>
-                <Pressable onPress={() => props.changeResource("equipments")}>
-                    <Text
-                        style={[
-                            StyleGuide.typography.text3,
-                            styles.btnGroupText,
-                        ]}
-                    >
-                        Matériels
-                    </Text>
-                </Pressable>
-            </View>
-            {/* Filter */}
-            <View style={styles.filterContainer}>
-                <View style={{ marginBottom: 15 }}>
-                    <Text
-                        style={[
-                            StyleGuide.typography.text3,
-                            styles.filterLabel,
-                        ]}
-                    >
-                        Recherche par mots clés
-                    </Text>
-                    <Input type="text" placeholder={"Pale Ale.."} />
-                </View>
-                <View style={{ position: "relative", zIndex: 10 }}>
-                    <Text
-                        style={[
-                            StyleGuide.typography.text3,
-                            styles.filterLabel,
-                        ]}
-                    >
-                        Type de bière
-                    </Text>
-                    <Dropdown title={"Bière blonde"} />
-                </View>
-                <View style={{ position: "relative", zIndex: 9 }}>
-                    <Text
-                        style={[
-                            StyleGuide.typography.text3,
-                            styles.filterLabel,
-                        ]}
-                    >
-                        Inclus les ingrédients suivants
-                    </Text>
-                    <Dropdown title={"Bière blonde"} />
-                </View>
-                {/* Slider */}
-                <View style={{ marginTop: 20 }}>
-                    <View>
-                        <Text
-                            style={[
-                                StyleGuide.typography.text3,
-                                styles.filterLabel,
-                            ]}
-                        >
-                            Couleur de la bière
-                        </Text>
-                        <Slider
-                            style={{ width: 300 }}
-                            minimumValue={0}
-                            maximumValue={1}
-                            value={0.5}
-                            minimumTrackTintColor={StyleGuide.colors.secondary}
-                            maximumTrackTintColor="#000000"
-                            thumbTintColor={StyleGuide.colors.primary}
-                            onValueChange={(value) =>
-                                setRange(Math.floor(value * 100) + "%")
-                            }
-                        />
-                        <Text style={{ textAlign: "center" }}>{range}</Text>
-                    </View>
-                    <View>
-                        <Text
-                            style={[
-                                StyleGuide.typography.text3,
-                                styles.filterLabel,
-                            ]}
-                        >
-                            Amertume de la bière
-                        </Text>
-                        <Slider
-                            style={{ width: 300 }}
-                            minimumValue={0}
-                            maximumValue={1}
-                            value={0.5}
-                            minimumTrackTintColor={StyleGuide.colors.secondary}
-                            maximumTrackTintColor="#000000"
-                            thumbTintColor={StyleGuide.colors.primary}
-                            onValueChange={(value) =>
-                                setBitternessRange(
-                                    Math.floor(value * 100) + "%"
-                                )
-                            }
-                        />
-                        <Text style={{ textAlign: "center" }}>
-                            {bitternessRange}
-                        </Text>
-                    </View>
-                </View>
-            </View>
-            {/* List */}
-            <View>
-                <List>
-                    <ListItem
-                        title="Citra IPA"
-                        content="Très bonne bière !"
-                        btnType="next"
-                        onPress={() =>
-                            props.navigation.navigate("Recipe", {
-                                recipeId: "6221fc055223412400e58d53",
-                            })
-                        }
-                    />
-                    <ListItem title="test" content="test" btnType="next" />
-                    <ListItem title="test" content="test" btnType="next" />
-                    <ListItem title="test" content="test" btnType="next" />
-                    <ListItem title="test" content="test" btnType="next" />
-                    <ListItem title="test" content="test" btnType="next" />
-                    <ListItem title="test" content="test" btnType="next" />
-                    <ListItem title="test" content="test" btnType="next" />
-                </List>
-            </View>
+      <View style={[StyleGuide.container, { alignItems: 'center' }]}>
+        <Header title='Ressources' />
+        {/* Navigation */}
+        <View style={styles.btnGroup}>
+          <Pressable onPress={() => props.changeResource('recipes')}>
+            <Text
+              style={[
+                StyleGuide.typography.text3,
+                styles.btnGroupText,
+                { textDecorationLine: 'underline' },
+              ]}
+            >
+              Recettes
+            </Text>
+          </Pressable>
+          <Pressable onPress={() => props.changeResource('ingredients')}>
+            <Text style={[StyleGuide.typography.text3, styles.btnGroupText]}>
+              Ingrédients
+            </Text>
+          </Pressable>
+          <Pressable onPress={() => props.changeResource('equipments')}>
+            <Text style={[StyleGuide.typography.text3, styles.btnGroupText]}>
+              Matériels
+            </Text>
+          </Pressable>
         </View>
+        {/* Filter */}
+        <View style={styles.filterContainer}>
+          <View style={{ marginBottom: 15 }}>
+            <Text style={[StyleGuide.typography.text3, styles.filterLabel]}>
+              Recherche par mots clés
+            </Text>
+            <Input type='text' placeholder={'Pale Ale..'} />
+          </View>
+          <View style={{ position: 'relative', zIndex: 10 }}>
+            <Text style={[StyleGuide.typography.text3, styles.filterLabel]}>
+              Type de bière
+            </Text>
+            <Dropdown title={'Bière blonde'} />
+          </View>
+          <View style={{ position: 'relative', zIndex: 9 }}>
+            <Text style={[StyleGuide.typography.text3, styles.filterLabel]}>
+              Inclus les ingrédients suivants
+            </Text>
+            <Dropdown title={'Bière blonde'} />
+          </View>
+          {/* Slider */}
+          <View style={{ marginTop: 20 }}>
+            <View>
+              <Text style={[StyleGuide.typography.text3, styles.filterLabel]}>
+                Couleur de la bière
+              </Text>
+              <Slider
+                style={{ width: 300 }}
+                minimumValue={0}
+                maximumValue={1}
+                value={0.5}
+                minimumTrackTintColor={StyleGuide.colors.secondary}
+                maximumTrackTintColor='#000000'
+                thumbTintColor={StyleGuide.colors.primary}
+                onValueChange={(value) =>
+                  setRange(Math.floor(value * 100) + '%')
+                }
+              />
+              <Text style={{ textAlign: 'center' }}>{range}</Text>
+            </View>
+            <View>
+              <Text style={[StyleGuide.typography.text3, styles.filterLabel]}>
+                Amertume de la bière
+              </Text>
+              <Slider
+                style={{ width: 300 }}
+                minimumValue={0}
+                maximumValue={1}
+                value={0.5}
+                minimumTrackTintColor={StyleGuide.colors.secondary}
+                maximumTrackTintColor='#000000'
+                thumbTintColor={StyleGuide.colors.primary}
+                onValueChange={(value) =>
+                  setBitternessRange(Math.floor(value * 100) + '%')
+                }
+              />
+              <Text style={{ textAlign: 'center' }}>{bitternessRange}</Text>
+            </View>
+          </View>
+        </View>
+        {/* List */}
+        <View>
+          <List>
+            <ListItem
+              title='Citra IPA'
+              content='Très bonne bière !'
+              btnType='next'
+              onPress={() =>
+                props.navigation.navigate('Recipe', {
+                  recipeId: '6221fc055223412400e58d53',
+                })
+              }
+            />
+            <ListItem title='test' content='test' btnType='next' />
+            <ListItem title='test' content='test' btnType='next' />
+            <ListItem title='test' content='test' btnType='next' />
+            <ListItem title='test' content='test' btnType='next' />
+            <ListItem title='test' content='test' btnType='next' />
+            <ListItem title='test' content='test' btnType='next' />
+            <ListItem title='test' content='test' btnType='next' />
+          </List>
+        </View>
+      </View>
     );
 };
 

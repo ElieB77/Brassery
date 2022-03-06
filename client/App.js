@@ -13,6 +13,9 @@ import Step4 from "./screens/createBrassery/steps/Step4";
 import Step5 from "./screens/createBrassery/steps/Step5";
 import Step6 from "./screens/createBrassery/steps/Step6";
 import Resources from "./screens/Resources";
+import BeerLiked from './screens/myBrewery/BeerLiked'
+import Beer from "./screens/myBrewery/Beer";
+import Other from "./screens/otherBrewery.jsx/Other";
 
 import Navbar from "./components/layouts/navbar/Navbar";
 
@@ -41,6 +44,7 @@ const App = () => {
             setIsLoggedIn(true);
         }
     });
+
     return (
         <Provider store={store}>
             <LoadFonts>
@@ -79,19 +83,31 @@ const App = () => {
                             </>
                         ) : (
                             <>
-                                <Stack.Screen
-                                    name="Navbar"
-                                    component={Navbar}
-                                />
-                                <Stack.Screen
-                                    name="Resources"
-                                    component={Resources}
-                                />
-                                <Stack.Screen name="Batch" component={Batch} />
-                                <Stack.Screen
-                                    name="Recipe"
-                                    component={Recipe}
-                                />
+                                    <Stack.Screen
+                                        name="Navbar"
+                                        component={Navbar}
+                                    />
+                                    <Stack.Screen
+                                        name="Resources"
+                                        component={Resources}
+                                    />
+                                    <Stack.Screen name="Batch" component={Batch} />
+                                    <Stack.Screen
+                                        name="Recipe"
+                                        component={Recipe}
+                                    />
+                                    <Stack.Screen
+                                        name="Other"
+                                        component={Other}
+                                    />
+                                    <Stack.Screen
+                                        name="BeerLiked"
+                                        component={BeerLiked}
+                                    />
+                                    <Stack.Screen
+                                        name="Beer"
+                                        component={Beer}
+                                    />
                             </>
                         )}
                     </Stack.Navigator>

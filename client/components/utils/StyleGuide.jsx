@@ -71,13 +71,6 @@ const StyleGuide = {
             fontFamily: "Manrope_700Bold",
         },
     },
-
-    textButton: {
-        fontSize: 12,
-        lineHeight: 16,
-        fontFamily: "Manrope_700Bold",
-    },
-
     borderRadius: 8,
     shadowProp: shadow,
 

@@ -9,27 +9,27 @@ import ListItem from "../../components/lists/listItem";
 
 const ResourceIngredient = (props) => {
   return (
-    <View style={[StyleGuide.container, { alignItems: "center" }]}>
-      <Header title="Resources" />
+    <View style={[StyleGuide.container, { alignItems: 'center' }]}>
+      <Header title='Ressources' />
       {/* Navigation */}
       <View style={styles.btnGroup}>
-        <Pressable onPress={() => props.changeResource("recipes")}>
+        <Pressable onPress={() => props.changeResource('recipes')}>
           <Text style={[StyleGuide.typography.text3, styles.btnGroupText]}>
             Recettes
           </Text>
         </Pressable>
-        <Pressable onPress={() => props.changeResource("ingredients")}>
+        <Pressable onPress={() => props.changeResource('ingredients')}>
           <Text
             style={[
               StyleGuide.typography.text3,
               styles.btnGroupText,
-              { textDecorationLine: "underline" },
+              { textDecorationLine: 'underline' },
             ]}
           >
             Ingrédients
           </Text>
         </Pressable>
-        <Pressable onPress={() => props.changeResource("equipments")}>
+        <Pressable onPress={() => props.changeResource('equipments')}>
           <Text style={[StyleGuide.typography.text3, styles.btnGroupText]}>
             Matériels
           </Text>
@@ -41,29 +41,29 @@ const ResourceIngredient = (props) => {
           <Text style={[StyleGuide.typography.text3, styles.filterLabel]}>
             Recherche par mots clés
           </Text>
-          <Input type="text" placeholder={"Pale Ale.."} />
+          <Input type='text' placeholder={'Pale Ale..'} />
         </View>
-        <View style={{ position: "relative", zIndex: 10 }}>
+        <View style={{ position: 'relative', zIndex: 10 }}>
           <Text style={[StyleGuide.typography.text3, styles.filterLabel]}>
             Catégories
           </Text>
-          <Dropdown title={"Bière blonde"} />
+          <Dropdown title={'Bière blonde'} />
         </View>
         {/* Slider */}
       </View>
       {/* List */}
       <View
-        style={{ width: 300, marginTop: 50, position: "relative", zIndex: 0 }}
+        style={{ width: 300, marginTop: 50, position: 'relative', zIndex: 0 }}
       >
         <List>
-        <ListItem title="test" content="test" btnType="next" />
-        <ListItem title="test" content="test" btnType="next" />
-        <ListItem title="test" content="test" btnType="next" />
-        <ListItem title="test" content="test" btnType="next" />
-        <ListItem title="test" content="test" btnType="next" />
-        <ListItem title="test" content="test" btnType="next" />
-        <ListItem title="test" content="test" btnType="next" />
-        <ListItem title="test" content="test" btnType="next" />
+          <ListItem title='test' content='test' btnType='next' />
+          <ListItem title='test' content='test' btnType='next' />
+          <ListItem title='test' content='test' btnType='next' />
+          <ListItem title='test' content='test' btnType='next' />
+          <ListItem title='test' content='test' btnType='next' />
+          <ListItem title='test' content='test' btnType='next' />
+          <ListItem title='test' content='test' btnType='next' />
+          <ListItem title='test' content='test' btnType='next' />
         </List>
       </View>
     </View>
