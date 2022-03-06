@@ -91,6 +91,7 @@ const Recipe = ({ id, readOnly, navigation }) => {
     // Getting the recipe
     useEffect(async () => {
         AsyncStorage.getItem("user", async function (error, data) {
+            // Getting the data
             const rawResponse = await fetch(
                 `${config.base_url}/api/${
                     readOnly ? "recipes" : "batches"
@@ -109,8 +110,58 @@ const Recipe = ({ id, readOnly, navigation }) => {
                 setRecipe(result.recipe);
                 setBatch(result);
             }
+
+            // Set up like status
+            if (readOnly) {
+                AsyncStorage.getItem("user", async function (error, data) {
+                    const rawResponse = await fetch(
+                        `${config.base_url}/api/users/6224b1431cfbdb724b2256bc`,
+                        {
+                            method: "GET",
+                            headers: {
+                                Authorization: `Bearer ${data}`,
+                            },
+                        }
+                    );
+                    const user = await rawResponse.json();
+                    if (
+                        user.data.likedRecipes.findIndex(
+                            (x) => x._id !== result._id
+                        ) !== -1
+                    ) {
+                        setLikeOutline(false);
+                    }
+                });
+            }
         });
     }, [id]);
+
+    // Like or dislike recipe
+    const [likeOutline, setLikeOutline] = useState(false);
+    const toggleLikeRecipe = () => {
+        AsyncStorage.getItem("user", async function (error, data) {
+            const rawResponse = await fetch(
+                `${config.base_url}/api/users/recipe/6224b1431cfbdb724b2256bc/${recipe._id}`,
+                {
+                    method: "PUT",
+                    headers: {
+                        Authorization: `Bearer ${data}`,
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                }
+            );
+            const result = await rawResponse.json();
+            if (
+                result.data.likedRecipes.findIndex(
+                    (x) => x._id === recipe._id
+                ) !== -1
+            ) {
+                setLikeOutline(false);
+            } else {
+                setLikeOutline(true);
+            }
+        });
+    };
 
     // Specific description of the recipe
     const recipeDescription = `${recipe?.description}\n\nCouleur: ${recipe?.colorEstimate} EBC\nAmertume: ${recipe?.ibuEstimate} IBU\nAlcool: ${recipe?.alcoholByVolume} %\nDensité de départ: ${recipe?.originalGravity}\nDensité de fin: ${recipe?.finalGravity}`;
@@ -125,7 +176,7 @@ const Recipe = ({ id, readOnly, navigation }) => {
             <ScrollView
                 contentContainerStyle={{
                     alignItems: "center",
-                    paddingBottom: 80,
+                    paddingBottom: 100,
                 }}
             >
                 <RecipeList>
@@ -290,7 +341,7 @@ const Recipe = ({ id, readOnly, navigation }) => {
                     </View>
                 </View>
             )}
-            {!readOnly && (
+            {!readOnly ? (
                 <View
                     style={{
                         position: "absolute",
@@ -306,6 +357,33 @@ const Recipe = ({ id, readOnly, navigation }) => {
                         onPress={() =>
                             setTransparentOverlay(!transparentOverlay)
                         }
+                    />
+                </View>
+            ) : (
+                <View
+                    style={{
+                        position: "absolute",
+                        top: "87%",
+                        left: "32%",
+                        transform: [{ scale: 0.9 }],
+                        flexDirection: "row",
+                        width: "65%",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                    }}
+                >
+                    <CustomButton
+                        type="brasser"
+                        onPress={() =>
+                            navigation.navigate("Batch", {
+                                batchId: "6221fc885223412400e58d54",
+                            })
+                        }
+                    />
+                    <CustomButton
+                        outline={likeOutline}
+                        type="liker"
+                        onPress={() => toggleLikeRecipe()}
                     />
                 </View>
             )}

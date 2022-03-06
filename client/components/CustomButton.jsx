@@ -14,9 +14,10 @@ import Brasser from "./utils/icons/Brasser";
 import Fermentable from "./utils/icons/Fermentable";
 import Yeast from "./utils/icons/Yeast";
 import Other from "./utils/icons/Other";
+import Heart from "./utils/icons/Heart";
 import StyleGuide from "./utils/StyleGuide";
 
-const CustomButton = ({ onPress, title, time, type, border }) => {
+const CustomButton = ({ onPress, title, time, type, border, outline }) => {
     switch (type) {
         case "comment":
             return (
@@ -153,6 +154,15 @@ const CustomButton = ({ onPress, title, time, type, border }) => {
                     </View>
                 </TouchableOpacity>
             );
+        case "liker":
+            return (
+                <TouchableOpacity
+                    style={[styles.containerLiker, StyleGuide.shadowProp]}
+                    onPress={onPress}
+                >
+                    <Heart width="30" height="30" outline={outline} />
+                </TouchableOpacity>
+            );
         case "hops":
             return (
                 <TouchableOpacity
@@ -245,79 +255,87 @@ const CustomButton = ({ onPress, title, time, type, border }) => {
 };
 
 const styles = StyleSheet.create({
-  containerIcon: {
-    backgroundColor: StyleGuide.colors.primary,
-    borderRadius: StyleGuide.borderRadius,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 45,
-    height: 30,
-  },
-  containerWithText: {
-    backgroundColor: StyleGuide.colors.primary,
-    borderRadius: StyleGuide.borderRadius,
-    paddingTop: 5,
-    paddingBottom: 6,
-    paddingLeft: 15,
-    paddingRight: 15,
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: 145,
-    height: 30,
-  },
-  containerBrasser: {
-    backgroundColor: StyleGuide.colors.primary,
-    borderRadius: StyleGuide.borderRadius,
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 45,
-    paddingRight: 45,
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    width: 145,
-    height: 90,
-  },
-  containerPlus: {
-    backgroundColor: StyleGuide.colors.secondary,
-    borderRadius: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 45,
-    height: 45,
-  },
-  containerTime: {
-    backgroundColor: StyleGuide.colors.secondary,
-    borderRadius: StyleGuide.borderRadius,
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    paddingTop: 9,
-    paddingBottom: 9,
-    paddingLeft: 6,
-    paddingRight: 6,
-    width: 115,
-    height: 42,
-  },
-  container: {
-    backgroundColor: StyleGuide.colors.primary,
-    borderRadius: StyleGuide.borderRadius,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 207,
-    height: 45,
-  },
-  textTime: {
-    color: StyleGuide.colors.primary,
-    fontSize: 18,
-    lineHeight: 25,
-    fontFamily: StyleGuide.typography.textButton.fontFamily,
-  },
-  text: {
-    color: StyleGuide.colors.secondary,
-    fontSize: StyleGuide.typography.textButton.fontSize,
-    lineHeight: StyleGuide.typography.textButton.lineHeight,
-    fontFamily: StyleGuide.typography.textButton.fontFamily,
-  },
+    containerIcon: {
+        backgroundColor: StyleGuide.colors.primary,
+        borderRadius: StyleGuide.borderRadius,
+        justifyContent: "center",
+        alignItems: "center",
+        width: 45,
+        height: 30,
+    },
+    containerWithText: {
+        backgroundColor: StyleGuide.colors.primary,
+        borderRadius: StyleGuide.borderRadius,
+        paddingTop: 5,
+        paddingBottom: 6,
+        paddingLeft: 15,
+        paddingRight: 15,
+        flexDirection: "row",
+        alignItems: "center",
+        width: 145,
+        height: 30,
+    },
+    containerBrasser: {
+        backgroundColor: StyleGuide.colors.primary,
+        borderRadius: StyleGuide.borderRadius,
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 45,
+        paddingRight: 45,
+        justifyContent: "space-evenly",
+        alignItems: "center",
+        width: 145,
+        height: 90,
+    },
+    containerLiker: {
+        backgroundColor: StyleGuide.colors.secondary,
+        borderRadius: 50,
+        justifyContent: "center",
+        alignItems: "center",
+        width: 55,
+        height: 55,
+    },
+    containerPlus: {
+        backgroundColor: StyleGuide.colors.secondary,
+        borderRadius: 50,
+        justifyContent: "center",
+        alignItems: "center",
+        width: 45,
+        height: 45,
+    },
+    containerTime: {
+        backgroundColor: StyleGuide.colors.secondary,
+        borderRadius: StyleGuide.borderRadius,
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        alignItems: "center",
+        paddingTop: 9,
+        paddingBottom: 9,
+        paddingLeft: 6,
+        paddingRight: 6,
+        width: 115,
+        height: 42,
+    },
+    container: {
+        backgroundColor: StyleGuide.colors.primary,
+        borderRadius: StyleGuide.borderRadius,
+        justifyContent: "center",
+        alignItems: "center",
+        width: 207,
+        height: 45,
+    },
+    textTime: {
+        color: StyleGuide.colors.primary,
+        fontSize: 18,
+        lineHeight: 25,
+        fontFamily: StyleGuide.typography.textButton.fontFamily,
+    },
+    text: {
+        color: StyleGuide.colors.secondary,
+        fontSize: StyleGuide.typography.textButton.fontSize,
+        lineHeight: StyleGuide.typography.textButton.lineHeight,
+        fontFamily: StyleGuide.typography.textButton.fontFamily,
+    },
 });
 
 export default CustomButton;
