@@ -4,8 +4,7 @@ import ResourceIngredient from "./ResourceIngredient";
 import ResourceEquipment from "./ResourceEquipment";
 
 const Ressources = () => {
-  const [resourceType, setResourceType] = useState("equipments");
-  console.log(resourceType);
+  const [resourceType, setResourceType] = useState("recipes");
 
   if (resourceType === "recipes") {
     return (
