@@ -143,7 +143,7 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
 })
 
 // *desc    Update user details
-// *route   PUT /api/auth/updateOnboarding
+// *route   PUT /api/auth/updateonboarding
 // *access  Private
 exports.updateOnboarding = asyncHandler(async (req, res, next) => {
     const avatarPath = `./temp/avatar/${uniqid()}.jpg`
@@ -185,9 +185,84 @@ exports.updateOnboarding = asyncHandler(async (req, res, next) => {
     fs.unlinkSync(installationPath);
 })
 
+// *desc    Update user avatar
+// *route   PUT /api/auth/updateavatar
+// *access  Private
+exports.updateAvatarPicture = asyncHandler(async (req, res, next) => {
+    const avatarPath = `./temp/avatar/${uniqid()}.jpg`
+    await req.files.avatar.mv(avatarPath);
+    const avatar = await cloudinary.uploader.upload(avatarPath);
+
+    if (!avatar) {
+        res.json({ result: false, message: 'error' });
+    } else {
+        const user = await User.updateOne({ _id: req.user.id }, { avatar: avatar.url })
+
+        res.status(200).json({
+            success: true,
+            data: user
+        })
+    }
+
+    fs.unlinkSync(avatarPath);
+})
+
+// *desc    Update user brew description
+// *route   PUT /api/auth/updatebrewdescription
+// *access  Private
+exports.updateBrewDescription = asyncHandler(async (req, res, next) => {
+    const { brewDescription } = req.body
+
+    if (!brewDescription) {
+        res.status(400).json({ success: false, message: 'Please add a description' })
+    } else {
+        await User.updateOne({ _id: req.user.id }, { brewDescription })
+
+        res.status(200).json({
+            success: true,
+            data: req.user
+        })
+    }
+})
+
+// *desc    Update username
+// *route   PUT /api/auth/updateusername
+// *access  Private
+exports.updateUsername = asyncHandler(async (req, res, next) => {
+    const { username } = req.body
+
+    if (!username) {
+        res.status(400).json({ success: false, message: 'Please add a username' })
+    } else {
+        await User.updateOne({ _id: req.user.id }, { username })
+
+        res.status(200).json({
+            success: true,
+            data: req.user
+        })
+    }
+})
+
+// *desc    Update email
+// *route   PUT /api/auth/updateemail
+// *access  Private
+exports.updateEmail = asyncHandler(async (req, res, next) => {
+    const { email } = req.body
+
+    if (!email) {
+        res.status(400).json({ success: false, message: 'Please add an email' })
+    } else {
+        await User.updateOne({ _id: req.user.id }, { email })
+
+        res.status(200).json({
+            success: true,
+            data: req.user
+        })
+    }
+})
 
 // *desc    Update password
-// *route   PUT /api/v1/auth/updatepassword
+// *route   PUT /api/auth/updatepassword
 // *access  Private
 exports.updatePassword = asyncHandler(async (req, res, next) => {
     const user = await User.findById(req.user.id).select('+password')
