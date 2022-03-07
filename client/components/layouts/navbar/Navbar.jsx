@@ -7,8 +7,8 @@ import { View, Text } from 'react-native';
 import StyleGuide from '../../utils/StyleGuide';
 
 import MyBrewery from "../../../screens/MyBrewery";
-import OtherBrewers from "../../../screens/otherbrewers/Map";
-import Ressources from "../../../screens/ressources/Ressources";
+import Map from "../../../screens/otherbrewers/Map";
+import Resources from "../../../screens/Resources";
 
 import BrasserieIcon from "../../utils/icons/Brasserie";
 import LocationIcon from "../../utils/icons/Location";
@@ -78,7 +78,7 @@ const Navbar = ({ saveToken }) => {
       />
       <Tab.Screen
         name='Autres brasseurs'
-        component={OtherBrewers}
+        component={Map}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center' }}>

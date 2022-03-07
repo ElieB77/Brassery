@@ -10,8 +10,8 @@ import RecipeIngredients from "./recipeIngredients";
 
 import Header from "../headings/Header";
 import CustomButton from "../CustomButton";
-import ActionOverlay from "../overlays/actionOverlay";
-import RecipeTimer from "./recipeTimer";
+import ActionOverlay from "../overlays/ActionOverlay";
+import RecipeTimer from "./RecipeTimer";
 import NoteOverlay from "../overlays/noteOverlay";
 import IngredientsOverlay from "../overlays/ingredientsOverlay";
 

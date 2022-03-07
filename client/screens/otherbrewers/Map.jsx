@@ -69,7 +69,7 @@ const Location = ({ navigation }) => {
         key={i}
         image={require('../../assets/marker2.png')}
         coordinate={{ latitude: user.localisation.lat, longitude: user.localisation.long }}
-        onPress={() => navigation.navigate("UserPage")}
+        onPress={() => navigation.navigate("UserPage", {userId: user._id})}
     />
     )});
 

@@ -18,7 +18,7 @@ router.route("/recipe/:id/:recipeId").put(addLikeRecipe);
 
 router.route("/:id").get(getUser)
 
-router.use(authorize("admin"));
+// router.use(authorize("admin"));
 
 router.route("/").get(advancedResults(User), getUsers).post(createUser);
 
