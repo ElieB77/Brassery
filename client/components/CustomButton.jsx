@@ -263,7 +263,19 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
             return (
                 <TouchableOpacity
                     style={[
-                        styles.container,
+                        outline
+                            ? {
+                                  backgroundColor: StyleGuide.colors.white,
+                                  borderRadius: StyleGuide.borderRadius,
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                  width: 207,
+                                  height: 45,
+                                  borderColor: StyleGuide.colors.primary,
+                                  borderStyle: "solid",
+                                  borderWidth: 2,
+                              }
+                            : styles.container,
                         StyleGuide.shadowProp,
                         border && {
                             borderColor: StyleGuide.colors.secondary,
