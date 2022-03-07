@@ -7,7 +7,7 @@ const StepsStatus = mongoose.Schema({
 });
 
 const GravitySchema = mongoose.Schema({
-    name: { type: String },
+    description: { type: String },
     value: { type: Number },
     createdAt: { type: Date },
 });

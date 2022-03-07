@@ -5,6 +5,7 @@ const {
     updateStepStatus,
     createBatch,
     deleteBatch,
+    insertMeasure,
 } = require("../controllers/batches");
 const router = express.Router();
 const Batch = require("../models/Batch");
@@ -23,5 +24,7 @@ router.route("/update/:id").post(updateStepStatus);
 router.route("/create").post(createBatch);
 
 router.route("/delete/:id").delete(deleteBatch);
+
+router.route("/:id/addMeasure").post(insertMeasure);
 
 module.exports = router;
