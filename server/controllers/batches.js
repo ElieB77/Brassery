@@ -32,3 +32,5 @@ exports.updateStepStatus = asyncHandler(async (req, res, next) => {
     }
     res.status(200).json(batch);
 });
+
+exports.createBatch = asyncHandler(async (req, res, next) => {});

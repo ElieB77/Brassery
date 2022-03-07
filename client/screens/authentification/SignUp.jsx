@@ -31,6 +31,7 @@ const SignUp = ({ navigation, saveToken }) => {
 
     if (response.token) {
       AsyncStorage.setItem('user', response.token);
+      AsyncStorage.setItem('userId', response.userId);
       saveToken(response.token);
       navigation.navigate('Step1');
     } else {

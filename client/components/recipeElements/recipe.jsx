@@ -69,6 +69,17 @@ const Recipe = ({ id, readOnly, navigation, token }) => {
         },
     });
 
+    // GET user ID
+    const [userId, setUserId] = useState(null);
+    useEffect(() => {
+        if (!userId)
+            AsyncStorage.getItem("userId", function (error, data) {
+                if (data != null) {
+                    setUserId(data);
+                }
+            });
+    }, [userId]);
+
     // This function gets the status of the step according to the batch information
     const getStepStatus = (section, position) => {
         return batch?.stepsStatus.filter(
@@ -164,9 +175,9 @@ const Recipe = ({ id, readOnly, navigation, token }) => {
         }
 
         // Set up like status
-        if (readOnly) {
+        if (readOnly && userId) {
             const rawResponse = await fetch(
-                `${config.base_url}/api/users/6224b1431cfbdb724b2256bc`,
+                `${config.base_url}/api/users/${userId}`,
                 {
                     method: "GET",
                     headers: {
@@ -189,7 +200,7 @@ const Recipe = ({ id, readOnly, navigation, token }) => {
     const [likeOutline, setLikeOutline] = useState(false);
     const toggleLikeRecipe = async () => {
         const rawResponse = await fetch(
-            `${config.base_url}/api/users/recipe/6224b1431cfbdb724b2256bc/${recipe._id}`,
+            `${config.base_url}/api/users/recipe/${userId}/${recipe._id}`,
             {
                 method: "PUT",
                 headers: {
