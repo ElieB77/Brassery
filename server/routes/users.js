@@ -12,10 +12,6 @@ const User = require('../models/User')
 const router = express.Router();
 
 const advancedResults = require('../middlewares/advancedResults')
-const { protect, authorize } = require('../middlewares/authentification')
-
-router.use(protect)
-router.use(authorize('admin'))
 
 router
     .route('/')
