@@ -220,6 +220,45 @@ const Recipe = ({ id, readOnly, navigation, token }) => {
         }
     };
 
+    /* BATCH */
+    // Create
+    const createNewBatch = async () => {
+        const rawResponse = await fetch(
+            `${config.base_url}/api/batches/create`,
+            {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: `recipeId=${recipe._id}&userId=${userId}`,
+            }
+        );
+        const result = await rawResponse.json();
+        navigation.navigate("Batch", {
+            batchId: result._id,
+        });
+    };
+
+    /* // Delete
+    const deleteBatch = async () => {
+        const rawResponse = await fetch(
+            `${config.base_url}/api/batches/create`,
+            {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: `recipeId=${recipe._id}&userId=${userId}`,
+            }
+        );
+        const result = await rawResponse.json();
+        navigation.navigate("Batch", {
+            batchId: result._id,
+        });
+    }; */
+
     // Specific description of the recipe
     const recipeDescription = `${recipe?.description}\n\nCouleur: ${recipe?.colorEstimate} EBC\nAmertume: ${recipe?.ibuEstimate} IBU\nAlcool: ${recipe?.alcoholByVolume} %\nDensité de départ: ${recipe?.originalGravity}\nDensité de fin: ${recipe?.finalGravity}`;
     if (!recipe)
@@ -381,11 +420,7 @@ const Recipe = ({ id, readOnly, navigation, token }) => {
                 <View style={style.brasserBtn}>
                     <CustomButton
                         type="brasser"
-                        onPress={() =>
-                            navigation.navigate("Batch", {
-                                batchId: "6221fc885223412400e58d54",
-                            })
-                        }
+                        onPress={() => createNewBatch()}
                     />
                 </View>
             )}

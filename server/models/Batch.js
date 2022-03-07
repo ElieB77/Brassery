@@ -8,7 +8,6 @@ const StepsStatus = mongoose.Schema({
 
 const BatchModel = mongoose.Schema({
     recipe: { type: mongoose.Schema.Types.ObjectId, ref: "recipes" },
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
     createdAt: Date,
     stepsStatus: [StepsStatus],
     /* ex: 
