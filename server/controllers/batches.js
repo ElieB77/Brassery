@@ -60,7 +60,7 @@ exports.createBatch = asyncHandler(async (req, res, next) => {
     const batchId = batch.id;
 
     user.batches.push({
-        batchId
+        batchId,
     });
     await user.save();
 
@@ -69,5 +69,16 @@ exports.createBatch = asyncHandler(async (req, res, next) => {
 
 exports.deleteBatch = asyncHandler(async (req, res, next) => {
     await Batch.findByIdAndDelete(req.params.id);
+    res.status(200).json({ success: true });
+});
+
+exports.insertMeasure = asyncHandler(async (req, res, next) => {
+    const batch = await Batch.findById(req.params.id);
+    batch.gravities.push({
+        description: req.body.description,
+        value: req.body.value,
+        createdAt: new Date(),
+    });
+    await batch.save();
     res.status(200).json({ success: true });
 });
