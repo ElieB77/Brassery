@@ -11,6 +11,7 @@ import StyleGuide from '../components/utils/StyleGuide';
 
 const Home = ({ navigation, saveToken }) => {
   const [avatar, setAvatar] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     function saveTokenToReducer() {
@@ -27,6 +28,7 @@ const Home = ({ navigation, saveToken }) => {
             const response = await rawResponse.json();
 
             if (response.data) {
+              setUserId(response.data._id);
               let avatar = response.data.avatar.split('/');
               avatar[5] = `${avatar[5]}/w_200,h_200,c_fill,r_max`;
               avatar = avatar.join('/');
@@ -39,7 +41,31 @@ const Home = ({ navigation, saveToken }) => {
       });
     }
     saveTokenToReducer();
-  });
+  }, []);
+
+  useEffect(() => {
+    function loadAvatar() {
+      AsyncStorage.getItem('user', async function (error, data) {
+        if (data != null) {
+          const rawResponse = await fetch(`${config.base_url}/api/auth/me`, {
+            headers: {
+              Authorization: `Bearer ${data}`,
+            },
+          });
+          const response = await rawResponse.json();
+
+          if (response.data) {
+            let avatar = response.data.avatar.split('/');
+            avatar[5] = `${avatar[5]}/w_200,h_200,c_fill,r_max`;
+            avatar = avatar.join('/');
+
+            setAvatar(avatar);
+          }
+        }
+      });
+    }
+    loadAvatar();
+  }, [avatar]);
 
   return (
     <View style={StyleGuide.container}>
@@ -57,7 +83,7 @@ const Home = ({ navigation, saveToken }) => {
             { marginRight: Dimensions.get('window').width / 10 },
           ]}
         >
-          Ma brasserie
+          Ma brassery
         </Text>
         <CustomButton
           type='settings'
@@ -99,8 +125,8 @@ const Home = ({ navigation, saveToken }) => {
           <CustomButton
             title='Mon installation'
             onPress={() =>
-              navigation.navigate('Batch', {
-                batchId: '6221fc885223412400e58d54',
+              navigation.navigate('MyInstallation', {
+                userId,
               })
             }
           />

@@ -3,23 +3,30 @@ import { TextInput, StyleSheet, View, Pressable } from "react-native";
 import Search from "../icons/Search";
 
 
-const InputText = ({ placeholder, type, onChangeText, value, onPress }) => {
+const InputText = ({
+  placeholder,
+  type,
+  onChangeText,
+  value,
+  onPress,
+  style,
+}) => {
   switch (type) {
-    case "text":
+    case 'text':
       return (
         <TextInput
-          style={[styles.textInput, StyleGuide.shadowProp]}
+          style={[styles.textInput, StyleGuide.shadowProp, style]}
           placeholder={placeholder}
           onChangeText={onChangeText}
           value={value}
         />
       );
-    case "password":
+    case 'password':
       return (
         <TextInput
           secureTextEntry={true}
-          style={[styles.textInput, StyleGuide.shadowProp]}
-          placeholder="Mot de passe.."
+          style={[styles.textInput, StyleGuide.shadowProp, style]}
+          placeholder={placeholder ? placeholder : 'Mot de passe...'}
           onChangeText={onChangeText}
           value={value}
         />
@@ -27,8 +34,7 @@ const InputText = ({ placeholder, type, onChangeText, value, onPress }) => {
     case 'textArea':
       return (
         <TextInput
-          style={[styles.textArea, StyleGuide.shadowProp]}
-
+          style={[styles.textArea, StyleGuide.shadowProp, style]}
           underlineColorAndroid='transparent'
           placeholder='Écrivez quelque chose'
           placeholderTextColor={placeholder}
@@ -40,8 +46,12 @@ const InputText = ({ placeholder, type, onChangeText, value, onPress }) => {
       );
     case 'searchInput':
       return (
-        <View style={styles.searchInput}>
-          <TextInput style={styles.textInput} placeholder={placeholder} onChangeText={onChangeText}/>
+        <View style={[styles.searchInput, style]}>
+          <TextInput
+            style={styles.textInput}
+            placeholder={placeholder}
+            onChangeText={onChangeText}
+          />
           <View style={styles.searchIcon}>
             <Pressable onPress={onPress}>
               <Search />
@@ -50,7 +60,6 @@ const InputText = ({ placeholder, type, onChangeText, value, onPress }) => {
         </View>
       );
   }
-
 };
 
 const styles = StyleSheet.create({

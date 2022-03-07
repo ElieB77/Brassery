@@ -43,7 +43,7 @@ const Step6 = ({ navigation, token, user }) => {
       data.append('materials', JSON.stringify(user.materials));
 
       const rawResponse = await fetch(
-        `${config.base_url}/api/auth/updateOnboarding`,
+        `${config.base_url}/api/auth/updateonboarding`,
         {
           method: 'put',
           headers: {

@@ -17,241 +17,250 @@ import Other from "./utils/icons/Other";
 import Heart from "./utils/icons/Heart";
 import StyleGuide from "./utils/StyleGuide";
 
-const CustomButton = ({ onPress, title, time, type, border, outline }) => {
-    switch (type) {
-        case "comment":
-            return (
-                <TouchableOpacity
-                    style={[styles.containerIcon, StyleGuide.shadowProp]}
-                    onPress={onPress}
-                >
-                    <Comment />
-                </TouchableOpacity>
-            );
-        case "search":
-            return (
-                <TouchableOpacity
-                    style={[styles.containerIcon, StyleGuide.shadowProp]}
-                    onPress={onPress}
-                >
-                    <Search />
-                </TouchableOpacity>
-            );
-        case "next":
-            return (
-                <TouchableOpacity
-                    style={[styles.containerIcon, StyleGuide.shadowProp]}
-                    onPress={onPress}
-                >
-                    <Next />
-                </TouchableOpacity>
-            );
-        case "close":
-            return (
-                <TouchableOpacity
-                    style={[styles.containerIcon, StyleGuide.shadowProp]}
-                    onPress={onPress}
-                >
-                    <Close width="13" height="13" />
-                </TouchableOpacity>
-            );
-        case "add":
-            return (
-                <TouchableOpacity
-                    style={[styles.containerIcon, StyleGuide.shadowProp]}
-                    onPress={onPress}
-                >
-                    <Add />
-                </TouchableOpacity>
-            );
-        case "settings":
-            return (
-                <TouchableOpacity
-                    style={[styles.containerIcon, StyleGuide.shadowProp]}
-                    onPress={onPress}
-                >
-                    <Settings />
-                </TouchableOpacity>
-            );
-        case "minus":
-            return (
-                <TouchableOpacity
-                    style={[styles.containerIcon, StyleGuide.shadowProp]}
-                    onPress={onPress}
-                >
-                    <Minus />
-                </TouchableOpacity>
-            );
-        case "densimetre":
-            return (
-                <TouchableOpacity
-                    style={[styles.containerWithText, StyleGuide.shadowProp]}
-                    onPress={onPress}
-                >
-                    <Gravity />
-                    <View style={{ width: "100%", alignItems: "center" }}>
-                        <Text style={styles.text}>Densimètre</Text>
-                    </View>
-                </TouchableOpacity>
-            );
-        case "addNote":
-            return (
-                <TouchableOpacity
-                    style={[styles.containerWithText, StyleGuide.shadowProp]}
-                    onPress={onPress}
-                >
-                    <Add />
-                    <View style={{ width: "100%", alignItems: "center" }}>
-                        <Text style={styles.text}>Ajouter une note</Text>
-                    </View>
-                </TouchableOpacity>
-            );
-        case "other":
-            return (
-                <TouchableOpacity
-                    style={[styles.containerWithText, StyleGuide.shadowProp]}
-                    onPress={onPress}
-                >
-                    <More />
-                    <View style={{ width: "100%", alignItems: "center" }}>
-                        <Text style={styles.text}>Autre</Text>
-                    </View>
-                </TouchableOpacity>
-            );
-        case "convert":
-            return (
-                <TouchableOpacity
-                    style={[styles.containerWithText, StyleGuide.shadowProp]}
-                    onPress={onPress}
-                >
-                    <Convert />
-                    <View style={{ width: "100%", alignItems: "center" }}>
-                        <Text style={styles.text}>Convertisseurs</Text>
-                    </View>
-                </TouchableOpacity>
-            );
-        case "timer":
-            return (
-                <TouchableOpacity
-                    style={[styles.containerWithText, StyleGuide.shadowProp]}
-                    onPress={onPress}
-                >
-                    <Timer />
-                    <View style={{ width: "100%", alignItems: "center" }}>
-                        <Text style={styles.text}>Timer</Text>
-                    </View>
-                </TouchableOpacity>
-            );
-        case "brasser":
-            return (
-                <TouchableOpacity
-                    style={[styles.containerBrasser, StyleGuide.shadowProp]}
-                    onPress={onPress}
-                >
-                    <Brasser width="43" height="43" />
-                    <View style={{ width: "100%", alignItems: "center" }}>
-                        <Text style={styles.text}>Brasser !</Text>
-                    </View>
-                </TouchableOpacity>
-            );
-        case "liker":
-            return (
-                <TouchableOpacity
-                    style={[styles.containerLiker, StyleGuide.shadowProp]}
-                    onPress={onPress}
-                >
-                    <Heart width="30" height="30" outline={outline} />
-                </TouchableOpacity>
-            );
-        case "hops":
-            return (
-                <TouchableOpacity
-                    style={[styles.containerBrasser, StyleGuide.shadowProp]}
-                    onPress={onPress}
-                >
-                    <Brasser width="43" height="43" />
-                    <View style={{ width: "100%", alignItems: "center" }}>
-                        <Text style={styles.text}>Houblon</Text>
-                    </View>
-                </TouchableOpacity>
-            );
-        case "fermentables":
-            return (
-                <TouchableOpacity
-                    style={[styles.containerBrasser, StyleGuide.shadowProp]}
-                    onPress={onPress}
-                >
-                    <Fermentable width="43" height="43" />
-                    <View style={{ width: "100%", alignItems: "center" }}>
-                        <Text style={styles.text}>Malt</Text>
-                    </View>
-                </TouchableOpacity>
-            );
-        case "miscs":
-            return (
-                <TouchableOpacity
-                    style={[styles.containerBrasser, StyleGuide.shadowProp]}
-                    onPress={onPress}
-                >
-                    <Other width="43" height="43" />
-                    <View style={{ width: "100%", alignItems: "center" }}>
-                        <Text style={styles.text}>Autre</Text>
-                    </View>
-                </TouchableOpacity>
-            );
-        case "cultures":
-            return (
-                <TouchableOpacity
-                    style={[styles.containerBrasser, StyleGuide.shadowProp]}
-                    onPress={onPress}
-                >
-                    <Yeast width="43" height="43" />
-                    <View style={{ width: "100%", alignItems: "center" }}>
-                        <Text style={styles.text}>Levure</Text>
-                    </View>
-                </TouchableOpacity>
-            );
-        case "plus":
-            return (
-                <TouchableOpacity
-                    style={[styles.containerPlus, StyleGuide.shadowProp]}
-                    onPress={onPress}
-                >
-                    <Add color={StyleGuide.colors.primary} />
-                </TouchableOpacity>
-            );
-        case "time":
-            return (
-                <TouchableOpacity
-                    style={[styles.containerTime, StyleGuide.shadowProp]}
-                >
-                    <Close
-                        onPress={onPress}
-                        width="12"
-                        height="12"
-                        color={StyleGuide.colors.primary}
-                    />
-                    <Text style={styles.textTime}>{time}</Text>
-                </TouchableOpacity>
-            );
-        default:
-            return (
-                <TouchableOpacity
-                    style={[
-                        styles.container,
-                        StyleGuide.shadowProp,
-                        border && {
-                            borderColor: StyleGuide.colors.secondary,
-                            borderStyle: "solid",
-                            borderWidth: 1,
-                        },
-                    ]}
-                    onPress={onPress}
-                >
-                    <Text style={styles.text}>{title}</Text>
-                </TouchableOpacity>
-            );
-    }
+const CustomButton = ({
+  onPress,
+  title,
+  time,
+  type,
+  border,
+  outline,
+  style,
+}) => {
+  switch (type) {
+    case 'comment':
+      return (
+        <TouchableOpacity
+          style={[styles.containerIcon, StyleGuide.shadowProp, style]}
+          onPress={onPress}
+        >
+          <Comment />
+        </TouchableOpacity>
+      );
+    case 'search':
+      return (
+        <TouchableOpacity
+          style={[styles.containerIcon, StyleGuide.shadowProp, style]}
+          onPress={onPress}
+        >
+          <Search />
+        </TouchableOpacity>
+      );
+    case 'next':
+      return (
+        <TouchableOpacity
+          style={[styles.containerIcon, StyleGuide.shadowProp, style]}
+          onPress={onPress}
+        >
+          <Next />
+        </TouchableOpacity>
+      );
+    case 'close':
+      return (
+        <TouchableOpacity
+          style={[styles.containerIcon, StyleGuide.shadowProp, style]}
+          onPress={onPress}
+        >
+          <Close width='13' height='13' />
+        </TouchableOpacity>
+      );
+    case 'add':
+      return (
+        <TouchableOpacity
+          style={[styles.containerIcon, StyleGuide.shadowProp, style]}
+          onPress={onPress}
+        >
+          <Add />
+        </TouchableOpacity>
+      );
+    case 'settings':
+      return (
+        <TouchableOpacity
+          style={[styles.containerIcon, StyleGuide.shadowProp, style]}
+          onPress={onPress}
+        >
+          <Settings />
+        </TouchableOpacity>
+      );
+    case 'minus':
+      return (
+        <TouchableOpacity
+          style={[styles.containerIcon, StyleGuide.shadowProp, style]}
+          onPress={onPress}
+        >
+          <Minus />
+        </TouchableOpacity>
+      );
+    case 'densimetre':
+      return (
+        <TouchableOpacity
+          style={[styles.containerWithText, StyleGuide.shadowProp, style]}
+          onPress={onPress}
+        >
+          <Gravity />
+          <View style={{ width: '100%', alignItems: 'center' }}>
+            <Text style={styles.text}>Densimètre</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    case 'addNote':
+      return (
+        <TouchableOpacity
+          style={[styles.containerWithText, StyleGuide.shadowProp, style]}
+          onPress={onPress}
+        >
+          <Add />
+          <View style={{ width: '100%', alignItems: 'center' }}>
+            <Text style={styles.text}>Ajouter une note</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    case 'other':
+      return (
+        <TouchableOpacity
+          style={[styles.containerWithText, StyleGuide.shadowProp, style]}
+          onPress={onPress}
+        >
+          <More />
+          <View style={{ width: '100%', alignItems: 'center' }}>
+            <Text style={styles.text}>Autre</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    case 'convert':
+      return (
+        <TouchableOpacity
+          style={[styles.containerWithText, StyleGuide.shadowProp, style]}
+          onPress={onPress}
+        >
+          <Convert />
+          <View style={{ width: '100%', alignItems: 'center' }}>
+            <Text style={styles.text}>Convertisseurs</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    case 'timer':
+      return (
+        <TouchableOpacity
+          style={[styles.containerWithText, StyleGuide.shadowProp, style]}
+          onPress={onPress}
+        >
+          <Timer />
+          <View style={{ width: '100%', alignItems: 'center' }}>
+            <Text style={styles.text}>Timer</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    case 'brasser':
+      return (
+        <TouchableOpacity
+          style={[styles.containerBrasser, StyleGuide.shadowProp, style]}
+          onPress={onPress}
+        >
+          <Brasser width='43' height='43' />
+          <View style={{ width: '100%', alignItems: 'center' }}>
+            <Text style={styles.text}>Brasser !</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    case 'liker':
+      return (
+        <TouchableOpacity
+          style={[styles.containerLiker, StyleGuide.shadowProp, style]}
+          onPress={onPress}
+        >
+          <Heart width='30' height='30' outline={outline} />
+        </TouchableOpacity>
+      );
+    case 'hops':
+      return (
+        <TouchableOpacity
+          style={[styles.containerBrasser, StyleGuide.shadowProp, style]}
+          onPress={onPress}
+        >
+          <Brasser width='43' height='43' />
+          <View style={{ width: '100%', alignItems: 'center' }}>
+            <Text style={styles.text}>Houblon</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    case 'fermentables':
+      return (
+        <TouchableOpacity
+          style={[styles.containerBrasser, StyleGuide.shadowProp, style]}
+          onPress={onPress}
+        >
+          <Fermentable width='43' height='43' />
+          <View style={{ width: '100%', alignItems: 'center' }}>
+            <Text style={styles.text}>Malt</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    case 'miscs':
+      return (
+        <TouchableOpacity
+          style={[styles.containerBrasser, StyleGuide.shadowProp, style]}
+          onPress={onPress}
+        >
+          <Other width='43' height='43' />
+          <View style={{ width: '100%', alignItems: 'center' }}>
+            <Text style={styles.text}>Autre</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    case 'cultures':
+      return (
+        <TouchableOpacity
+          style={[styles.containerBrasser, StyleGuide.shadowProp, style]}
+          onPress={onPress}
+        >
+          <Yeast width='43' height='43' />
+          <View style={{ width: '100%', alignItems: 'center' }}>
+            <Text style={styles.text}>Levure</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    case 'plus':
+      return (
+        <TouchableOpacity
+          style={[styles.containerPlus, StyleGuide.shadowProp, style]}
+          onPress={onPress}
+        >
+          <Add color={StyleGuide.colors.primary} />
+        </TouchableOpacity>
+      );
+    case 'time':
+      return (
+        <TouchableOpacity
+          style={[styles.containerTime, StyleGuide.shadowProp, style]}
+        >
+          <Close
+            onPress={onPress}
+            width='12'
+            height='12'
+            color={StyleGuide.colors.primary}
+          />
+          <Text style={styles.textTime}>{time}</Text>
+        </TouchableOpacity>
+      );
+    default:
+      return (
+        <TouchableOpacity
+          style={[
+            style,
+            styles.container,
+            StyleGuide.shadowProp,
+            border && {
+              borderColor: StyleGuide.colors.secondary,
+              borderStyle: 'solid',
+              borderWidth: 1,
+            },
+          ]}
+          onPress={onPress}
+        >
+          <Text style={styles.text}>{title}</Text>
+        </TouchableOpacity>
+      );
+  }
 };
 
 const styles = StyleSheet.create({

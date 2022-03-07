@@ -16,6 +16,8 @@ import Resources from "./screens/Resources";
 import BeerLiked from './screens/myBrewery/BeerLiked'
 import Beer from "./screens/myBrewery/Beer";
 import Other from "./screens/otherBrewery.jsx/Other";
+import Settings from './screens/Settings'
+import MyInstallation from './screens/myBrewery/MyInstallation'
 
 import Navbar from "./components/layouts/navbar/Navbar";
 
@@ -107,6 +109,14 @@ const App = () => {
                                     <Stack.Screen
                                         name="Beer"
                                         component={Beer}
+                                    />
+                                    <Stack.Screen
+                                        name="Settings"
+                                        component={Settings}
+                                    />
+                                    <Stack.Screen
+                                        name="MyInstallation"
+                                        component={MyInstallation}
                                     />
                             </>
                         )}
