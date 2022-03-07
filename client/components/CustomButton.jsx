@@ -15,6 +15,7 @@ import Fermentable from "./utils/icons/Fermentable";
 import Yeast from "./utils/icons/Yeast";
 import Other from "./utils/icons/Other";
 import Heart from "./utils/icons/Heart";
+import Measure from "./utils/icons/Measure";
 import StyleGuide from "./utils/StyleGuide";
 
 const CustomButton = ({ onPress, title, time, type, border, outline }) => {
@@ -94,6 +95,18 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
                     </View>
                 </TouchableOpacity>
             );
+        case "measure":
+            return (
+                <TouchableOpacity
+                    style={[styles.containerWithText, StyleGuide.shadowProp]}
+                    onPress={onPress}
+                >
+                    <Measure />
+                    <View style={{ width: "100%", alignItems: "center" }}>
+                        <Text style={styles.text}>Mesures</Text>
+                    </View>
+                </TouchableOpacity>
+            );
         case "addNote":
             return (
                 <TouchableOpacity
@@ -102,7 +115,19 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
                 >
                     <Add />
                     <View style={{ width: "100%", alignItems: "center" }}>
-                        <Text style={styles.text}>Ajouter une note</Text>
+                        <Text style={styles.text}>Ajouter note</Text>
+                    </View>
+                </TouchableOpacity>
+            );
+        case "addMeasure":
+            return (
+                <TouchableOpacity
+                    style={[styles.containerWithText, StyleGuide.shadowProp]}
+                    onPress={onPress}
+                >
+                    <Add />
+                    <View style={{ width: "100%", alignItems: "center" }}>
+                        <Text style={styles.text}>Ajouter mesure</Text>
                     </View>
                 </TouchableOpacity>
             );
@@ -238,7 +263,19 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
             return (
                 <TouchableOpacity
                     style={[
-                        styles.container,
+                        outline
+                            ? {
+                                  backgroundColor: StyleGuide.colors.white,
+                                  borderRadius: StyleGuide.borderRadius,
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                  width: 207,
+                                  height: 45,
+                                  borderColor: StyleGuide.colors.primary,
+                                  borderStyle: "solid",
+                                  borderWidth: 2,
+                              }
+                            : styles.container,
                         StyleGuide.shadowProp,
                         border && {
                             borderColor: StyleGuide.colors.secondary,

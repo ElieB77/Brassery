@@ -8,18 +8,19 @@ import List from "../lists/list";
 import ListItem from "../lists/listItem";
 import Input from "../utils/form-elements/Input";
 import config from "../../config/globalVariables";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-function NoteOverlay({ recipe, section, closeAction, position, token }) {
+function MeasureOverlay({ closeAction, batch, token }) {
     /* STATES */
-    const [addNote, setAddNote] = useState(false);
-    const [noteTitle, setNoteTitle] = useState("");
-    const [noteContent, setNoteContent] = useState("");
-    const [notesData, setNotesData] = useState([]);
+    const [addMeasure, setAddMeasure] = useState(false);
+    const [measuresData, setMeasuresData] = useState([]);
+    const [measureValue, setMeasureValue] = useState("");
+    const [measureContent, setMeasureContent] = useState("");
 
     /* OTHER HOOKS */
     useEffect(async () => {
         const rawResponse = await fetch(
-            `${config.base_url}/api/recipes/${recipe}`,
+            `${config.base_url}/api/batches/${batch}`,
             {
                 method: "GET",
                 headers: {
@@ -29,22 +30,19 @@ function NoteOverlay({ recipe, section, closeAction, position, token }) {
             }
         );
         const result = await rawResponse.json();
-        setNotesData(result[section][`${section}Steps`][position].notes);
-    }, [addNote]);
+        setMeasuresData(result.gravities);
+    }, [addMeasure]);
 
     /* FETCH */
-    const insertNote = async () => {
-        await fetch(
-            `${config.base_url}/api/recipes/${recipe}/addNote/${section}/${position}`,
-            {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-                body: `name=${noteTitle}&content=${noteContent}`,
-            }
-        );
+    const insertMeasure = async () => {
+        await fetch(`${config.base_url}/api/batches/${batch}/addMeasure`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: `description=${measureContent}&value=${measureValue}`,
+        });
     };
 
     /* STYLES */
@@ -79,8 +77,11 @@ function NoteOverlay({ recipe, section, closeAction, position, token }) {
         },
     });
 
-    const allItems = notesData?.map((note, i) => {
-        return <ListItem content={note.content} title={note.name} key={i} />;
+    const allItems = measuresData?.map((measure, i) => {
+        const displayText = `Date: ${new Date(
+            measure.createdAt
+        ).toLocaleDateString("en-GB")}\n${measure.description}`;
+        return <ListItem content={displayText} title={measure.value} key={i} />;
     });
 
     return (
@@ -88,22 +89,24 @@ function NoteOverlay({ recipe, section, closeAction, position, token }) {
             <View style={[styles.overlay, StyleGuide.shadowProp]}>
                 <View style={styles.titleContainer}>
                     <CustomButton type="close" onPress={() => closeAction()} />
-                    <Text style={StyleGuide.typography.text5}>Notes</Text>
+                    <Text style={StyleGuide.typography.text5}>
+                        Mesures de densité
+                    </Text>
                 </View>
-                {addNote ? (
+                {addMeasure ? (
                     <View>
                         <View style={styles.inputContainer}>
                             <Input
                                 type="text"
-                                placeholder="Titre"
-                                onChangeText={(e) => setNoteTitle(e)}
+                                placeholder="Densité mesurée"
+                                onChangeText={(e) => setMeasureValue(e)}
                             />
-                        </View>
-                        <View style={styles.inputContainer}>
-                            <Input
-                                type="textArea"
-                                onChangeText={(e) => setNoteContent(e)}
-                            />
+                            <View style={styles.inputContainer}>
+                                <Input
+                                    type="textArea"
+                                    onChangeText={(e) => setMeasureContent(e)}
+                                />
+                            </View>
                         </View>
                     </View>
                 ) : (
@@ -111,10 +114,12 @@ function NoteOverlay({ recipe, section, closeAction, position, token }) {
                 )}
                 <View style={styles.btnContainer}>
                     <CustomButton
-                        type={addNote ? "" : "addNote"}
+                        type={addMeasure ? "" : "addMeasure"}
                         title="Valider"
                         onPress={() =>
-                            addNote ? [insertNote(),setAddNote(false)] : setAddNote(true)
+                            addMeasure
+                                ? [insertMeasure(), setAddMeasure(false)]
+                                : setAddMeasure(true)
                         }
                     />
                 </View>
@@ -127,4 +132,4 @@ function mapStateToProps(state) {
     return { token: state.token };
 }
 
-export default connect(mapStateToProps, null)(NoteOverlay);
+export default connect(mapStateToProps, null)(MeasureOverlay);

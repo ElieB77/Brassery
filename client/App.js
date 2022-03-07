@@ -5,6 +5,8 @@ import UserPage from './screens/otherbrewers/UserPage'
 import Recipe from "./screens/functionalities/Recipe";
 import Batch from "./screens/functionalities/Batch";
 import Home from "./screens/Home";
+import FirstPage from "./screens/FirstPage";
+import Discovering from "./screens/Discovering";
 import SignIn from "./screens/authentification/SignIn";
 import SignUp from "./screens/authentification/SignUp";
 import Step1 from "./screens/createBrassery/steps/Step1";
@@ -54,6 +56,8 @@ const App = () => {
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             {!isLoggedIn ? (
               <>
+                <Stack.Screen name="FirstPage" component={FirstPage} />
+                <Stack.Screen name="Discovering" component={Discovering} />
                 <Stack.Screen name="Home" component={Home} />
                 <Stack.Screen name="Resources" component={Resources} />
                 <Stack.Screen name="SignIn" component={SignIn} />
@@ -71,6 +75,8 @@ const App = () => {
             ) : (
               <>
                 <Stack.Screen name="Navbar" component={Navbar} />
+                <Stack.Screen name="FirstPage" component={FirstPage} />
+                <Stack.Screen name="Discovering" component={Discovering} />
                 <Stack.Screen name="Resources" component={Resources} />
                 <Stack.Screen name="Batch" component={Batch} />
                 <Stack.Screen name="Recipe" component={Recipe} />

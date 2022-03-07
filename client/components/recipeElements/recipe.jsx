@@ -13,62 +13,13 @@ import CustomButton from "../CustomButton";
 import ActionOverlay from "../overlays/ActionOverlay";
 import RecipeTimer from "./RecipeTimer";
 import NoteOverlay from "../overlays/noteOverlay";
+import MeasureOverlay from "../overlays/measureOverlay";
 import IngredientsOverlay from "../overlays/ingredientsOverlay";
 
 import config from "../../config/globalVariables";
 import StyleGuide from "../utils/StyleGuide";
 
 const Recipe = ({ id, readOnly, navigation, token }) => {
-    /* STYLES */
-    const style = StyleSheet.create({
-        mainContainer: {
-            paddingTop: 60,
-            backgroundColor: StyleGuide.colors.white,
-        },
-        header: { left: 25 },
-        scrollContainer: {
-            alignItems: "center",
-            paddingBottom: 100,
-        },
-        dividerColor: { backgroundColor: StyleGuide.colors.primary },
-        titleContainer: { textAlign: "left", width: "100%" },
-        overlay: {
-            backgroundColor: "rgba(255,255,255,0.8)",
-            ...StyleSheet.absoluteFill,
-        },
-        actionBtnOpen: {
-            height: 200,
-            justifyContent: "space-between",
-            position: "absolute",
-            top: "60%",
-            left: "60%",
-        },
-        actionBtn: {
-            position: "absolute",
-            top: "90%",
-            left: "80%",
-            transform: [{ rotate: transparentOverlay ? "45deg" : "0deg" }],
-        },
-        brasserBtn: {
-            position: "absolute",
-            top: "89%",
-            left: "33%",
-            transform: [{ scale: 0.9 }],
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-        },
-        likeBtn: {
-            position: "absolute",
-            top: "91%",
-            left: "5%",
-            transform: [{ scale: 0.9 }],
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-        },
-    });
-
     // GET user ID
     const [userId, setUserId] = useState(null);
     useEffect(() => {
@@ -109,11 +60,26 @@ const Recipe = ({ id, readOnly, navigation, token }) => {
     };
     let noteOverlayRender = (
         <NoteOverlay
-            type={noteOverlay}
             closeAction={closeNoteOverlay}
             recipe={recipe?._id}
             section={notesCat}
             position={notesPosition}
+        />
+    );
+
+    // Measures overlay when clicking measure btn
+    const [measureOverlay, setMeasureOverlay] = useState(null);
+    const displayMeasureOverlay = () => {
+        setTransparentOverlay(false);
+        setMeasureOverlay(true);
+    };
+    const closeMeasureOverlay = () => {
+        setMeasureOverlay(null);
+    };
+    let measureOverlayRender = (
+        <MeasureOverlay
+            closeAction={closeMeasureOverlay}
+            batch={batch?._id}
         />
     );
 
@@ -256,6 +222,56 @@ const Recipe = ({ id, readOnly, navigation, token }) => {
         />
     );
 
+    /* STYLES */
+    const style = StyleSheet.create({
+        mainContainer: {
+            paddingTop: 60,
+            backgroundColor: StyleGuide.colors.white,
+        },
+        header: { left: 25 },
+        scrollContainer: {
+            alignItems: "center",
+            paddingBottom: 100,
+        },
+        dividerColor: { backgroundColor: StyleGuide.colors.primary },
+        titleContainer: { textAlign: "left", width: "100%" },
+        overlay: {
+            backgroundColor: "rgba(255,255,255,0.8)",
+            ...StyleSheet.absoluteFill,
+        },
+        actionBtnOpen: {
+            height: 250,
+            justifyContent: "space-between",
+            position: "absolute",
+            top: "55%",
+            left: "60%",
+        },
+        actionBtn: {
+            position: "absolute",
+            top: "90%",
+            left: "80%",
+            transform: [{ rotate: transparentOverlay ? "45deg" : "0deg" }],
+        },
+        brasserBtn: {
+            position: "absolute",
+            top: "89%",
+            left: "33%",
+            transform: [{ scale: 0.9 }],
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+        },
+        likeBtn: {
+            position: "absolute",
+            top: "91%",
+            left: "5%",
+            transform: [{ scale: 0.9 }],
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+        },
+    });
+
     // Specific description of the recipe
     const recipeDescription = `${recipe?.description}\n\nCouleur: ${recipe?.colorEstimate} EBC\nAmertume: ${recipe?.ibuEstimate} IBU\nAlcool: ${recipe?.alcoholByVolume} %\nDensité de départ: ${recipe?.originalGravity}\nDensité de fin: ${recipe?.finalGravity}`;
     if (!recipe)
@@ -390,6 +406,10 @@ const Recipe = ({ id, readOnly, navigation, token }) => {
                             onPress={() => displayActionOverlay("options")}
                         />
                         <CustomButton
+                            type="measure"
+                            onPress={() => displayMeasureOverlay()}
+                        />
+                        <CustomButton
                             type="densimetre"
                             onPress={() => displayActionOverlay("densimetre")}
                         />
@@ -435,6 +455,7 @@ const Recipe = ({ id, readOnly, navigation, token }) => {
             {actionOverlay && actionOverlayRender}
             {noteOverlay && noteOverlayRender}
             {ingredientOverlay && ingredientOverlayRender}
+            {measureOverlay && measureOverlayRender}
         </View>
     );
 };
