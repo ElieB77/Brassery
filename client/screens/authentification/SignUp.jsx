@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
+import { connect } from 'react-redux';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import config from '../../config/globalVariables';
 
@@ -13,7 +15,7 @@ import Google from '../../components/utils/icons/Google';
 
 import StyleGuide from '../../components/utils/StyleGuide';
 
-const SignUp = ({ navigation }) => {
+const SignUp = ({ navigation, saveToken }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -29,6 +31,7 @@ const SignUp = ({ navigation }) => {
 
     if (response.token) {
       AsyncStorage.setItem('user', response.token);
+      saveToken(response.token);
       navigation.navigate('Step1');
     } else {
       console.log(response);
@@ -144,4 +147,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUp;
+function mapDispatchToProps(dispatch) {
+  return {
+    saveToken: (token) => {
+      dispatch({ type: 'addToken', token });
+    },
+  };
+}
+
+export default connect(null, mapDispatchToProps)(SignUp);
+

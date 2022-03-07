@@ -130,27 +130,27 @@ const ResourceIngredient = (props) => {
   };
 
   return (
-    <View style={[StyleGuide.container, { alignItems: "center" }]}>
-      <Header title="Ressources" />
+    <View style={[StyleGuide.container, { alignItems: 'center' }]}>
+      <Header title='Ressources' />
       {/* Navigation */}
       <View style={styles.btnGroup}>
-        <Pressable onPress={() => props.changeResource("recipes")}>
+        <Pressable onPress={() => props.changeResource('recipes')}>
           <Text style={[StyleGuide.typography.text3, styles.btnGroupText]}>
             Recettes
           </Text>
         </Pressable>
-        <Pressable onPress={() => props.changeResource("ingredients")}>
+        <Pressable onPress={() => props.changeResource('ingredients')}>
           <Text
             style={[
               StyleGuide.typography.text3,
               styles.btnGroupText,
-              { textDecorationLine: "underline" },
+              { textDecorationLine: 'underline' },
             ]}
           >
             Ingrédients
           </Text>
         </Pressable>
-        <Pressable onPress={() => props.changeResource("equipments")}>
+        <Pressable onPress={() => props.changeResource('equipments')}>
           <Text style={[StyleGuide.typography.text3, styles.btnGroupText]}>
             Matériels
           </Text>
@@ -172,22 +172,30 @@ const ResourceIngredient = (props) => {
           <Text style={[StyleGuide.typography.text3, styles.filterLabel]}>
             Recherche par mots clés
           </Text>
+<<<<<<< HEAD:client/screens/ressources/ResourceIngredient.jsx
 
           <Input
             type="text"
             placeholder={"Amarillo.."}
             onChangeText={(val) => setSearchInput(val)}
           />
+=======
+          <Input type='text' placeholder={'Pale Ale..'} />
+>>>>>>> 21a6288396dfe1704d5a3de0dad8a0e4cc789fa7:client/components/resources/ResourceIngredient.jsx
         </View>
-        <View style={{ position: "relative", zIndex: 10 }}>
+        <View style={{ position: 'relative', zIndex: 10 }}>
           <Text style={[StyleGuide.typography.text3, styles.filterLabel]}>
             Catégories
           </Text>
+<<<<<<< HEAD:client/screens/ressources/ResourceIngredient.jsx
           <Dropdown
             title={"Choisissez une catégorie"}
             item={ingredientCategory}
             getValue={getCategory}
           />
+=======
+          <Dropdown title={'Bière blonde'} />
+>>>>>>> 21a6288396dfe1704d5a3de0dad8a0e4cc789fa7:client/components/resources/ResourceIngredient.jsx
         </View>
         {/* Slider */}
         <View style={{ alignItems: "flex-end", marginTop: 20 }}>
@@ -198,6 +206,7 @@ const ResourceIngredient = (props) => {
       {/* List */}
 
       <View
+<<<<<<< HEAD:client/screens/ressources/ResourceIngredient.jsx
         style={{
           width: 300,
           marginTop: 25,
@@ -206,6 +215,20 @@ const ResourceIngredient = (props) => {
         }}
       >
         <List>{ingredientList}</List>
+=======
+        style={{ width: 300, marginTop: 50, position: 'relative', zIndex: 0 }}
+      >
+        <List>
+          <ListItem title='test' content='test' btnType='next' />
+          <ListItem title='test' content='test' btnType='next' />
+          <ListItem title='test' content='test' btnType='next' />
+          <ListItem title='test' content='test' btnType='next' />
+          <ListItem title='test' content='test' btnType='next' />
+          <ListItem title='test' content='test' btnType='next' />
+          <ListItem title='test' content='test' btnType='next' />
+          <ListItem title='test' content='test' btnType='next' />
+        </List>
+>>>>>>> 21a6288396dfe1704d5a3de0dad8a0e4cc789fa7:client/components/resources/ResourceIngredient.jsx
       </View>
     </View>
   );
@@ -226,11 +249,6 @@ const styles = StyleSheet.create({
   },
   btnGroupText: {
     color: StyleGuide.colors.secondary,
-    borderColor: "rgba(255,0,0,1)",
-    borderWidth: 0,
-    borderTopWidth: 2,
-    borderBottomWidth: 2,
-    borderStyle: "dashed",
   },
   filterContainer: {
     marginTop: 30,

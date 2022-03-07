@@ -57,8 +57,16 @@ const UserSchema = mongoose.Schema({
             type: Number,
             default: 0 
         },
-        long: { type: Number, default: 0 },
+        long: {
+            type: Number,
+            default: 0
+        },
     },
+    brewDescription: String,
+    brewedYet: String,
+    favoriteBeer: String,
+    installationDescription: String,
+    installationPicture: String,
     materials: [{ type: mongoose.Schema.Types.ObjectId, ref: "materials" }],
     likedRecipes: [{ type: mongoose.Schema.Types.ObjectId, ref: "recipes" }],
     batches: [BatchSchema],

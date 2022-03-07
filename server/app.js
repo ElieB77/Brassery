@@ -2,6 +2,7 @@ const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
+const fileUpload = require('express-fileupload')
 const mongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
 const xss = require("xss-clean");
@@ -21,12 +22,16 @@ dotenv.config({ path: "./config/config.env" });
 connectDB();
 
 // Route files
-const authentification = require('./routes/authentification')
-const users = require('./routes/users')
-const recipes = require('./routes/recipes')
-const materials = require('./routes/materials')
+const authentification = require("./routes/authentification");
+const users = require("./routes/users");
+const recipes = require("./routes/recipes");
+const materials = require("./routes/materials");
+const batches = require("./routes/batches");
 
 const app = express();
+
+// file upload
+app.use(fileUpload())
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -61,10 +66,11 @@ app.use(limiter);
 app.use(cors());
 
 // Mount routers
-app.use('/api/auth', authentification);
-app.use('/api/users', users);
-app.use('/api/recipes', recipes);
-app.use('/api/materials', materials);
+app.use("/api/auth", authentification);
+app.use("/api/users", users);
+app.use("/api/recipes", recipes);
+app.use("/api/materials", materials);
+app.use("/api/batches", batches);
 
 app.use(errorHandler);
 

@@ -14,20 +14,24 @@ export default function RecipeDescription(props) {
             backgroundColor: StyleGuide.colors.secondary,
             elevation: 10,
             marginBottom: 10,
-            width:"100%"
+            width: "100%",
         },
         text: {
-            color:StyleGuide.colors.white
+            color: StyleGuide.colors.white,
         },
         headline: {
-            color:StyleGuide.colors.primary
-        }
+            color: StyleGuide.colors.primary,
+        },
     });
 
     return (
         <View style={styles.container}>
-            <Text style={[StyleGuide.typography.text1,styles.headline]}>{props.title}</Text>
-            <Text style={[StyleGuide.typography.text3,styles.text]}>{props.content}</Text>
+            <Text style={[StyleGuide.typography.text1, styles.headline]}>
+                {props.title}
+            </Text>
+            <Text style={[StyleGuide.typography.text3, styles.text]}>
+                {props.content}
+            </Text>
         </View>
     );
 }

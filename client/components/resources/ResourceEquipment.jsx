@@ -1,3 +1,4 @@
+<<<<<<< HEAD:client/screens/ressources/ResourceEquipment.jsx
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import StyleGuide from "../../components/utils/StyleGuide";
@@ -9,6 +10,16 @@ import ListItem from "../../components/lists/listItem";
 import config from "../../config/globalVariables";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CustomButton from "../../components/CustomButton";
+=======
+import React from "react";
+import { View, Text, StyleSheet, Pressable, ScrollView } from "react-native";
+import StyleGuide from "../utils/StyleGuide";
+import Header from "../headings/Header";
+import Input from "../utils/form-elements/Input";
+import Dropdown from "../utils/form-elements/Dropdown";
+import List from "../lists/list";
+import ListItem from "../lists/listItem";
+>>>>>>> 21a6288396dfe1704d5a3de0dad8a0e4cc789fa7:client/components/resources/ResourceEquipment.jsx
 
 const ResourceEquipment = (props) => {
   const [categories, setCategories] = useState([]);
@@ -126,26 +137,26 @@ const ResourceEquipment = (props) => {
   };
 
   return (
-    <View style={[StyleGuide.container, { alignItems: "center" }]}>
-      <Header title="Ressources" />
+    <View style={[StyleGuide.container, { alignItems: 'center' }]}>
+      <Header title='Ressources' />
       {/* Navigation */}
       <View style={styles.btnGroup}>
-        <Pressable onPress={() => props.changeResource("recipes")}>
+        <Pressable onPress={() => props.changeResource('recipes')}>
           <Text style={[StyleGuide.typography.text3, styles.btnGroupText]}>
             Recettes
           </Text>
         </Pressable>
-        <Pressable onPress={() => props.changeResource("ingredients")}>
+        <Pressable onPress={() => props.changeResource('ingredients')}>
           <Text style={[StyleGuide.typography.text3, styles.btnGroupText]}>
             Ingrédients
           </Text>
         </Pressable>
-        <Pressable onPress={() => props.changeResource("equipments")}>
+        <Pressable onPress={() => props.changeResource('equipments')}>
           <Text
             style={[
               StyleGuide.typography.text3,
               styles.btnGroupText,
-              { textDecorationLine: "underline" },
+              { textDecorationLine: 'underline' },
             ]}
           >
             Matériels
@@ -168,26 +179,35 @@ const ResourceEquipment = (props) => {
           <Text style={[StyleGuide.typography.text3, styles.filterLabel]}>
             Recherche par mots clés
           </Text>
+<<<<<<< HEAD:client/screens/ressources/ResourceEquipment.jsx
           <Input
             type="text"
             placeholder={" Pompes de transfert.."}
             onChangeText={(val) => setSearchInput(val)}
           />
+=======
+          <Input type='text' placeholder={'Pale Ale..'} />
+>>>>>>> 21a6288396dfe1704d5a3de0dad8a0e4cc789fa7:client/components/resources/ResourceEquipment.jsx
         </View>
-        <View style={{ position: "relative", zIndex: 10 }}>
+        <View style={{ position: 'relative', zIndex: 10 }}>
           <Text style={[StyleGuide.typography.text3, styles.filterLabel]}>
             Catégories
           </Text>
+<<<<<<< HEAD:client/screens/ressources/ResourceEquipment.jsx
           <Dropdown
             title={"Choisissez une catégorie"}
             item={categories}
             getValue={getCategory}
           />
+=======
+          <Dropdown title={'Bière blonde'} />
+>>>>>>> 21a6288396dfe1704d5a3de0dad8a0e4cc789fa7:client/components/resources/ResourceEquipment.jsx
         </View>
-        <View style={{ position: "relative", zIndex: 9 }}>
+        <View style={{ position: 'relative', zIndex: 9 }}>
           <Text style={[StyleGuide.typography.text3, styles.filterLabel]}>
             Marques
           </Text>
+<<<<<<< HEAD:client/screens/ressources/ResourceEquipment.jsx
           <Dropdown
             title={"Choisissez une marque"}
             item={brand}
@@ -196,15 +216,31 @@ const ResourceEquipment = (props) => {
         </View>
         <View style={{ alignItems: "flex-end", marginTop: 20 }}>
           <CustomButton type="search" onPress={() => search()} />
+=======
+          <Dropdown title={'Bière blonde'} />
+>>>>>>> 21a6288396dfe1704d5a3de0dad8a0e4cc789fa7:client/components/resources/ResourceEquipment.jsx
         </View>
       </View>
       {/* List */}
+<<<<<<< HEAD:client/screens/ressources/ResourceEquipment.jsx
       <View style={styles.divider}></View>
 
       <View
         style={{ width: 300, marginTop: 25, zIndex: -1, position: "relative" }}
       >
         <List>{materialList}</List>
+=======
+      <View style={{ width: 300, marginTop: 50 }}>
+        <List>
+          <ListItem title='test' content='test' btnType='next' />
+          <ListItem title='test' content='test' btnType='next' />
+          <ListItem title='test' content='test' btnType='next' />
+          <ListItem title='test' content='test' btnType='next' />
+          <ListItem title='test' content='test' btnType='next' />
+          <ListItem title='test' content='test' btnType='next' />
+          <ListItem title='test' content='test' btnType='next' />
+        </List>
+>>>>>>> 21a6288396dfe1704d5a3de0dad8a0e4cc789fa7:client/components/resources/ResourceEquipment.jsx
       </View>
     </View>
   );
@@ -225,11 +261,6 @@ const styles = StyleSheet.create({
   },
   btnGroupText: {
     color: StyleGuide.colors.secondary,
-    borderColor: "rgba(255,0,0,1)",
-    borderWidth: 0,
-    borderTopWidth: 2,
-    borderBottomWidth: 2,
-    borderStyle: "dashed",
   },
   filterContainer: {
     marginTop: 30,
