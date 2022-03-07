@@ -7,10 +7,11 @@ export default function ListItem(props) {
     /* STATE */
     const [seeMoreBtnText, setSeeMoreBtnText] = useState("voir plus...");
     const [limitHeight, setLimitHeight] = useState(true);
+    const [selected, setSelected] = useState(false);
     const [content, setContent] = useState(props.content);
     let maxWords = 8;
     useEffect(() => {
-        if (limitHeight) {
+        if (limitHeight && content) {
             let contentLength = content.split(" ").length;
             if (contentLength > maxWords) {
                 let contentTemp = content.split(" ");
@@ -20,6 +21,11 @@ export default function ListItem(props) {
             }
             setSeeMoreBtnText("voir plus ↓");
         }
+        if (!limitHeight) {
+            setContent(props.content);
+            setSeeMoreBtnText("voir moins ↑");
+        }
+        setSeeMoreBtnText("voir plus ↓");
         if (!limitHeight) {
             setContent(props.content);
             setSeeMoreBtnText("voir moins ↑");
@@ -42,9 +48,10 @@ export default function ListItem(props) {
             borderBottomLeftRadius: props.last ? StyleGuide.borderRadius : 0,
             borderTopRightRadius: props.first ? StyleGuide.borderRadius : 0,
             borderTopLeftRadius: props.first ? StyleGuide.borderRadius : 0,
-            backgroundColor: props.reverseColor
-                ? StyleGuide.colors.secondary
-                : StyleGuide.colors.white,
+            backgroundColor:
+                props.reverseColor || selected
+                    ? StyleGuide.colors.secondary
+                    : StyleGuide.colors.white,
         },
         btnContainer: {
             justifyContent: "center",
@@ -55,11 +62,27 @@ export default function ListItem(props) {
             flexDirection: "column",
         },
         text: {
-            color: props.reverseColor
-                ? StyleGuide.colors.primary
-                : StyleGuide.colors.secondary,
+            color:
+                props.reverseColor || selected
+                    ? StyleGuide.colors.primary
+                    : StyleGuide.colors.secondary,
         },
     });
+
+    const handleClick = () => {
+        if (!selected) {
+            setSelected(true);
+        } else {
+            setSelected(false);
+        }
+
+        const element = {
+            title: props.title,
+            content: props.content,
+        };
+
+        props.getValue(element);
+    };
 
     return (
         <View style={styles.container}>
@@ -67,7 +90,7 @@ export default function ListItem(props) {
                 <Text style={[StyleGuide.typography.text5, styles.text]}>
                     {props.title}
                 </Text>
-                {content.split(" ").length > maxWords ? (
+                {content?.split(" ").length > maxWords ? (
                     <Pressable onPress={() => setLimitHeight(!limitHeight)}>
                         <Text
                             style={[StyleGuide.typography.text3, styles.text]}
@@ -93,8 +116,8 @@ export default function ListItem(props) {
             {props.btnType && (
                 <View style={styles.btnContainer}>
                     <CustomButton
-                        type={props.btnType}
-                        onPress={props.onPress}
+                        type={selected ? "minus" : props.btnType}
+                        onPress={props.getValue ? () => handleClick() : props.onPress}
                     />
                 </View>
             )}

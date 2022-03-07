@@ -1,6 +1,10 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { View, Text } from "react-native";
-import StyleGuide from "../../utils/StyleGuide";
+import React, { useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { connect } from 'react-redux';
+
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { View, Text } from 'react-native';
+import StyleGuide from '../../utils/StyleGuide';
 
 import MyBrewery from "../../../screens/MyBrewery";
 import OtherBrewers from "../../../screens/otherbrewers/Map";
@@ -8,17 +12,28 @@ import Ressources from "../../../screens/ressources/Ressources";
 
 import BrasserieIcon from "../../utils/icons/Brasserie";
 import LocationIcon from "../../utils/icons/Location";
-import RessourcesIcon from "../../utils/icons/Ressources";
+import ResourcesIcon from "../../utils/icons/Resources";
 
 const Tab = createBottomTabNavigator();
 
-const Navbar = () => {
+const Navbar = ({ saveToken }) => {
+  useEffect(() => {
+    function saveTokenToReducer() {
+      AsyncStorage.getItem('user', function (error, data) {
+        if (data != null) {
+          saveToken(data);
+        }
+      });
+    }
+    saveTokenToReducer();
+  }, []);
+
   return (
     <Tab.Navigator
       tabBarOptions={{
         showLabel: false,
         style: {
-          shadowColor: "#7F5DF0",
+          shadowColor: '#7F5DF0',
           shadowOffset: {
             width: 0,
             height: 10,
@@ -31,11 +46,12 @@ const Navbar = () => {
       }}
     >
       <Tab.Screen
-        name="Ma brasserie"
+        name='Ma brasserie'
         component={MyBrewery}
         options={{
+          tabBarStyle: { display: 'none' },
           tabBarIcon: ({ focused }) => (
-            <View style={{ alignItems: "center" }}>
+            <View style={{ alignItems: 'center' }}>
               <BrasserieIcon
                 color={
                   focused
@@ -61,11 +77,11 @@ const Navbar = () => {
         }}
       />
       <Tab.Screen
-        name="Autres brasseurs"
+        name='Autres brasseurs'
         component={OtherBrewers}
         options={{
           tabBarIcon: ({ focused }) => (
-            <View style={{ alignItems: "center" }}>
+            <View style={{ alignItems: 'center' }}>
               <LocationIcon
                 color={
                   focused
@@ -91,12 +107,12 @@ const Navbar = () => {
         }}
       />
       <Tab.Screen
-        name="Ressources"
-        component={Ressources}
+        name='Resources'
+        component={Resources}
         options={{
           tabBarIcon: ({ focused }) => (
-            <View style={{ alignItems: "center" }}>
-              <RessourcesIcon
+            <View style={{ alignItems: 'center' }}>
+              <ResourcesIcon
                 color={
                   focused
                     ? StyleGuide.colors.secondary
@@ -114,7 +130,7 @@ const Navbar = () => {
                   },
                 ]}
               >
-                Ressources
+                Resources
               </Text>
             </View>
           ),
@@ -124,4 +140,12 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+function mapDispatchToProps(dispatch) {
+  return {
+    saveToken: (token) => {
+      dispatch({ type: 'saveToken', token });
+    },
+  };
+}
+
+export default connect(null, mapDispatchToProps)(Navbar);

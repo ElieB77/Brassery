@@ -86,7 +86,7 @@ export default function IngredientsOverlay({
         },
     });
 
-    const allItems = ingredientsList.map((element, i) => {
+    const allItems = ingredientsList?.map((element, i) => {
         return (
             <ListItem
                 content={processContent(element)}

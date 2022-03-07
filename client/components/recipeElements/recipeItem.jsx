@@ -1,20 +1,43 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Button, Pressable } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import CustomButton from "../CustomButton";
 import StyleGuide from "../utils/StyleGuide";
-import NoteOverlay from "../overlays/noteOverlay";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import config from "../../config/globalVariables";
 
 import Checkbox from "../utils/form-elements/Checkbox";
 
 export default function RecipeItem(props) {
     /* STATES */
-    const [seeMoreBtnText, setSeeMoreBtnText] = useState("voir plus...");
-    const [isDone, setIsDone] = useState(false);
+    const [seeMoreBtnText, setSeeMoreBtnText] = useState("voir plus ↓");
     const [limitHeight, setLimitHeight] = useState(true);
     const [content, setContent] = useState(props.content);
+    const [isDone, setIsDone] = useState(props.stepStatus);
+
+    // Validation of an item ✅
+    const isDoneAction = () => {
+        setIsDone(!isDone);
+        AsyncStorage.getItem("user", async function (error, data) {
+            await fetch(
+                `${config.base_url}/api/batches/update/${props.batchId}`,
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${data}`,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        section: props.cat,
+                        position: props.position,
+                        isDone: !isDone,
+                    }),
+                }
+            );
+        });
+    };
 
     // Limit the number of words displayed
-    let maxWords = 8;
+    let maxWords = 12;
     useEffect(() => {
         if (limitHeight) {
             let contentLength = content.split(" ").length;
@@ -52,11 +75,13 @@ export default function RecipeItem(props) {
             width: "80%",
             flexDirection: "column",
             borderWidth: 1,
-            borderColor: "#435E75",
-            borderRadius: 8,
+            borderColor: StyleGuide.colors.secondary,
+            borderRadius: StyleGuide.borderRadius,
             paddingHorizontal: 10,
             paddingVertical: 5,
-            backgroundColor: isDone ? "#435E75" : "#FFFDFB",
+            backgroundColor: isDone
+                ? StyleGuide.colors.secondary
+                : StyleGuide.colors.white,
         },
         text: {
             color: isDone
@@ -95,7 +120,9 @@ export default function RecipeItem(props) {
                 )}
             </View>
             <View style={styles.btnContainer}>
-                <Checkbox isDone={isDone} onPress={() => setIsDone(!isDone)} />
+                {!props.readOnly && (
+                    <Checkbox isDone={isDone} onPress={() => isDoneAction()} />
+                )}
                 <CustomButton
                     type="comment"
                     onPress={() => props.openNotes(props.cat, props.position)}

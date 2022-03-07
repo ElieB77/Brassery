@@ -14,9 +14,10 @@ import Brasser from "./utils/icons/Brasser";
 import Fermentable from "./utils/icons/Fermentable";
 import Yeast from "./utils/icons/Yeast";
 import Other from "./utils/icons/Other";
+import Heart from "./utils/icons/Heart";
 import StyleGuide from "./utils/StyleGuide";
 
-const CustomButton = ({ onPress, title, time, type, border }) => {
+const CustomButton = ({ onPress, title, time, type, border, outline }) => {
     switch (type) {
         case "comment":
             return (
@@ -153,6 +154,15 @@ const CustomButton = ({ onPress, title, time, type, border }) => {
                     </View>
                 </TouchableOpacity>
             );
+        case "liker":
+            return (
+                <TouchableOpacity
+                    style={[styles.containerLiker, StyleGuide.shadowProp]}
+                    onPress={onPress}
+                >
+                    <Heart width="30" height="30" outline={outline} />
+                </TouchableOpacity>
+            );
         case "hops":
             return (
                 <TouchableOpacity
@@ -252,7 +262,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         width: 45,
         height: 30,
-        elevation: 10,
     },
     containerWithText: {
         backgroundColor: StyleGuide.colors.primary,
@@ -277,6 +286,14 @@ const styles = StyleSheet.create({
         alignItems: "center",
         width: 145,
         height: 90,
+    },
+    containerLiker: {
+        backgroundColor: StyleGuide.colors.secondary,
+        borderRadius: 50,
+        justifyContent: "center",
+        alignItems: "center",
+        width: 55,
+        height: 55,
     },
     containerPlus: {
         backgroundColor: StyleGuide.colors.secondary,
@@ -311,13 +328,13 @@ const styles = StyleSheet.create({
         color: StyleGuide.colors.primary,
         fontSize: 18,
         lineHeight: 25,
-        fontFamily: StyleGuide.textButton.fontFamily,
+        fontFamily: StyleGuide.typography.textButton.fontFamily,
     },
     text: {
         color: StyleGuide.colors.secondary,
-        fontSize: StyleGuide.textButton.fontSize,
-        lineHeight: StyleGuide.textButton.lineHeight,
-        fontFamily: StyleGuide.textButton.fontFamily,
+        fontSize: StyleGuide.typography.textButton.fontSize,
+        lineHeight: StyleGuide.typography.textButton.lineHeight,
+        fontFamily: StyleGuide.typography.textButton.fontFamily,
     },
 });
 

@@ -1,28 +1,27 @@
-const express = require('express');
+const express = require("express");
 const {
     getUsers,
     getUser,
     createUser,
     updateUser,
-    deleteUser
-} = require('../controllers/users')
+    deleteUser,
+    addLikeRecipe,
+} = require("../controllers/users");
 
-const User = require('../models/User')
+const User = require("../models/User");
 
 const router = express.Router();
 
 const advancedResults = require('../middlewares/advancedResults')
 
-router
-    .route('/')
-    .get(advancedResults(User), getUsers)
-    .post(createUser)
+router.route("/recipe/:id/:recipeId").put(addLikeRecipe);
 
-router
-    .route('/:id')
-    .get(getUser)
-    .put(updateUser)
-    .delete(deleteUser)
+router.route("/:id").get(getUser)
 
+router.use(authorize("admin"));
 
-module.exports = router
+router.route("/").get(advancedResults(User), getUsers).post(createUser);
+
+router.route("/:id").put(updateUser).delete(deleteUser);
+
+module.exports = router;

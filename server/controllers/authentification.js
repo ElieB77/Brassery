@@ -3,15 +3,27 @@ const ErrorResponse = require('../utils/errorResponse.js')
 const asyncHandler = require('../middlewares/async')
 const sendEmail = require('../utils/sendEmail')
 const User = require('../models/User')
+const Material = require('../models/Material')
+const Recipe = require('../models/Recipe')
+const fs = require('fs');
+const uniqid = require('uniqid');
+const cloudinary = require('cloudinary').v2
+
+cloudinary.config({
+    cloud_name: 'drp9cvlh2',
+    api_key: '367194621118956',
+    api_secret: '4YRuLzkx0RczySJ6iJMJTHPkEo4'
+});
+
 
 // *desc    Register user
 // *route   POST /api/v1/auth/register
 // *access  Public
 exports.register = asyncHandler(async (req, res, next) => {
-    const { username, email, password, localisation } = req.body
+    const { username, email, password } = req.body
 
     // Create user
-    const newUser = new User({ username, email, password, localisation })
+    const newUser = new User({ username, email, password })
     const user = await newUser.save()
 
     sendTokenResponse(user, 200, res)
@@ -130,6 +142,50 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
     })
 })
 
+// *desc    Update user details
+// *route   PUT /api/auth/updateOnboarding
+// *access  Private
+exports.updateOnboarding = asyncHandler(async (req, res, next) => {
+    const avatarPath = `./temp/avatar/${uniqid()}.jpg`
+    const installationPath = `./temp/installation/${uniqid()}.jpg`
+    await req.files.avatar.mv(avatarPath);
+    await req.files.installationPicture.mv(installationPath);
+    const avatar = await cloudinary.uploader.upload(avatarPath);
+    const installationPicture = await cloudinary.uploader.upload(installationPath);
+
+    if (!avatar || !installationPicture) {
+        res.json({ result: false, message: 'error' });
+    } else {
+        const fielsToUpdate = {
+            brewedYet: Boolean(req.body.brewedYet),
+            localisation: JSON.parse(req.body.localisation),
+            avatar: avatar.url,
+            brewDescription: req.body.brewedDescription,
+            installationDescription: req.body.installationDescription,
+            installationPicture: installationPicture.url,
+        }
+
+        const user = await User.updateOne({ _id: req.user.id }, fielsToUpdate)
+
+        const beer = await Recipe.findOne({ name: req.body.favoriteBeer })
+        await User.updateOne({ _id: req.user.id }, { $push: { likedRecipes: beer } })
+
+        for (item of JSON.parse(req.body.materials)) {
+            const material = await Material.findOne({ name: item.title })
+            await User.updateOne({ _id: req.user.id }, { $push: { materials: material._id } })
+        }
+
+        res.status(200).json({
+            success: true,
+            data: user
+        })
+    }
+
+    fs.unlinkSync(avatarPath);
+    fs.unlinkSync(installationPath);
+})
+
+
 // *desc    Update password
 // *route   PUT /api/v1/auth/updatepassword
 // *access  Private
@@ -182,9 +238,8 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 const sendTokenResponse = (user, statusCode, res) => {
     // Create token
     const token = user.getSignedJwtToken()
-
     res
         .status(statusCode)
-        .json({ success: true, token })
+        .json({ success: true, token, userId: user._id })
 
 }

@@ -8,7 +8,7 @@ import Input from "../utils/form-elements/Input";
 import config from "../../config/globalVariables";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function TimerOverlay({
+export default function NoteOverlay({
     recipe,
     section,
     closeAction,
@@ -87,7 +87,7 @@ export default function TimerOverlay({
         },
     });
 
-    const allItems = notesData.map((note, i) => {
+    const allItems = notesData?.map((note, i) => {
         return <ListItem content={note.content} title={note.name} key={i} />;
     });
 

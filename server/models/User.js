@@ -3,26 +3,6 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const GravitySchema = mongoose.Schema({
-    name: { type: String },
-    value: { type: Number },
-    createdAt: { type: Date },
-});
-
-const CommentSchema = mongoose.Schema({
-    title: { type: String },
-    content: { type: String },
-    createdAt: { type: Date },
-});
-
-const BatchSchema = mongoose.Schema({
-    recipe: { type: mongoose.Schema.Types.ObjectId, ref: "recipes" },
-    name: { type: String },
-    gravities: [GravitySchema],
-    comments: [CommentSchema],
-    createdAt: { type: Date },
-});
-
 const UserSchema = mongoose.Schema({
     username: {
         type: String,
@@ -57,11 +37,19 @@ const UserSchema = mongoose.Schema({
             type: Number,
             default: 0 
         },
-        long: { type: Number, default: 0 },
+        long: {
+            type: Number,
+            default: 0
+        },
     },
+    brewDescription: String,
+    brewedYet: String,
+    favoriteBeer: String,
+    installationDescription: String,
+    installationPicture: String,
     materials: [{ type: mongoose.Schema.Types.ObjectId, ref: "materials" }],
     likedRecipes: [{ type: mongoose.Schema.Types.ObjectId, ref: "recipes" }],
-    batches: [BatchSchema],
+    batches: [{ type: mongoose.Schema.Types.ObjectId, ref: "batches" }],
 });
 
 // Encrypt password using bcrypt

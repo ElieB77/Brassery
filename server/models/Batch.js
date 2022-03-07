@@ -1,17 +1,26 @@
 const mongoose = require("mongoose");
 
 const StepsStatus = mongoose.Schema({
-    section: { type: String },
-    position: { type: Number },
-    isDone: { type: Boolean },
+    section: String ,
+    position: Number ,
+    isDone: Boolean ,
+});
+
+const GravitySchema = mongoose.Schema({
+    name: { type: String },
+    value: { type: Number },
+    createdAt: { type: Date },
+});
+
+const CommentSchema = mongoose.Schema({
+    title: { type: String },
+    content: { type: String },
+    createdAt: { type: Date },
 });
 
 const BatchModel = mongoose.Schema({
     recipe: { type: mongoose.Schema.Types.ObjectId, ref: "recipes" },
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
-    createdAt: {
-        type: Date,
-    },
+    createdAt: Date,
     stepsStatus: [StepsStatus],
     /* ex: 
     [
@@ -32,6 +41,8 @@ const BatchModel = mongoose.Schema({
         },
     ]
     */
+    gravities: [GravitySchema],
+    comments: [CommentSchema],
 });
 
 module.exports = mongoose.model("batches", BatchModel);
