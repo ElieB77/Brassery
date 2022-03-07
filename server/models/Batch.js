@@ -6,6 +6,18 @@ const StepsStatus = mongoose.Schema({
     isDone: Boolean ,
 });
 
+const GravitySchema = mongoose.Schema({
+    name: { type: String },
+    value: { type: Number },
+    createdAt: { type: Date },
+});
+
+const CommentSchema = mongoose.Schema({
+    title: { type: String },
+    content: { type: String },
+    createdAt: { type: Date },
+});
+
 const BatchModel = mongoose.Schema({
     recipe: { type: mongoose.Schema.Types.ObjectId, ref: "recipes" },
     createdAt: Date,
@@ -29,6 +41,8 @@ const BatchModel = mongoose.Schema({
         },
     ]
     */
+    gravities: [GravitySchema],
+    comments: [CommentSchema],
 });
 
 module.exports = mongoose.model("batches", BatchModel);
