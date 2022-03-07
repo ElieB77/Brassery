@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import StyleGuide from "../../utils/StyleGuide";
 
 import MyBrewery from "../../../screens/MyBrewery";
-import OtherBrewers from "../../../screens/OtherBrewers";
+import OtherBrewers from "../../../screens/otherbrewers/Map";
 import Ressources from "../../../screens/ressources/Ressources";
 
 import BrasserieIcon from "../../utils/icons/Brasserie";

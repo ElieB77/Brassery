@@ -2,15 +2,15 @@
 import React, {useEffect, useState} from 'react';
 import { View, StyleSheet, Text, Modal } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
-import config from '../config/globalVariables';
-import Header from '../components/headings/Header';
-import Input from '../components/utils/form-elements/Input';
-import CustomButton from '../components/CustomButton';
-import StyleGuide from '../components/utils/StyleGuide';
+import config from '../../config/globalVariables';
+import Header from '../../components/headings/Header';
+import Input from '../../components/utils/form-elements/Input';
+import CustomButton from '../../components/CustomButton';
+import StyleGuide from '../../components/utils/StyleGuide';
 import Geocode from "react-geocode";
 
 
-const Location = () => {
+const Location = ({ navigation }) => {
   
   const [modalVisible, setModalVisible] = useState(false);
   const [adress, setAdress] = useState();
@@ -66,8 +66,9 @@ const Location = () => {
   var userMarker = userList.map((user, i) => {
     return<Marker 
         key={i}
-        image={require('../assets/marker2.png')}
+        image={require('../../assets/marker2.png')}
         coordinate={{ latitude: user.localisation.lat, longitude: user.localisation.long }}
+        onPress={() => navigation.navigate("UserPage")}
     />
   });
 
@@ -125,7 +126,7 @@ const Location = () => {
         {userMarker}
         {(lat && lon) && <Marker 
           coordinate={{latitude: lat, longitude: lon}}
-          image={require('../assets/marker.png')}
+          image={require('../../assets/marker.png')}
         />}
       </MapView>  
       <View style={styles.button}>

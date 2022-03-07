@@ -3,6 +3,7 @@ import LoadFonts from "./components/layouts/LoadFonts";
 
 
 import LaRecette from "./screens/functionnalities/LaRecette";
+import UserPage from './screens/otherbrewers/UserPage'
 import Home from './screens/Home'
 import SignIn from './screens/authentification/SignIn'
 import SignUp from './screens/authentification/SignUp'
@@ -70,6 +71,10 @@ const App = () => {
                     <Stack.Screen
                         name="LaRecette"
                         component={LaRecette}
+                    />
+                    <Stack.Screen
+                        name="UserPage"
+                        component={UserPage}
                     />
                   </>
               )
