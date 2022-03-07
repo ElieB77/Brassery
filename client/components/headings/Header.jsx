@@ -5,11 +5,14 @@ import ArrowBack from '../../components/utils/icons/ArrowBack';
 
 import StyleGuide from '../../components/utils/StyleGuide';
 
-const Header = ({ title }) => {
+const Header = ({ title, withoutArrow }) => {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <ArrowBack style={{ width: 15 }} onPress={() => navigation.goBack()} />
+      {!withoutArrow && (
+        <ArrowBack style={{ width: 15 }} onPress={() => navigation.goBack()} />
+      )}
+
       <Text
         style={[
           StyleGuide.typography.text1,

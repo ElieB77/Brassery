@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { StyleSheet, View, Text } from 'react-native';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { StyleSheet, View, Text } from "react-native";
 
-import CustomButton from '../../../components/CustomButton';
-import Input from '../../../components/utils/form-elements/Input';
-import Dropdown from '../../../components/utils/form-elements/Dropdown';
-import List from '../../../components/lists/list';
-import ListItem from '../../../components/lists/listItem';
+import CustomButton from "../../../components/CustomButton";
+import Input from "../../../components/utils/form-elements/Input";
+import Dropdown from "../../../components/utils/form-elements/Dropdown";
+import List from "../../../components/lists/list";
+import ListItem from "../../../components/lists/listItem";
 
-import config from '../../../config/globalVariables';
+import config from "../../../config/globalVariables";
 
-import StyleGuide from '../../../components/utils/StyleGuide';
+import StyleGuide from "../../../components/utils/StyleGuide";
 
 const BrowseTools = ({ closeBrowseTool, token, updateMaterials }) => {
   const [error, setError] = useState(null);
@@ -70,7 +70,7 @@ const BrowseTools = ({ closeBrowseTool, token, updateMaterials }) => {
 
   // Add Arguments
   const search = async () => {
-    setError('');
+    setError("");
     let request;
 
     if (!word && !category && !brand) {
@@ -107,7 +107,7 @@ const BrowseTools = ({ closeBrowseTool, token, updateMaterials }) => {
             key={index}
             title={item.name}
             content={item.description}
-            btnType='add'
+            btnType="add"
             getValue={getMaterial}
           />
         );
@@ -126,38 +126,38 @@ const BrowseTools = ({ closeBrowseTool, token, updateMaterials }) => {
     <View
       style={[
         styles.container,
-        { width: 400, height: 1200, position: 'absolute', zIndex: 1000 },
+        { width: 400, height: 1200, position: "absolute", zIndex: 1000 },
       ]}
     >
       <View
-        style={{ alignItems: 'center', flexDirection: 'row', paddingLeft: 45 }}
+        style={{ alignItems: "center", flexDirection: "row", paddingLeft: 45 }}
       >
-        <CustomButton type='close' onPress={() => closeOverlay()} />
+        <CustomButton type="close" onPress={() => closeOverlay()} />
         <Text
           style={[
             StyleGuide.typography.text3,
-            { width: 290, textAlign: 'center' },
+            { width: 290, textAlign: "center" },
           ]}
         >
           Chercher mon matériel de brasseur
         </Text>
       </View>
-      <View style={{ alignItems: 'center' }}>
+      <View style={{ alignItems: "center" }}>
         <View style={{ marginTop: 25 }}>
           <Text style={StyleGuide.typography.text4}>Mots clés</Text>
-          <Input type='text' />
+          <Input type="text" />
         </View>
         <View
           style={{
             marginTop: 10,
             width: 300,
-            position: 'relative',
+            position: "relative",
             zIndex: 1000,
           }}
         >
           <Text style={StyleGuide.typography.text4}>Catégorie</Text>
           <Dropdown
-            title='Choisir ma catégorie'
+            title="Choisir ma catégorie"
             item={categories}
             getValue={getCategory}
           />
@@ -166,13 +166,13 @@ const BrowseTools = ({ closeBrowseTool, token, updateMaterials }) => {
           style={{
             marginTop: 10,
             width: 300,
-            position: 'relative',
+            position: "relative",
             zIndex: 100,
           }}
         >
           <Text style={StyleGuide.typography.text4}>Marque</Text>
           <Dropdown
-            title='Choisir ma marque'
+            title="Choisir ma marque"
             item={brands}
             getValue={getBrand}
           />
@@ -181,17 +181,17 @@ const BrowseTools = ({ closeBrowseTool, token, updateMaterials }) => {
           style={{
             marginTop: 25,
             width: 300,
-            alignSelf: 'center',
+            alignSelf: "center",
           }}
         >
-          <View style={{ alignItems: 'flex-end' }}>
-            <CustomButton type='search' onPress={() => search()} />
+          <View style={{ alignItems: "flex-end" }}>
+            <CustomButton type="search" onPress={() => search()} />
           </View>
         </View>
         <View style={styles.divider}></View>
 
         {searchItems.length > 0 && (
-          <View style={{ width: 300, alignItems: 'center', marginTop: 25 }}>
+          <View style={{ width: 300, alignItems: "center", marginTop: 25 }}>
             <List>{searchItems}</List>
           </View>
         )}
@@ -205,9 +205,9 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 45,
     paddingTop: 10,
-    position: 'absolute',
-    width: '100%',
-    height: '105%',
+    position: "absolute",
+    width: "100%",
+    height: "105%",
     zIndex: 10,
     backgroundColor: StyleGuide.colors.white,
   },
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     width: 300,
     height: 1,
     backgroundColor: StyleGuide.colors.black,
-    position: 'relative',
+    position: "relative",
     zIndex: 10,
   },
 });
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
 function mapDispatchToProps(dispatch) {
   return {
     updateMaterials: (materials) => {
-      dispatch({ type: 'updateMaterials', materials });
+      dispatch({ type: "updateMaterials", materials });
     },
   };
 }

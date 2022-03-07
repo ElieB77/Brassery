@@ -10,8 +10,7 @@ import StyleGuide from '../components/utils/StyleGuide';
 import Geocode from "react-geocode";
 
 
-const Location = () => {
-  
+const Location = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [adress, setAdress] = useState();
   const [ville, setVille] = useState('');
@@ -19,120 +18,133 @@ const Location = () => {
   const [lon, setLon] = useState(2.333333);
   const [latVille, setLatVille] = useState(48.866667);
   const [lonVille, setLonVille] = useState(2.333333);
-  const [userList, setUserList] = useState([])
+  const [userList, setUserList] = useState([]);
 
-  Geocode.setApiKey("AIzaSyBYhX2VO2iJV1HVsw_hVc9bNpsrjjGp_dc");
-  Geocode.setRegion("fr");
-  Geocode.setLanguage("fr");
+  Geocode.setApiKey('AIzaSyBYhX2VO2iJV1HVsw_hVc9bNpsrjjGp_dc');
+  Geocode.setRegion('fr');
+  Geocode.setLanguage('fr');
 
-  useEffect(()=>{
+  useEffect(() => {
     async function findUser() {
-      const reqFind = await fetch(`${config.base_url}/api/users`)
-      const resultFind = await reqFind.json()
-      setUserList(resultFind.data)
+      const reqFind = await fetch(`${config.base_url}/api/users`);
+      const resultFind = await reqFind.json();
+      setUserList(resultFind.data);
     }
-    findUser()
-  },[])
+    findUser();
+  }, []);
 
   const sendAdress = () => {
     Geocode.fromAddress(adress).then(
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
-        setLat(lat)
-        setLon(lng)
-        setLatVille(lat)
-        setLonVille(lng)
+        setLat(lat);
+        setLon(lng);
+        setLatVille(lat);
+        setLonVille(lng);
       },
       (error) => {
         console.error(error);
       }
     );
     setModalVisible(!modalVisible);
-  }
+  };
 
   const sendVille = () => {
     Geocode.fromAddress(ville).then(
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
-        setLatVille(lat)
-        setLonVille(lng)
+        setLatVille(lat);
+        setLonVille(lng);
       },
       (error) => {
         console.error(error);
       }
     );
-  }
+  };
 
   var userMarker = userList.map((user, i) => {
-    return<Marker 
+    return (
+      <Marker
         key={i}
-        image={require('../assets/marker2.png')}
-        coordinate={{ latitude: user.localisation.lat, longitude: user.localisation.long }}
-    />
+        //image={require('../assets/marker2.png')}
+        onPress={() => console.log('ok')}
+        coordinate={{
+          latitude: user.localisation.lat,
+          longitude: user.localisation.long,
+        }}
+      />
+    );
   });
 
   return (
-
     <View style={styles.formContainer}>
-      <Header title='Autres brasseurs'/>
+      <View style={{ paddingLeft: 25 }}>
+        <Header title='Autres brasseurs' />
+      </View>
       <View style={styles.formInput}>
         <Input
-            type='searchInput'
-            placeholder='Ville'
-            onChangeText={(value) => setVille(value)}
-            onPress={() => sendVille()}
+          type='searchInput'
+          placeholder='Ville'
+          onChangeText={(value) => setVille(value)}
+          onPress={() => sendVille()}
         />
       </View>
       <Modal
-        animationType="slide"
+        animationType='slide'
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
+          Alert.alert('Modal has been closed.');
           setModalVisible(!modalVisible);
         }}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <View style={styles.modal}>
-            <Text style={StyleGuide.typography.text3}>Positionner votre Brassery!</Text>
+              <Text style={StyleGuide.typography.text3}>
+                Positionner votre Brasserie!
+              </Text>
             </View>
             <View style={styles.modal}>
-            <Input 
+              <Input
                 type='text'
                 placeholder='Votre adresse...'
                 onChangeText={(val) => setAdress(val)}
-            />  
-            </View>  
+              />
+            </View>
             <View style={styles.modal}>
-            <CustomButton 
-                type='Convert' 
+              <CustomButton
+                type='Convert'
                 title='Valider'
                 onPress={() => sendAdress()}
-            />
+              />
             </View>
           </View>
         </View>
       </Modal>
-      <MapView style={styles.map}
-          region={{
-            latitude: latVille,
-            longitude: lonVille,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
+      <MapView
+        style={styles.map}
+        region={{
+          latitude: latVille,
+          longitude: lonVille,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
       >
         {userMarker}
-        {(lat && lon) && <Marker 
-          coordinate={{latitude: lat, longitude: lon}}
-          image={require('../assets/marker.png')}
-        />}
-      </MapView>  
+        {lat && lon && (
+          <Marker
+            coordinate={{ latitude: lat, longitude: lon }}
+            image={require('../assets/marker.png')}
+            onPress={() => navigation.navigate('Other')}
+          />
+        )}
+      </MapView>
       <View style={styles.button}>
-        <CustomButton 
-        type='Convert' 
-        title='Me positionner'
-        onPress={() => setModalVisible(true)}
+        <CustomButton
+          type='Convert'
+          title='Me positionner'
+          onPress={() => setModalVisible(true)}
         />
       </View>
     </View>

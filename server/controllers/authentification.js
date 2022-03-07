@@ -4,6 +4,7 @@ const asyncHandler = require('../middlewares/async')
 const sendEmail = require('../utils/sendEmail')
 const User = require('../models/User')
 const Material = require('../models/Material')
+const Recipe = require('../models/Recipe')
 const fs = require('fs');
 const uniqid = require('uniqid');
 const cloudinary = require('cloudinary').v2
@@ -142,7 +143,7 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
 })
 
 // *desc    Update user details
-// *route   PUT /api/v1/auth/updatedetails
+// *route   PUT /api/auth/updateOnboarding
 // *access  Private
 exports.updateOnboarding = asyncHandler(async (req, res, next) => {
     const avatarPath = `./temp/avatar/${uniqid()}.jpg`
@@ -157,7 +158,6 @@ exports.updateOnboarding = asyncHandler(async (req, res, next) => {
     } else {
         const fielsToUpdate = {
             brewedYet: Boolean(req.body.brewedYet),
-            favoriteBeer: req.body.favoriteBeer,
             localisation: JSON.parse(req.body.localisation),
             avatar: avatar.url,
             brewDescription: req.body.brewedDescription,
@@ -167,12 +167,13 @@ exports.updateOnboarding = asyncHandler(async (req, res, next) => {
 
         const user = await User.updateOne({ _id: req.user.id }, fielsToUpdate)
 
+        const beer = await Recipe.findOne({ name: req.body.favoriteBeer })
+        await User.updateOne({ _id: req.user.id }, { $push: { likedRecipes: beer } })
+
         for (item of JSON.parse(req.body.materials)) {
             const material = await Material.findOne({ name: item.title })
             await User.updateOne({ _id: req.user.id }, { $push: { materials: material._id } })
-
         }
-
 
         res.status(200).json({
             success: true,
