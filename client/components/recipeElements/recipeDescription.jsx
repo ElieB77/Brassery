@@ -1,8 +1,9 @@
 import React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import StyleGuide from "../utils/StyleGuide";
 
 export default function RecipeDescription(props) {
+
     /* STYLES */
     const styles = StyleSheet.create({
         container: {

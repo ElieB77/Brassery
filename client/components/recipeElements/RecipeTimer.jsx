@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 
 import CustomButton from "../CustomButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const RecipeTimer = ({ onPress }) => {
+    
+    /* STATES */
     const isFocused = useIsFocused();
 
-    // Getting the timer
+    // TIMER ⏰
     const [timer, setTimer] = useState(null);
     useEffect(() => {
         AsyncStorage.getItem("timer", function (error, data) {
@@ -16,6 +18,7 @@ const RecipeTimer = ({ onPress }) => {
         });
     }, []);
 
+    // Timer logic
     useEffect(() => {
         if (isFocused) {
             var interval = setInterval(() => {
@@ -25,22 +28,24 @@ const RecipeTimer = ({ onPress }) => {
                         AsyncStorage.removeItem("timer"));
                     return lastTimerCount - 1000;
                 });
-            }, 1000); //each count lasts for a second
+            }, 1000);
         }
-        //cleanup the interval on complete
+        // Cleanup the interval on complete
         return () => {
             clearInterval(interval);
         };
     }, []);
 
+    /* STYLES */
+    const style = StyleSheet.create({
+        timer: {
+            position: "absolute",
+            top: "90%",
+            left: "5%",
+        },
+    });
     return (
-        <View
-            style={{
-                position: "absolute",
-                top: "90%",
-                left: "5%",
-            }}
-        >
+        <View style={style.timer}>
             <CustomButton
                 type="time"
                 time={`${

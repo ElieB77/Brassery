@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 import StyleGuide from "../utils/StyleGuide";
 import CustomButton from "../CustomButton";
 
 export default function RecipeIngredients(props) {
+
     /* STYLES */
     const styles = StyleSheet.create({
         container: {
@@ -27,6 +28,7 @@ export default function RecipeIngredients(props) {
         },
     });
 
+    /* Inverse data flow functions */
     const openYeast = () => props.open("cultures");
     const openHop = () => props.open("hops");
     const openFermentable = () => props.open("fermentables");

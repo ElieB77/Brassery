@@ -109,7 +109,7 @@ const Step6 = ({ navigation, token, user }) => {
             <CustomButton
               type='next'
               onPress={() =>
-                navigation.navigate('Navbar', { sreen: 'MyBrewery' })
+                navigation.navigate('Navbar', { screen: 'MyBrewery' })
               }
             />
           </View>

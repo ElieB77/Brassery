@@ -238,9 +238,8 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 const sendTokenResponse = (user, statusCode, res) => {
     // Create token
     const token = user.getSignedJwtToken()
-
     res
         .status(statusCode)
-        .json({ success: true, token })
+        .json({ success: true, token, userId: user._id })
 
 }

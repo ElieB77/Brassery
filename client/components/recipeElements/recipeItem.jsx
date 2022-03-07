@@ -14,8 +14,9 @@ export default function RecipeItem(props) {
     const [content, setContent] = useState(props.content);
     const [isDone, setIsDone] = useState(props.stepStatus);
 
+    // Validation of an item ✅
     const isDoneAction = () => {
-        setIsDone(!isDone)
+        setIsDone(!isDone);
         AsyncStorage.getItem("user", async function (error, data) {
             await fetch(
                 `${config.base_url}/api/batches/update/${props.batchId}`,
@@ -36,7 +37,7 @@ export default function RecipeItem(props) {
     };
 
     // Limit the number of words displayed
-    let maxWords = 8;
+    let maxWords = 12;
     useEffect(() => {
         if (limitHeight) {
             let contentLength = content.split(" ").length;
@@ -74,11 +75,13 @@ export default function RecipeItem(props) {
             width: "80%",
             flexDirection: "column",
             borderWidth: 1,
-            borderColor: "#435E75",
-            borderRadius: 8,
+            borderColor: StyleGuide.colors.secondary,
+            borderRadius: StyleGuide.borderRadius,
             paddingHorizontal: 10,
             paddingVertical: 5,
-            backgroundColor: isDone ? "#435E75" : "#FFFDFB",
+            backgroundColor: isDone
+                ? StyleGuide.colors.secondary
+                : StyleGuide.colors.white,
         },
         text: {
             color: isDone

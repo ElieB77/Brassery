@@ -1,32 +1,97 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { connect } from "react-redux";
+
 import RecipeList from "./recipeList";
 import RecipeItem from "./recipeItem";
 import RecipeDescription from "./recipeDescription";
 import RecipeIngredients from "./recipeIngredients";
+
 import Header from "../headings/Header";
 import CustomButton from "../CustomButton";
 import ActionOverlay from "../overlays/actionOverlay";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import RecipeTimer from "./recipeTimer";
 import NoteOverlay from "../overlays/noteOverlay";
 import IngredientsOverlay from "../overlays/ingredientsOverlay";
 
 import config from "../../config/globalVariables";
-
 import StyleGuide from "../utils/StyleGuide";
 
-const Recipe = ({ id, readOnly, navigation }) => {
-    // Controllers
+const Recipe = ({ id, readOnly, navigation, token }) => {
+    /* STYLES */
+    const style = StyleSheet.create({
+        mainContainer: {
+            paddingTop: 60,
+            backgroundColor: StyleGuide.colors.white,
+        },
+        header: { left: 25 },
+        scrollContainer: {
+            alignItems: "center",
+            paddingBottom: 100,
+        },
+        dividerColor: { backgroundColor: StyleGuide.colors.primary },
+        titleContainer: { textAlign: "left", width: "100%" },
+        overlay: {
+            backgroundColor: "rgba(255,255,255,0.8)",
+            ...StyleSheet.absoluteFill,
+        },
+        actionBtnOpen: {
+            height: 200,
+            justifyContent: "space-between",
+            position: "absolute",
+            top: "60%",
+            left: "60%",
+        },
+        actionBtn: {
+            position: "absolute",
+            top: "90%",
+            left: "80%",
+            transform: [{ rotate: transparentOverlay ? "45deg" : "0deg" }],
+        },
+        brasserBtn: {
+            position: "absolute",
+            top: "89%",
+            left: "33%",
+            transform: [{ scale: 0.9 }],
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+        },
+        likeBtn: {
+            position: "absolute",
+            top: "91%",
+            left: "5%",
+            transform: [{ scale: 0.9 }],
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+        },
+    });
+
+    // GET user ID
+    const [userId, setUserId] = useState(null);
+    useEffect(() => {
+        if (!userId)
+            AsyncStorage.getItem("userId", function (error, data) {
+                if (data != null) {
+                    setUserId(data);
+                }
+            });
+    }, [userId]);
+
+    // This function gets the status of the step according to the batch information
     const getStepStatus = (section, position) => {
         return batch?.stepsStatus.filter(
             (x) => x.section === section && x.position === position
         )[0].isDone;
     };
-    const [recipe, setRecipe] = useState(null);
-    const [batch, setBatch] = useState(null);
 
-    // Transparent Overlay when pressing plus btn
+    /* STATES */
+    const [recipe, setRecipe] = useState(null); // Recipe information
+    const [batch, setBatch] = useState(null); // Batch information if readOnly is false
+
+    // Transparent overlay when pressing plus btn
     const [transparentOverlay, setTransparentOverlay] = useState(false);
 
     // Notes overlay when clicking notes btn
@@ -69,6 +134,111 @@ const Recipe = ({ id, readOnly, navigation }) => {
         />
     );
 
+    // Getting a potential timer ⏰
+    const [timer, setTimer] = useState(false);
+    AsyncStorage.getItem("timer", function (error, data) {
+        if (data) setTimer(true);
+    });
+
+    /* MAIN DATA */
+    // Getting the recipe
+    useEffect(async () => {
+        // Getting the data
+        const rawResponse = await fetch(
+            `${config.base_url}/api/${readOnly ? "recipes" : "batches"}/${id}`,
+            {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+            }
+        );
+        const result = await rawResponse.json();
+        if (readOnly) setRecipe(result);
+        if (!readOnly) {
+            setRecipe(result.recipe);
+            setBatch(result);
+        }
+
+        // Set up like status
+        if (readOnly && userId) {
+            const rawResponse = await fetch(
+                `${config.base_url}/api/users/${userId}`,
+                {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            const user = await rawResponse.json();
+            if (
+                user.data.likedRecipes.findIndex(
+                    (x) => x._id !== result._id
+                ) !== -1
+            ) {
+                setLikeOutline(false);
+            }
+        }
+    }, [id]);
+
+    // Like or dislike recipe
+    const [likeOutline, setLikeOutline] = useState(false);
+    const toggleLikeRecipe = async () => {
+        const rawResponse = await fetch(
+            `${config.base_url}/api/users/recipe/${userId}/${recipe._id}`,
+            {
+                method: "PUT",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+            }
+        );
+        const result = await rawResponse.json();
+        if (
+            result.data.likedRecipes.findIndex((x) => x._id === recipe._id) !==
+            -1
+        ) {
+            setLikeOutline(false);
+        } else {
+            setLikeOutline(true);
+        }
+    };
+
+    /* BATCH */
+    // Create
+    const createNewBatch = async () => {
+        const rawResponse = await fetch(
+            `${config.base_url}/api/batches/create`,
+            {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: `recipeId=${recipe._id}&userId=${userId}`,
+            }
+        );
+        const result = await rawResponse.json();
+        navigation.navigate("Batch", {
+            batchId: result._id,
+        });
+    };
+
+    // Delete
+    const deleteBatch = async () => {
+        await fetch(`${config.base_url}/api/batches/delete/${batch._id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+        });
+        navigation.navigate("Navbar");
+    };
+
     // Set action overlay to display: "timer", "other", "densimetre", "convert", null
     const [actionOverlay, setActionOverlay] = useState(null);
     const displayActionOverlay = (type) => {
@@ -79,122 +249,38 @@ const Recipe = ({ id, readOnly, navigation }) => {
         setActionOverlay(null);
     };
     let actionOverlayRender = (
-        <ActionOverlay type={actionOverlay} closeAction={closeActionOverlay} />
+        <ActionOverlay
+            type={actionOverlay}
+            closeAction={closeActionOverlay}
+            deleteBatch={deleteBatch}
+        />
     );
-
-    // Getting any potential timer
-    const [timer, setTimer] = useState(false);
-    AsyncStorage.getItem("timer", function (error, data) {
-        if (data) setTimer(true);
-    });
-
-    // Getting the recipe
-    useEffect(async () => {
-        AsyncStorage.getItem("user", async function (error, data) {
-            // Getting the data
-            const rawResponse = await fetch(
-                `${config.base_url}/api/${
-                    readOnly ? "recipes" : "batches"
-                }/${id}`,
-                {
-                    method: "GET",
-                    headers: {
-                        Authorization: `Bearer ${data}`,
-                        "Content-Type": "application/x-www-form-urlencoded",
-                    },
-                }
-            );
-            const result = await rawResponse.json();
-            if (readOnly) setRecipe(result);
-            if (!readOnly) {
-                setRecipe(result.recipe);
-                setBatch(result);
-            }
-
-            // Set up like status
-            if (readOnly) {
-                AsyncStorage.getItem("user", async function (error, data) {
-                    const rawResponse = await fetch(
-                        `${config.base_url}/api/users/6224b1431cfbdb724b2256bc`,
-                        {
-                            method: "GET",
-                            headers: {
-                                Authorization: `Bearer ${data}`,
-                            },
-                        }
-                    );
-                    const user = await rawResponse.json();
-                    if (
-                        user.data.likedRecipes.findIndex(
-                            (x) => x._id !== result._id
-                        ) !== -1
-                    ) {
-                        setLikeOutline(false);
-                    }
-                });
-            }
-        });
-    }, [id]);
-
-    // Like or dislike recipe
-    const [likeOutline, setLikeOutline] = useState(false);
-    const toggleLikeRecipe = () => {
-        AsyncStorage.getItem("user", async function (error, data) {
-            const rawResponse = await fetch(
-                `${config.base_url}/api/users/recipe/6224b1431cfbdb724b2256bc/${recipe._id}`,
-                {
-                    method: "PUT",
-                    headers: {
-                        Authorization: `Bearer ${data}`,
-                        "Content-Type": "application/x-www-form-urlencoded",
-                    },
-                }
-            );
-            const result = await rawResponse.json();
-            if (
-                result.data.likedRecipes.findIndex(
-                    (x) => x._id === recipe._id
-                ) !== -1
-            ) {
-                setLikeOutline(false);
-            } else {
-                setLikeOutline(true);
-            }
-        });
-    };
 
     // Specific description of the recipe
     const recipeDescription = `${recipe?.description}\n\nCouleur: ${recipe?.colorEstimate} EBC\nAmertume: ${recipe?.ibuEstimate} IBU\nAlcool: ${recipe?.alcoholByVolume} %\nDensité de départ: ${recipe?.originalGravity}\nDensité de fin: ${recipe?.finalGravity}`;
-    if (!recipe) return <View></View>;
+    if (!recipe)
+        return (
+            <View>
+                <Text>No recipe found 🤷</Text>
+            </View>
+        );
     return (
-        <View
-            style={{ paddingTop: 60, backgroundColor: StyleGuide.colors.white }}
-        >
-            <View style={{ left: 25 }}>
+        <View style={style.mainContainer}>
+            <View style={style.header}>
                 <Header title={recipe.name} />
             </View>
-            <ScrollView
-                contentContainerStyle={{
-                    alignItems: "center",
-                    paddingBottom: 100,
-                }}
-            >
+            <ScrollView contentContainerStyle={style.scrollContainer}>
                 <RecipeList>
                     <RecipeDescription
                         title={recipe.name}
                         content={recipeDescription}
                     />
                     <RecipeIngredients open={openIngredientsOverlay} />
-                    <View
-                        style={[
-                            StyleGuide.divider,
-                            { backgroundColor: StyleGuide.colors.primary },
-                        ]}
-                    />
+                    <View style={[StyleGuide.divider, style.dividerColor]} />
                     <Text
                         style={[
                             StyleGuide.typography.text1,
-                            { textAlign: "left", width: "100%" },
+                            style.titleContainer,
                         ]}
                     >
                         Empatage
@@ -224,16 +310,11 @@ const Recipe = ({ id, readOnly, navigation }) => {
                             />
                         );
                     })}
-                    <View
-                        style={[
-                            StyleGuide.divider,
-                            { backgroundColor: StyleGuide.colors.primary },
-                        ]}
-                    />
+                    <View style={[StyleGuide.divider, style.dividerColor]} />
                     <Text
                         style={[
                             StyleGuide.typography.text1,
-                            { textAlign: "left", width: "100%" },
+                            style.titleContainer,
                         ]}
                     >
                         Ébullition
@@ -259,16 +340,11 @@ const Recipe = ({ id, readOnly, navigation }) => {
                             />
                         );
                     })}
-                    <View
-                        style={[
-                            StyleGuide.divider,
-                            { backgroundColor: StyleGuide.colors.primary },
-                        ]}
-                    />
+                    <View style={[StyleGuide.divider, style.dividerColor]} />
                     <Text
                         style={[
                             StyleGuide.typography.text1,
-                            { textAlign: "left", width: "100%" },
+                            style.titleContainer,
                         ]}
                     >
                         Fermentation
@@ -307,21 +383,8 @@ const Recipe = ({ id, readOnly, navigation }) => {
                 </RecipeList>
             </ScrollView>
             {transparentOverlay && (
-                <View
-                    style={{
-                        backgroundColor: "rgba(255,255,255,0.8)",
-                        ...StyleSheet.absoluteFill,
-                    }}
-                >
-                    <View
-                        style={{
-                            height: 200,
-                            justifyContent: "space-between",
-                            position: "absolute",
-                            top: "60%",
-                            left: "60%",
-                        }}
-                    >
+                <View style={style.overlay}>
+                    <View style={style.actionBtnOpen}>
                         <CustomButton
                             type="other"
                             onPress={() => displayActionOverlay("options")}
@@ -342,16 +405,7 @@ const Recipe = ({ id, readOnly, navigation }) => {
                 </View>
             )}
             {!readOnly ? (
-                <View
-                    style={{
-                        position: "absolute",
-                        top: "90%",
-                        left: "80%",
-                        transform: [
-                            { rotate: transparentOverlay ? "45deg" : "0deg" },
-                        ],
-                    }}
-                >
+                <View style={style.actionBtn}>
                     <CustomButton
                         type="plus"
                         onPress={() =>
@@ -360,40 +414,16 @@ const Recipe = ({ id, readOnly, navigation }) => {
                     />
                 </View>
             ) : (
-                <View
-                    style={{
-                        position: "absolute",
-                        top: "89%",
-                        left: "33%",
-                        transform: [{ scale: 0.9 }],
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        alignItems: "center",
-                    }}
-                >
+                <View style={style.brasserBtn}>
                     <CustomButton
                         type="brasser"
-                        onPress={() =>
-                            navigation.navigate("Batch", {
-                                batchId: "6221fc885223412400e58d54",
-                            })
-                        }
+                        onPress={() => createNewBatch()}
                     />
                 </View>
             )}
 
             {readOnly && (
-                <View
-                    style={{
-                        position: "absolute",
-                        top: "91%",
-                        left: "5%",
-                        transform: [{ scale: 0.9 }],
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        alignItems: "center",
-                    }}
-                >
+                <View style={style.likeBtn}>
                     <CustomButton
                         outline={likeOutline}
                         type="liker"
@@ -409,4 +439,8 @@ const Recipe = ({ id, readOnly, navigation }) => {
     );
 };
 
-export default Recipe;
+function mapStateToProps(state) {
+    return { token: state.token };
+}
+
+export default connect(mapStateToProps, null)(Recipe);
