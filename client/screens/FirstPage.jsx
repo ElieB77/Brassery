@@ -39,7 +39,7 @@ const FirstPage = ({ navigation }) => {
                 style={style.image}
             >
                 <CustomButton
-                    title="Parcourir les recette de bières"
+                    title="Parcourir les recettes de bières"
                     onPress={() => navigation.navigate("Resources")}
                 />
             </ImageBackground>
