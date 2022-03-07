@@ -57,9 +57,10 @@ exports.createBatch = asyncHandler(async (req, res, next) => {
         stepsStatus,
     });
     const batch = await newBatch.save();
+    const batchId = batch.id;
 
     user.batches.push({
-        batch,
+        batchId
     });
     await user.save();
 
