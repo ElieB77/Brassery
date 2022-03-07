@@ -6,7 +6,7 @@ import CustomButton from "../CustomButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Dropdown from "../utils/form-elements/Dropdown";
 
-export default function TimerOverlay({ type, closeAction }) {
+export default function ActionOverlay({ type, closeAction, deleteBatch }) {
     /* STATES */
     const [overlayType, setOverlayType] = useState(type);
 
@@ -257,6 +257,7 @@ export default function TimerOverlay({ type, closeAction }) {
                     <View style={styles.input}>
                         <CustomButton
                             title="Supprimer ce brassin"
+                            onPress={() => deleteBatch()}
                         />
                     </View>
                 </View>

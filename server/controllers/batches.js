@@ -37,7 +37,6 @@ exports.updateStepStatus = asyncHandler(async (req, res, next) => {
 exports.createBatch = asyncHandler(async (req, res, next) => {
     const recipe = await Recipe.findById(req.body.recipeId);
     const user = await User.findById(req.body.userId).populate("batches");
-    console.log("🚀 ~ file: batches.js ~ line 40 ~ exports.createBatch=asyncHandler ~ user", user)
     let stepsStatus = [];
     recipe.mash.mashSteps.forEach((x, i) =>
         stepsStatus.push({ section: "mash", position: i, isDone: false })
@@ -65,4 +64,9 @@ exports.createBatch = asyncHandler(async (req, res, next) => {
     await user.save();
 
     res.status(200).json(batch);
+});
+
+exports.deleteBatch = asyncHandler(async (req, res, next) => {
+    await Batch.findByIdAndDelete(req.params.id);
+    res.status(200).json({ success: true });
 });

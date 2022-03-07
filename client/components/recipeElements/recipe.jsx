@@ -134,19 +134,6 @@ const Recipe = ({ id, readOnly, navigation, token }) => {
         />
     );
 
-    // Set action overlay to display: "timer", "other", "densimetre", "convert", null
-    const [actionOverlay, setActionOverlay] = useState(null);
-    const displayActionOverlay = (type) => {
-        setTransparentOverlay(false);
-        setActionOverlay(type);
-    };
-    const closeActionOverlay = () => {
-        setActionOverlay(null);
-    };
-    let actionOverlayRender = (
-        <ActionOverlay type={actionOverlay} closeAction={closeActionOverlay} />
-    );
-
     // Getting a potential timer ⏰
     const [timer, setTimer] = useState(false);
     AsyncStorage.getItem("timer", function (error, data) {
@@ -240,24 +227,34 @@ const Recipe = ({ id, readOnly, navigation, token }) => {
         });
     };
 
-    /* // Delete
+    // Delete
     const deleteBatch = async () => {
-        const rawResponse = await fetch(
-            `${config.base_url}/api/batches/create`,
-            {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-                body: `recipeId=${recipe._id}&userId=${userId}`,
-            }
-        );
-        const result = await rawResponse.json();
-        navigation.navigate("Batch", {
-            batchId: result._id,
+        await fetch(`${config.base_url}/api/batches/delete/${batch._id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
         });
-    }; */
+        navigation.navigate("Navbar");
+    };
+
+    // Set action overlay to display: "timer", "other", "densimetre", "convert", null
+    const [actionOverlay, setActionOverlay] = useState(null);
+    const displayActionOverlay = (type) => {
+        setTransparentOverlay(false);
+        setActionOverlay(type);
+    };
+    const closeActionOverlay = () => {
+        setActionOverlay(null);
+    };
+    let actionOverlayRender = (
+        <ActionOverlay
+            type={actionOverlay}
+            closeAction={closeActionOverlay}
+            deleteBatch={deleteBatch}
+        />
+    );
 
     // Specific description of the recipe
     const recipeDescription = `${recipe?.description}\n\nCouleur: ${recipe?.colorEstimate} EBC\nAmertume: ${recipe?.ibuEstimate} IBU\nAlcool: ${recipe?.alcoholByVolume} %\nDensité de départ: ${recipe?.originalGravity}\nDensité de fin: ${recipe?.finalGravity}`;
