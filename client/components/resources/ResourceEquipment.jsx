@@ -1,11 +1,14 @@
-import React from "react";
-import { View, Text, StyleSheet, Pressable, ScrollView } from "react-native";
-import StyleGuide from "../utils/StyleGuide";
-import Header from "../headings/Header";
-import Input from "../utils/form-elements/Input";
-import Dropdown from "../utils/form-elements/Dropdown";
-import List from "../lists/list";
-import ListItem from "../lists/listItem";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, Pressable } from "react-native";
+import StyleGuide from "../../components/utils/StyleGuide";
+import Header from "../../components/headings/Header";
+import Input from "../../components/utils/form-elements/Input";
+import Dropdown from "../../components/utils/form-elements/Dropdown";
+import List from "../../components/lists/list";
+import ListItem from "../../components/lists/listItem";
+import config from "../../config/globalVariables";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import CustomButton from "../../components/CustomButton";
 
 const ResourceEquipment = (props) => {
   const [categories, setCategories] = useState([]);
@@ -165,32 +168,43 @@ const ResourceEquipment = (props) => {
           <Text style={[StyleGuide.typography.text3, styles.filterLabel]}>
             Recherche par mots clés
           </Text>
-          <Input type="text" placeholder={"Pale Ale.."} />
+          <Input
+            type="text"
+            placeholder={" Pompes de transfert.."}
+            onChangeText={(val) => setSearchInput(val)}
+          />
         </View>
         <View style={{ position: "relative", zIndex: 10 }}>
           <Text style={[StyleGuide.typography.text3, styles.filterLabel]}>
             Catégories
           </Text>
-          <Dropdown title={"Bière blonde"} />
+          <Dropdown
+            title={"Choisissez une catégorie"}
+            item={categories}
+            getValue={getCategory}
+          />
         </View>
         <View style={{ position: "relative", zIndex: 9 }}>
           <Text style={[StyleGuide.typography.text3, styles.filterLabel]}>
             Marques
           </Text>
-          <Dropdown title={"Bière blonde"} />
+          <Dropdown
+            title={"Choisissez une marque"}
+            item={brand}
+            getValue={getBrand}
+          />
+        </View>
+        <View style={{ alignItems: "flex-end", marginTop: 20 }}>
+          <CustomButton type="search" onPress={() => search()} />
         </View>
       </View>
       {/* List */}
-      <View style={{ width: 300, marginTop: 50 }}>
-        <List>
-          <ListItem title="test" content="test" btnType="next" />
-          <ListItem title="test" content="test" btnType="next" />
-          <ListItem title="test" content="test" btnType="next" />
-          <ListItem title="test" content="test" btnType="next" />
-          <ListItem title="test" content="test" btnType="next" />
-          <ListItem title="test" content="test" btnType="next" />
-          <ListItem title="test" content="test" btnType="next" />
-        </List>
+      <View style={styles.divider}></View>
+
+      <View
+        style={{ width: 300, marginTop: 25, zIndex: -1, position: "relative" }}
+      >
+        <List>{materialList}</List>
       </View>
     </View>
   );
@@ -211,6 +225,11 @@ const styles = StyleSheet.create({
   },
   btnGroupText: {
     color: StyleGuide.colors.secondary,
+    borderColor: "rgba(255,0,0,1)",
+    borderWidth: 0,
+    borderTopWidth: 2,
+    borderBottomWidth: 2,
+    borderStyle: "dashed",
   },
   filterContainer: {
     marginTop: 30,

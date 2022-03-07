@@ -172,13 +172,22 @@ const ResourceIngredient = (props) => {
           <Text style={[StyleGuide.typography.text3, styles.filterLabel]}>
             Recherche par mots clés
           </Text>
-          <Input type="text" placeholder={"Pale Ale.."} />
+
+          <Input
+            type="text"
+            placeholder={"Amarillo.."}
+            onChangeText={(val) => setSearchInput(val)}
+          />
         </View>
         <View style={{ position: "relative", zIndex: 10 }}>
           <Text style={[StyleGuide.typography.text3, styles.filterLabel]}>
             Catégories
           </Text>
-          <Dropdown title={"Bière blonde"} />
+          <Dropdown
+            title={"Choisissez une catégorie"}
+            item={ingredientCategory}
+            getValue={getCategory}
+          />
         </View>
         {/* Slider */}
         <View style={{ alignItems: "flex-end", marginTop: 20 }}>
@@ -189,18 +198,14 @@ const ResourceIngredient = (props) => {
       {/* List */}
 
       <View
-        style={{ width: 300, marginTop: 50, position: "relative", zIndex: 0 }}
+        style={{
+          width: 300,
+          marginTop: 25,
+          position: "relative",
+          zIndex: -1,
+        }}
       >
-        <List>
-          <ListItem title="test" content="test" btnType="next" />
-          <ListItem title="test" content="test" btnType="next" />
-          <ListItem title="test" content="test" btnType="next" />
-          <ListItem title="test" content="test" btnType="next" />
-          <ListItem title="test" content="test" btnType="next" />
-          <ListItem title="test" content="test" btnType="next" />
-          <ListItem title="test" content="test" btnType="next" />
-          <ListItem title="test" content="test" btnType="next" />
-        </List>
+        <List>{ingredientList}</List>
       </View>
     </View>
   );
@@ -221,6 +226,11 @@ const styles = StyleSheet.create({
   },
   btnGroupText: {
     color: StyleGuide.colors.secondary,
+    borderColor: "rgba(255,0,0,1)",
+    borderWidth: 0,
+    borderTopWidth: 2,
+    borderBottomWidth: 2,
+    borderStyle: "dashed",
   },
   filterContainer: {
     marginTop: 30,
