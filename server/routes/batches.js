@@ -12,9 +12,9 @@ const router = express.Router();
 const Batch = require("../models/Batch");
 
 const advancedResults = require("../middlewares/advancedResults");
-const { protect } = require("../middlewares/authentification");
+// const { protect } = require("../middlewares/authentification");
 
-router.use(protect);
+// router.use(protect);
 
 router.route("/").get(advancedResults(Batch), getBatches);
 

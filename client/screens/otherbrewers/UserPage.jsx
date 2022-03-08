@@ -14,8 +14,10 @@ const UserPage = ({ route }) => {
   const [userBio, setUserBio] = useState();
   const [userAvatar, setUserAvatar] = useState();
   const [userName, setUserName] = useState();
-  const [userInstallation, setUserInstallation] = useState({data:[]});
-  const [userRecipes, setUserRecipes] = useState({data:[]});
+  const [userInstallation, setUserInstallation] = useState({ data: [] });
+  const [userBatches, setUserBatches] = useState({ data: [] });
+  const [userRecipes, setUserRecipes] = useState([]);
+  const [recipesId, setRecipesId] = useState([]);
 
   useEffect(() => {
     async function findUser() {
@@ -24,39 +26,67 @@ const UserPage = ({ route }) => {
       setUserBio(resultFind.data[0].brewDescription);
       setUserAvatar(resultFind.data[0].avatar);
       setUserName(resultFind.data[0].username);
-    }
-    findUser();
-  }, []);
 
-  useEffect(() => {
-        AsyncStorage.getItem("user", function (error, data) {
-          if (data != null) {
-            async function loadData() {
-              const rawResponse = await fetch(
-                `${config.base_url}/api/materials/findmaterialbyid`,
-                {
-                  method: "POST",
-                  headers: {
-                    Authorization: `Bearer ${data}`,
-                    "Content-Type": "application/x-www-form-urlencoded",
-                  },
-                  body: `userId=${userId}`,
-                }
-              );
-              const response = await rawResponse.json();
-              setUserInstallation(response)
-            };
-            loadData();
+      AsyncStorage.getItem("user", function (error, data) {
+        if (data != null) {
+          async function loadData() {
+            // Find batches
+            const rawResponse = await fetch(
+              `${config.base_url}/api/batches/findbatches`,
+              {
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer ${data}`,
+                  "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: `userId=${userId}`,
+              }
+            );
+            const response = await rawResponse.json();
+            setUserBatches(response);
+
+            // Get recipes id from batches
+            var id = response.data.map((user, i) => {
+              return user.recipe;
+            });
+            setRecipesId(id);
+
+            // Get recipes' data
+            let temp = [];
+            for (var i = 0; i < id.length; i++) {
+              async function loadData2() {
+                const rawResponse2 = await fetch(
+                  `${config.base_url}/api/recipes/${id[i]}`,
+                  {
+                    method: "GET",
+                    headers: {
+                      Authorization: `Bearer ${data}`,
+                      "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                  }
+                );
+                const response2 = await rawResponse2.json();
+                temp.push(response2);
+              }
+              loadData2();
+            }
+            setUserRecipes(temp);
           }
-        });
-  },[modalVisible])
+          loadData();
+        }
+      });
+    }
+
+    // Run main function of useEffect
+    findUser();
+  }, [userId]);
 
   useEffect(() => {
     AsyncStorage.getItem("user", function (error, data) {
       if (data != null) {
         async function loadData() {
           const rawResponse = await fetch(
-            `${config.base_url}/api/batches/findbatches`,
+            `${config.base_url}/api/materials/findmaterialbyid`,
             {
               method: "POST",
               headers: {
@@ -67,33 +97,19 @@ const UserPage = ({ route }) => {
             }
           );
           const response = await rawResponse.json();
-          setUserRecipes(response)
-        };
+          setUserInstallation(response);
+        }
         loadData();
       }
     });
-},[modal2Visible])
-  
+  }, [modalVisible]);
+
   var userMaterial = userInstallation.data.map((user, i) => {
-    return (
-        <ListItem 
-            key={i}
-            title={user.type}
-            content={user.name}
-        />
-    );   
+    return <ListItem key={i} title={user.type} content={user.name} />;
   });
-
-  var userRecipesList = userRecipes.data.map((user, i) => {
-    return (
-        <ListItem 
-            key={i}
-            title={user.type}
-            content={user.name}
-        />
-    );   
+  var userRecipesList = userRecipes.map((user, i) => {
+    return <ListItem key={i} title={user.name} content={user.description} />;
   });
-
 
   return (
     <View style={styles.formContainer}>
@@ -122,7 +138,10 @@ const UserPage = ({ route }) => {
           marginBottom: Dimensions.get("window").width / 10,
         }}
       >
-        <CustomButton title="Mon installation" onPress={() => setModalVisible(true)} />
+        <CustomButton
+          title="Mon installation"
+          onPress={() => setModalVisible(true)}
+        />
       </View>
       <Modal
         transparent={true}
@@ -135,9 +154,7 @@ const UserPage = ({ route }) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <View style={styles.modal}>
-                {userMaterial}
-            </View>
+            <View style={styles.modal}>{userMaterial}</View>
             <View style={styles.modal}>
               <CustomButton
                 type="Convert"
@@ -168,9 +185,7 @@ const UserPage = ({ route }) => {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <View style={styles.modal}>
-                  {userRecipesList}
-              </View>
+              <View style={styles.modal}>{userRecipesList}</View>
               <View style={styles.modal}>
                 <CustomButton
                   type="Convert"

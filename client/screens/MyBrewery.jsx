@@ -12,7 +12,6 @@ import StyleGuide from '../components/utils/StyleGuide';
 const Home = ({ navigation, saveToken }) => {
   const [avatar, setAvatar] = useState(null);
   const [userId, setUserId] = useState(null);
-
   useEffect(() => {
     function saveTokenToReducer() {
       AsyncStorage.getItem('user', function (error, data) {
