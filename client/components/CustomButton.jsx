@@ -26,6 +26,7 @@ const CustomButton = ({
     border,
     outline,
     style,
+    reverse,
 }) => {
     switch (type) {
         case "comment":
@@ -144,6 +145,18 @@ const CustomButton = ({
                     <Add />
                     <View style={{ width: "100%", alignItems: "center" }}>
                         <Text style={styles.text}>Ajouter mesure</Text>
+                    </View>
+                </TouchableOpacity>
+            );
+        case "mainInfo":
+            return (
+                <TouchableOpacity
+                    style={[styles.containerWithText, StyleGuide.shadowProp]}
+                    onPress={onPress}
+                >
+                    <Text style={styles.text}>{reverse ? "↑" : "↓"}</Text>
+                    <View style={{ width: "100%", alignItems: "center" }}>
+                        <Text style={styles.text}>Infos principales</Text>
                     </View>
                 </TouchableOpacity>
             );
