@@ -18,8 +18,8 @@ import Resources from "./screens/Resources";
 import BeerLiked from "./screens/myBrewery/BeerLiked";
 import Beer from "./screens/myBrewery/Beer";
 import Other from "./screens/otherBrewery.jsx/Other";
-import Settings from './screens/Settings'
-import MyInstallation from './screens/myBrewery/MyInstallation'
+import Settings from "./screens/Settings";
+import MyInstallation from "./screens/myBrewery/MyInstallation";
 
 import Navbar from "./components/layouts/navbar/Navbar";
 
@@ -38,16 +38,16 @@ const Stack = createStackNavigator();
 const store = createStore(combineReducers({ token, user }));
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // AsyncStorage.clear()
-  // AsyncStorage.removeItem('user')
+    // AsyncStorage.clear()
+    // AsyncStorage.removeItem('user')
 
-  AsyncStorage.getItem("user", function (error, data) {
-    if (data != null) {
-      setIsLoggedIn(true);
-    }
-  });
+    AsyncStorage.getItem("user", function (error, data) {
+        if (data != null) {
+            setIsLoggedIn(true);
+        }
+    });
 
     return (
         <Provider store={store}>
@@ -56,6 +56,14 @@ const App = () => {
                     <Stack.Navigator screenOptions={{ headerShown: false }}>
                         {!isLoggedIn ? (
                             <>
+                                <Stack.Screen
+                                    name="FirstPage"
+                                    component={FirstPage}
+                                />
+                                <Stack.Screen
+                                    name="Discovering"
+                                    component={Discovering}
+                                />
                                 <Stack.Screen name="Home" component={Home} />
                                 <Stack.Screen
                                     name="Resources"
@@ -87,39 +95,33 @@ const App = () => {
                             </>
                         ) : (
                             <>
-                                    <Stack.Screen
-                                        name="Navbar"
-                                        component={Navbar}
-                                    />
-                                    <Stack.Screen
-                                        name="Resources"
-                                        component={Resources}
-                                    />
-                                    <Stack.Screen name="Batch" component={Batch} />
-                                    <Stack.Screen
-                                        name="Recipe"
-                                        component={Recipe}
-                                    />
-                                    <Stack.Screen
-                                        name="Other"
-                                        component={Other}
-                                    />
-                                    <Stack.Screen
-                                        name="BeerLiked"
-                                        component={BeerLiked}
-                                    />
-                                    <Stack.Screen
-                                        name="Beer"
-                                        component={Beer}
-                                    />
-                                    <Stack.Screen
-                                        name="Settings"
-                                        component={Settings}
-                                    />
-                                    <Stack.Screen
-                                        name="MyInstallation"
-                                        component={MyInstallation}
-                                    />
+                                <Stack.Screen
+                                    name="Navbar"
+                                    component={Navbar}
+                                />
+                                <Stack.Screen
+                                    name="Resources"
+                                    component={Resources}
+                                />
+                                <Stack.Screen name="Batch" component={Batch} />
+                                <Stack.Screen
+                                    name="Recipe"
+                                    component={Recipe}
+                                />
+                                <Stack.Screen name="Other" component={Other} />
+                                <Stack.Screen
+                                    name="BeerLiked"
+                                    component={BeerLiked}
+                                />
+                                <Stack.Screen name="Beer" component={Beer} />
+                                <Stack.Screen
+                                    name="Settings"
+                                    component={Settings}
+                                />
+                                <Stack.Screen
+                                    name="MyInstallation"
+                                    component={MyInstallation}
+                                />
                             </>
                         )}
                     </Stack.Navigator>

@@ -18,6 +18,17 @@ const FirstPage = ({ navigation }) => {
             alignItems: "center",
             justifyContent: "center",
         },
+        outline: {
+            backgroundColor: StyleGuide.colors.white,
+            borderRadius: StyleGuide.borderRadius,
+            justifyContent: "center",
+            alignItems: "center",
+            width: 207,
+            height: 45,
+            borderColor: StyleGuide.colors.primary,
+            borderStyle: "solid",
+            borderWidth: 2,
+        },
     });
 
     return (

@@ -156,7 +156,7 @@ const ResourceEquipment = (props) => {
       <View style={{ alignItems: "center", marginTop: 50 }}>
         <Text style={{ marginBottom: 15 }}>Parcourir les filtres</Text>
         <CustomButton
-          type="add"
+          type={modalVisible ? "minus" : "add" }
           onPress={() =>
             modalVisible ? setModalVisible(false) : setModalVisible(true)
           }
@@ -225,10 +225,6 @@ const styles = StyleSheet.create({
   },
   btnGroupText: {
     color: StyleGuide.colors.secondary,
-    borderColor: "rgba(255,0,0,1)",
-    borderWidth: 0,
-    borderTopWidth: 2,
-    borderBottomWidth: 2,
     borderStyle: "dashed",
   },
   filterContainer: {
