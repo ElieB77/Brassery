@@ -10,7 +10,7 @@ const Other = ({ navigation }) => {
       <Text>Other</Text>
       <CustomButton
         title='Aller sur le chat'
-        onPress={() => navigation.navigate()}
+        onPress={() => navigation.navigate('Chat')}
       />
     </View>
   );

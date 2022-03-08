@@ -37,7 +37,7 @@ const MyInstallation = ({ route, token }) => {
         <Image
           style={{
             width: Dimensions.get('window').width / 1.2,
-            height: Dimensions.get('window').height / 2.5,
+            height: Dimensions.get('window').height / 4,
             borderRadius: StyleGuide.borderRadius,
             marginBottom: Dimensions.get('window').height / 20,
           }}
