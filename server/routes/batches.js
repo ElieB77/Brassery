@@ -2,6 +2,7 @@ const express = require("express");
 const {
     getBatch,
     getBatches,
+    findBatch,
     updateStepStatus,
     createBatch,
     deleteBatch,
@@ -26,5 +27,7 @@ router.route("/create").post(createBatch);
 router.route("/delete/:id").delete(deleteBatch);
 
 router.route("/:id/addMeasure").post(insertMeasure);
+
+router.route("/findbatches").post(findBatch);
 
 module.exports = router;

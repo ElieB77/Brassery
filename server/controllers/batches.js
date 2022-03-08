@@ -72,6 +72,11 @@ exports.deleteBatch = asyncHandler(async (req, res, next) => {
     res.status(200).json({ success: true });
 });
 
+exports.findBatch = asyncHandler(async (req, res, next) => {
+    const userBatches = await User.findById(req.body.userId).populate("batches");
+    res.status(200).json( {data: userBatches.batches} );
+});
+
 exports.insertMeasure = asyncHandler(async (req, res, next) => {
     const batch = await Batch.findById(req.params.id);
     batch.gravities.push({

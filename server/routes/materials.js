@@ -1,5 +1,6 @@
 const express = require("express");
 const { getMaterials } = require("../controllers/materials");
+const {findMaterialById} = require('../controllers/materials')
 
 const Material = require("../models/Material");
 
@@ -11,5 +12,7 @@ const { protect } = require("../middlewares/authentification");
 router.use(protect);
 
 router.route("/").get(advancedResults(Material), getMaterials);
+
+router.route("/findmaterialbyid").post(findMaterialById);
 
 module.exports = router;
