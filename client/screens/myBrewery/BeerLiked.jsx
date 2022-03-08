@@ -26,26 +26,28 @@ const BeerLiked = ({ token, navigation }) => {
         for (const id of response.data.likedRecipes) {
           setRecipesId((prevState) => [...prevState, id]);
         }
-
-        async function getRecipes() {
-          const newRawResponse = await fetch(`${config.base_url}/api/recipes`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          const newResponse = await newRawResponse.json();
-
-          for (const recipe of newResponse.data) {
-            if (recipesId.includes(recipe._id))
-              setRecipes((prevState) => [...prevState, recipe]);
-          }
-        }
-        getRecipes();
       }
     }
     getUser();
   }, []);
+
+  useEffect(() => {
+    async function getRecipes() {
+      const newRawResponse = await fetch(`${config.base_url}/api/recipes`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const newResponse = await newRawResponse.json();
+
+      for (const recipe of newResponse.data) {
+        if (recipesId.includes(recipe._id))
+          setRecipes((prevState) => [...prevState, recipe]);
+      }
+    }
+    getRecipes();
+  }, [recipesId]);
 
   return (
     <View style={StyleGuide.container}>
@@ -60,7 +62,7 @@ const BeerLiked = ({ token, navigation }) => {
               btnType='next'
               onPress={() =>
                 navigation.navigate('Recipe', {
-                  beerId: item._id,
+                  recipeId: item._id,
                 })
               }
             />

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import LoadFonts from "./components/layouts/LoadFonts";
 
-import UserPage from './screens/otherbrewers/UserPage'
+import UserPage from "./screens/otherbrewers/UserPage";
 import Recipe from "./screens/functionalities/Recipe";
 import Batch from "./screens/functionalities/Batch";
 import Home from "./screens/Home";
@@ -19,6 +19,9 @@ import Resources from "./screens/Resources";
 import BeerLiked from "./screens/myBrewery/BeerLiked";
 import Beer from "./screens/myBrewery/Beer";
 import Other from "./screens/otherBrewery.jsx/Other";
+import Settings from "./screens/Settings";
+import MyInstallation from "./screens/myBrewery/MyInstallation";
+import Chat from "./screens/otherBrewery.jsx/Chat";
 
 import Navbar from "./components/layouts/navbar/Navbar";
 
@@ -50,7 +53,6 @@ const App = () => {
 
   return (
     <Provider store={store}>
-
       <LoadFonts>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -69,21 +71,26 @@ const App = () => {
                 <Stack.Screen name="Step5" component={Step5} />
                 <Stack.Screen name="Step6" component={Step6} />
                 <Stack.Screen name="Batch" component={Batch} />
+                <Stack.Screen name="UserPage" component={UserPage} />
                 <Stack.Screen name="Recipe" component={Recipe} />
                 <Stack.Screen name="Navbar" component={Navbar} />
               </>
             ) : (
               <>
                 <Stack.Screen name="Navbar" component={Navbar} />
-                <Stack.Screen name="FirstPage" component={FirstPage} />
-                <Stack.Screen name="Discovering" component={Discovering} />
                 <Stack.Screen name="Resources" component={Resources} />
                 <Stack.Screen name="Batch" component={Batch} />
                 <Stack.Screen name="Recipe" component={Recipe} />
-                <Stack.Screen name="UserPage" component={UserPage} />
                 <Stack.Screen name="Other" component={Other} />
                 <Stack.Screen name="BeerLiked" component={BeerLiked} />
                 <Stack.Screen name="Beer" component={Beer} />
+                <Stack.Screen name="Settings" component={Settings} />
+                <Stack.Screen name="UserPage" component={UserPage} />
+                <Stack.Screen
+                  name="MyInstallation"
+                  component={MyInstallation}
+                />
+                <Stack.Screen name="Chat" component={Chat} />
               </>
             )}
           </Stack.Navigator>

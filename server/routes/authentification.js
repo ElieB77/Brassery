@@ -6,6 +6,10 @@ const {
     getMe,
     updateDetails,
     updateOnboarding,
+    updateAvatarPicture,
+    updateBrewDescription,
+    updateUsername,
+    updateEmail,
     updatePassword,
     forgotPassword,
     resetPassword,
@@ -34,7 +38,23 @@ router
     .put(protect, updateDetails)
 
 router
-    .route('/updateOnboarding')
+    .route('/updateusername')
+    .put(protect, updateUsername)
+
+router
+    .route('/updateemail')
+    .put(protect, updateEmail)
+
+router
+    .route('/updateavatar')
+    .put(protect, updateAvatarPicture)
+
+router
+    .route('/updatebrewdescription')
+    .put(protect, updateBrewDescription)
+
+router
+    .route('/updateonboarding')
     .put(protect, updateOnboarding)
 
 router

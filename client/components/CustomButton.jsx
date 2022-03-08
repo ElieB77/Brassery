@@ -18,12 +18,20 @@ import Heart from "./utils/icons/Heart";
 import Measure from "./utils/icons/Measure";
 import StyleGuide from "./utils/StyleGuide";
 
-const CustomButton = ({ onPress, title, time, type, border, outline }) => {
+const CustomButton = ({
+    onPress,
+    title,
+    time,
+    type,
+    border,
+    outline,
+    style,
+}) => {
     switch (type) {
         case "comment":
             return (
                 <TouchableOpacity
-                    style={[styles.containerIcon, StyleGuide.shadowProp]}
+                    style={[styles.containerIcon, StyleGuide.shadowProp, style]}
                     onPress={onPress}
                 >
                     <Comment />
@@ -32,7 +40,7 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
         case "search":
             return (
                 <TouchableOpacity
-                    style={[styles.containerIcon, StyleGuide.shadowProp]}
+                    style={[styles.containerIcon, StyleGuide.shadowProp, style]}
                     onPress={onPress}
                 >
                     <Search />
@@ -41,7 +49,7 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
         case "next":
             return (
                 <TouchableOpacity
-                    style={[styles.containerIcon, StyleGuide.shadowProp]}
+                    style={[styles.containerIcon, StyleGuide.shadowProp, style]}
                     onPress={onPress}
                 >
                     <Next />
@@ -50,7 +58,7 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
         case "close":
             return (
                 <TouchableOpacity
-                    style={[styles.containerIcon, StyleGuide.shadowProp]}
+                    style={[styles.containerIcon, StyleGuide.shadowProp, style]}
                     onPress={onPress}
                 >
                     <Close width="13" height="13" />
@@ -59,7 +67,7 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
         case "add":
             return (
                 <TouchableOpacity
-                    style={[styles.containerIcon, StyleGuide.shadowProp]}
+                    style={[styles.containerIcon, StyleGuide.shadowProp, style]}
                     onPress={onPress}
                 >
                     <Add />
@@ -68,7 +76,7 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
         case "settings":
             return (
                 <TouchableOpacity
-                    style={[styles.containerIcon, StyleGuide.shadowProp]}
+                    style={[styles.containerIcon, StyleGuide.shadowProp, style]}
                     onPress={onPress}
                 >
                     <Settings />
@@ -77,7 +85,7 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
         case "minus":
             return (
                 <TouchableOpacity
-                    style={[styles.containerIcon, StyleGuide.shadowProp]}
+                    style={[styles.containerIcon, StyleGuide.shadowProp, style]}
                     onPress={onPress}
                 >
                     <Minus />
@@ -86,7 +94,11 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
         case "densimetre":
             return (
                 <TouchableOpacity
-                    style={[styles.containerWithText, StyleGuide.shadowProp]}
+                    style={[
+                        styles.containerWithText,
+                        StyleGuide.shadowProp,
+                        style,
+                    ]}
                     onPress={onPress}
                 >
                     <Gravity />
@@ -110,12 +122,16 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
         case "addNote":
             return (
                 <TouchableOpacity
-                    style={[styles.containerWithText, StyleGuide.shadowProp]}
+                    style={[
+                        styles.containerWithText,
+                        StyleGuide.shadowProp,
+                        style,
+                    ]}
                     onPress={onPress}
                 >
                     <Add />
                     <View style={{ width: "100%", alignItems: "center" }}>
-                        <Text style={styles.text}>Ajouter note</Text>
+                        <Text style={styles.text}>Ajouter une note</Text>
                     </View>
                 </TouchableOpacity>
             );
@@ -134,7 +150,11 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
         case "other":
             return (
                 <TouchableOpacity
-                    style={[styles.containerWithText, StyleGuide.shadowProp]}
+                    style={[
+                        styles.containerWithText,
+                        StyleGuide.shadowProp,
+                        style,
+                    ]}
                     onPress={onPress}
                 >
                     <More />
@@ -146,7 +166,11 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
         case "convert":
             return (
                 <TouchableOpacity
-                    style={[styles.containerWithText, StyleGuide.shadowProp]}
+                    style={[
+                        styles.containerWithText,
+                        StyleGuide.shadowProp,
+                        style,
+                    ]}
                     onPress={onPress}
                 >
                     <Convert />
@@ -158,7 +182,11 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
         case "timer":
             return (
                 <TouchableOpacity
-                    style={[styles.containerWithText, StyleGuide.shadowProp]}
+                    style={[
+                        styles.containerWithText,
+                        StyleGuide.shadowProp,
+                        style,
+                    ]}
                     onPress={onPress}
                 >
                     <Timer />
@@ -170,7 +198,11 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
         case "brasser":
             return (
                 <TouchableOpacity
-                    style={[styles.containerBrasser, StyleGuide.shadowProp]}
+                    style={[
+                        styles.containerBrasser,
+                        StyleGuide.shadowProp,
+                        style,
+                    ]}
                     onPress={onPress}
                 >
                     <Brasser width="43" height="43" />
@@ -182,7 +214,11 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
         case "liker":
             return (
                 <TouchableOpacity
-                    style={[styles.containerLiker, StyleGuide.shadowProp]}
+                    style={[
+                        styles.containerLiker,
+                        StyleGuide.shadowProp,
+                        style,
+                    ]}
                     onPress={onPress}
                 >
                     <Heart width="30" height="30" outline={outline} />
@@ -191,7 +227,11 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
         case "hops":
             return (
                 <TouchableOpacity
-                    style={[styles.containerBrasser, StyleGuide.shadowProp]}
+                    style={[
+                        styles.containerBrasser,
+                        StyleGuide.shadowProp,
+                        style,
+                    ]}
                     onPress={onPress}
                 >
                     <Brasser width="43" height="43" />
@@ -203,7 +243,11 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
         case "fermentables":
             return (
                 <TouchableOpacity
-                    style={[styles.containerBrasser, StyleGuide.shadowProp]}
+                    style={[
+                        styles.containerBrasser,
+                        StyleGuide.shadowProp,
+                        style,
+                    ]}
                     onPress={onPress}
                 >
                     <Fermentable width="43" height="43" />
@@ -215,7 +259,11 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
         case "miscs":
             return (
                 <TouchableOpacity
-                    style={[styles.containerBrasser, StyleGuide.shadowProp]}
+                    style={[
+                        styles.containerBrasser,
+                        StyleGuide.shadowProp,
+                        style,
+                    ]}
                     onPress={onPress}
                 >
                     <Other width="43" height="43" />
@@ -227,7 +275,11 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
         case "cultures":
             return (
                 <TouchableOpacity
-                    style={[styles.containerBrasser, StyleGuide.shadowProp]}
+                    style={[
+                        styles.containerBrasser,
+                        StyleGuide.shadowProp,
+                        style,
+                    ]}
                     onPress={onPress}
                 >
                     <Yeast width="43" height="43" />
@@ -239,7 +291,7 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
         case "plus":
             return (
                 <TouchableOpacity
-                    style={[styles.containerPlus, StyleGuide.shadowProp]}
+                    style={[styles.containerPlus, StyleGuide.shadowProp, style]}
                     onPress={onPress}
                 >
                     <Add color={StyleGuide.colors.primary} />
@@ -248,7 +300,7 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
         case "time":
             return (
                 <TouchableOpacity
-                    style={[styles.containerTime, StyleGuide.shadowProp]}
+                    style={[styles.containerTime, StyleGuide.shadowProp, style]}
                 >
                     <Close
                         onPress={onPress}
@@ -263,6 +315,7 @@ const CustomButton = ({ onPress, title, time, type, border, outline }) => {
             return (
                 <TouchableOpacity
                     style={[
+                        style,
                         outline
                             ? {
                                   backgroundColor: StyleGuide.colors.white,

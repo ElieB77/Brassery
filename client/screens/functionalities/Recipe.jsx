@@ -5,6 +5,7 @@ import CustomButton from "../../components/CustomButton";
 
 const Recette = ({ route, navigation }) => {
     const { recipeId } = route.params;
+    console.log("🚀 ~ file: Recipe.jsx ~ line 8 ~ Recette ~ recipeId", recipeId)
 
     return <Recipe readOnly={true} id={recipeId} navigation={navigation} />;
 };
