@@ -58,7 +58,7 @@ const Discovering = ({ navigation, saveToken }) => {
             justifyContent: "center",
             alignItems: "center",
         },
-        header: { top:70,zIndex:100 },
+        header: { top: 60, zIndex: 100 },
     });
 
     const content = (text) => <Text>{text}</Text>;
