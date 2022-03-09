@@ -170,7 +170,7 @@ const Discovering = ({ navigation, saveToken }) => {
                         </Text>
                     </Pressable>
                 </View>
-                <CustomButton title="Créer ma Brassery" />
+                <CustomButton title="Créer ma Brassery" onPress={() => navigation.navigate("SignUp")}/>
             </View>
         </View>
     );
