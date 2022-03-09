@@ -99,6 +99,10 @@ const App = () => {
                                     name="Navbar"
                                     component={Navbar}
                                 />
+                                <Stack.Screen
+                                    name="CreateRecipe"
+                                    component={CreateRecipe}
+                                />
                             </>
                         ) : (
                             <>
