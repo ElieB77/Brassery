@@ -34,3 +34,11 @@ exports.insertNote = asyncHandler(async (req, res, next) => {
     await recipe.save();
     res.status(200).json(recipe);
 });
+
+exports.createRecipe = asyncHandler(async (req, res, next) => {
+    console.log("🌞",req.body);
+    const recipe = await new Recipe(req.body);
+    await recipe.save();
+    res.status(200).json(recipe);
+});
+
