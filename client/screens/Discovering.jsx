@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Pressable } from "react-native";
 import CustomButton from "../components/CustomButton";
 import StyleGuide from "../components/utils/StyleGuide";
 import Swipeable from "react-native-gesture-handler/Swipeable";
+import Header from "../components/headings/Header";
 
 const Discovering = ({ navigation, saveToken }) => {
     /* ACTIVE PAGE */
@@ -57,6 +58,7 @@ const Discovering = ({ navigation, saveToken }) => {
             justifyContent: "center",
             alignItems: "center",
         },
+        header: { top:70,zIndex:100 },
     });
 
     const content = (text) => <Text>{text}</Text>;
@@ -101,6 +103,9 @@ const Discovering = ({ navigation, saveToken }) => {
                 backgroundColor: StyleGuide.colors.white,
             }}
         >
+            <View style={style.header}>
+                <Header title="Le brassage amateur" />
+            </View>
             <Swipeable
                 containerStyle={style.swipeContainer}
                 childrenContainerStyle={style.swipeChildren}
@@ -170,7 +175,10 @@ const Discovering = ({ navigation, saveToken }) => {
                         </Text>
                     </Pressable>
                 </View>
-                <CustomButton title="Créer ma Brassery" onPress={() => navigation.navigate("SignUp")}/>
+                <CustomButton
+                    title="Créer ma Brassery"
+                    onPress={() => navigation.navigate("SignUp")}
+                />
             </View>
         </View>
     );
