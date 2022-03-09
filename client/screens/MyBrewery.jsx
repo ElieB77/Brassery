@@ -145,9 +145,7 @@ const Home = ({ navigation, saveToken }) => {
           <CustomButton
             type='brasser'
             onPress={() =>
-              navigation.navigate('Batch', {
-                batchId: '6221fc885223412400e58d54',
-              })
+              navigation.navigate('CreateRecipe')
             }
           />
         </View>

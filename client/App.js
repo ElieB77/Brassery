@@ -97,10 +97,6 @@ const App = () => {
                         ) : (
                             <>
                                 <Stack.Screen
-                                    name="CreateRecipe"
-                                    component={CreateRecipe}
-                                />
-                                <Stack.Screen
                                     name="Navbar"
                                     component={Navbar}
                                 />
@@ -126,6 +122,10 @@ const App = () => {
                                 <Stack.Screen
                                     name="MyInstallation"
                                     component={MyInstallation}
+                                />
+                                <Stack.Screen
+                                    name="CreateRecipe"
+                                    component={CreateRecipe}
                                 />
                             </>
                         )}

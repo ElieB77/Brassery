@@ -11,7 +11,20 @@ import List from "../../components/lists/list";
 import ListItem from "../../components/lists/listItem";
 import config from "../../config/globalVariables";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const CreateRecipe = (props) => {
+    // GET user ID
+    const [userId, setUserId] = useState(null);
+    useEffect(() => {
+        if (!userId)
+            AsyncStorage.getItem("userId", function (error, data) {
+                if (data != null) {
+                    setUserId(data);
+                }
+            });
+    }, [userId]);
+
     /* STATES */
     const [stepOverlay, setStepOverlay] = useState(null);
     const [mainInfoToggle, setMainInfoToggle] = useState(false);
@@ -115,14 +128,32 @@ const CreateRecipe = (props) => {
                 boilSteps: boilSteps,
             },
         };
-        console.log("DATA 🔥",data);
-        await fetch(`${config.base_url}/api/recipes`, {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${props.token}`,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
+        const rawResponseNewRecipe = await fetch(
+            `${config.base_url}/api/recipes`,
+            {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${props.token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            }
+        );
+        const recipe = await rawResponseNewRecipe.json();
+        const rawResponseNewBatch = await fetch(
+            `${config.base_url}/api/batches/create`,
+            {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${props.token}`,
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: `recipeId=${recipe._id}&userId=${userId}`,
+            }
+        );
+        const result = await rawResponseNewBatch.json();
+        props.navigation.navigate("Batch", {
+            batchId: result._id,
         });
     };
 
@@ -320,15 +351,15 @@ const CreateRecipe = (props) => {
                     >
                         Empatage
                     </Text>
+                    <View style={style.inputContainer}>
+                        <Input
+                            type="text"
+                            placeholder="Nom de l'empatage"
+                            onChangeText={(e) => setMashName(e)}
+                        />
+                    </View>
                     {mashInfoToggle && (
                         <View>
-                            <View style={style.inputContainer}>
-                                <Input
-                                    type="text"
-                                    placeholder="Nom de l'empatage"
-                                    onChangeText={(e) => setMashName(e)}
-                                />
-                            </View>
                             <View style={style.inputContainer}>
                                 <Input
                                     type="text"
@@ -376,15 +407,15 @@ const CreateRecipe = (props) => {
                     >
                         Ébullition
                     </Text>
+                    <View style={style.inputContainer}>
+                        <Input
+                            type="text"
+                            placeholder="Nom de l'ébullition"
+                            onChangeText={(e) => setBoilName(e)}
+                        />
+                    </View>
                     {boilInfoToggle && (
                         <View>
-                            <View style={style.inputContainer}>
-                                <Input
-                                    type="text"
-                                    placeholder="Nom de l'ébullition"
-                                    onChangeText={(e) => setBoilName(e)}
-                                />
-                            </View>
                             <View style={style.inputContainer}>
                                 <Input
                                     type="text"
@@ -439,15 +470,15 @@ const CreateRecipe = (props) => {
                     >
                         Fermentation
                     </Text>
+                    <View style={style.inputContainer}>
+                        <Input
+                            type="text"
+                            placeholder="Nom de la fermentation"
+                            onChangeText={(e) => setFermentationName(e)}
+                        />
+                    </View>
                     {fermentationInfoToggle && (
                         <View>
-                            <View style={style.inputContainer}>
-                                <Input
-                                    type="text"
-                                    placeholder="Nom de la fermentation"
-                                    onChangeText={(e) => setFermentationName(e)}
-                                />
-                            </View>
                             <View style={style.inputContainer}>
                                 <Input
                                     type="text"

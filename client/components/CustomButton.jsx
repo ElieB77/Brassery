@@ -169,7 +169,7 @@ const CustomButton = ({
                 >
                     <Text style={styles.text}>{reverse ? "↑" : "↓"}</Text>
                     <View style={{ width: "100%", alignItems: "center" }}>
-                        <Text style={styles.text}>Infos principales</Text>
+                        <Text style={styles.text}>Infos en plus</Text>
                     </View>
                 </TouchableOpacity>
             );
