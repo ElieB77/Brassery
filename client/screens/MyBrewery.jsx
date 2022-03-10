@@ -133,20 +133,14 @@ const Home = ({ navigation, saveToken }) => {
         <View style={{ marginBottom: Dimensions.get('window').width / 12 }}>
           <CustomButton
             title='Mes messages'
-            onPress={() =>
-              navigation.navigate('Recipe', {
-                recipeId: '6221fc055223412400e58d53',
-              })
-            }
+            onPress={() => navigation.navigate('MyMessages')}
           />
         </View>
         <View style={{ marginBottom: Dimensions.get('window').width / 15 }}>
           <CustomButton
             type='brasser'
             onPress={() =>
-              navigation.navigate('Batch', {
-                batchId: '6221fc885223412400e58d54',
-              })
+              navigation.navigate('CreateRecipe')
             }
           />
         </View>

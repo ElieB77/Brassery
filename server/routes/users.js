@@ -16,12 +16,15 @@ const advancedResults = require('../middlewares/advancedResults')
 
 router.route("/recipe/:id/:recipeId").put(addLikeRecipe);
 
-router.route("/:id").get(getUser)
+router
+    .route("/")
+    .get(advancedResults(User), getUsers)
+    .post(createUser);
 
-// router.use(authorize("admin"));
-
-router.route("/").get(advancedResults(User), getUsers).post(createUser);
-
-router.route("/:id").put(updateUser).delete(deleteUser);
+router
+    .route("/:id")
+    .get(getUser)
+    .put(updateUser)
+    .delete(deleteUser);
 
 module.exports = router;

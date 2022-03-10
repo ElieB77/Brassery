@@ -8,7 +8,7 @@ const Spinner = (props) => {
       style={{
         margin: 'auto',
         background: '0 0',
-        display: 'block',
+        display: "flex",
         shapeRendering: 'auto',
       }}
       width={200}
