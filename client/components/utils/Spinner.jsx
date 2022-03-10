@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Svg, { Circle, AnimateTransform } from 'react-native-svg';
 
 const Spinner = (props) => {
@@ -8,7 +8,7 @@ const Spinner = (props) => {
       style={{
         margin: 'auto',
         background: '0 0',
-        display: 'block',
+        display: "flex",
         shapeRendering: 'auto',
       }}
       width={200}
