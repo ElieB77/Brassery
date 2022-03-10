@@ -255,7 +255,7 @@ const Recipe = ({ id, readOnly, navigation, token }) => {
         },
         brasserBtn: {
             position: "absolute",
-            top: "85%",
+            top: "87%",
             alignSelf: "center",
             transform: [{ scale: 0.9 }],
             flexDirection: "row",
