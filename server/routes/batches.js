@@ -1,12 +1,13 @@
 const express = require("express");
 const {
-    getBatch,
-    getBatches,
-    findBatch,
-    updateStepStatus,
-    createBatch,
-    deleteBatch,
-    insertMeasure,
+  getBatch,
+  getBatches,
+  findBatch,
+  updateStepStatus,
+  createBatch,
+  deleteBatch,
+  insertMeasure,
+  findBatchByUser
 } = require("../controllers/batches");
 const router = express.Router();
 const Batch = require("../models/Batch");
@@ -29,5 +30,6 @@ router.route("/delete/:id").delete(deleteBatch);
 router.route("/:id/addMeasure").post(insertMeasure);
 
 router.route("/findbatches").post(findBatch);
+router.route("/findbyuser").post(findBatchByUser);
 
 module.exports = router;

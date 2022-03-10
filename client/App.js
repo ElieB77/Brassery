@@ -24,6 +24,7 @@ import MyInstallation from "./screens/myBrewery/MyInstallation";
 import Chat from "./screens/otherBrewery.jsx/Chat";
 import CreateRecipe from "./screens/functionalities/CreateRecipe";
 import MyMessages from "./screens/otherBrewery.jsx/MyMessages";
+import MyBatches from "./screens/myBrewery/MyBatches";
 
 import Navbar from "./components/layouts/navbar/Navbar";
 
@@ -42,16 +43,16 @@ const Stack = createStackNavigator();
 const store = createStore(combineReducers({ token, user }));
 
 const App = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    // AsyncStorage.clear()
-    // AsyncStorage.removeItem('user')
+  // AsyncStorage.clear();
+  // AsyncStorage.removeItem('user')
 
-    AsyncStorage.getItem("user", function (error, data) {
-        if (data != null) {
-            setIsLoggedIn(true);
-        }
-    });
+  AsyncStorage.getItem("user", function (error, data) {
+    if (data != null) {
+      setIsLoggedIn(true);
+    }
+  });
 
     return (
         <Provider store={store}>
@@ -120,6 +121,10 @@ const App = () => {
                                     name="MyInstallation"
                                     component={MyInstallation}
                                 />
+                                <Stack.Screen
+                                    name="MyBatches"
+                                    component={MyBatches}
+                                />
                             </>
                         ) : (
                             <>
@@ -183,6 +188,10 @@ const App = () => {
                                     component={CreateRecipe}
                                 />
                                 <Stack.Screen name="MyMessages" component={MyMessages} />
+                                <Stack.Screen
+                                    name="MyBatches"
+                                    component={MyBatches}
+                                />
                             </>
                         )}
                     </Stack.Navigator>

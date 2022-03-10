@@ -25,16 +25,15 @@ const ResourceIngredient = (props) => {
   console.log(searchInput);
 
   useEffect(() => {
-    AsyncStorage.getItem("user", function (error, data) {
-      if (data != null) {
+
         async function loadData() {
           const rawResponse = await fetch(
-            `${config.base_url}/api/hops?limit=10`,
-            {
-              headers: {
-                Authorization: `Bearer ${data}`,
-              },
-            }
+            `${config.base_url}/api/hops?limit=10`
+            // {
+            //   headers: {
+            //     Authorization: `Bearer ${data}`,
+            //   },
+            //}
           );
 
           const response = await rawResponse.json();
@@ -47,8 +46,8 @@ const ResourceIngredient = (props) => {
               <ListItem
                 key={index}
                 title={item.name}
-                btnType="next"
-                content={".."}
+                btnType='next'
+                content={'..'}
               />
             );
           });
@@ -56,8 +55,7 @@ const ResourceIngredient = (props) => {
           setIngredientList(ingredientListArr);
         }
         loadData();
-      }
-    });
+
   }, []);
 
   const getCategory = (element) => {
@@ -158,9 +156,8 @@ const ResourceIngredient = (props) => {
       </View>
       {/* Filter Btn */}
       <View style={{ alignItems: "center", marginTop: 50 }}>
-        <Text style={{ marginBottom: 15 }}>Parcourir les filtres</Text>
         <CustomButton
-          type={modalVisible ? "minus" : "add" }
+          title="Parcourir les filtres"
           onPress={() =>
             modalVisible ? setModalVisible(false) : setModalVisible(true)
           }

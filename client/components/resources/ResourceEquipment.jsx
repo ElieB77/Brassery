@@ -24,51 +24,47 @@ const ResourceEquipment = (props) => {
     : styles.hideFilterContainer;
 
   useEffect(() => {
-    AsyncStorage.getItem("user", function (error, data) {
-      if (data != null) {
-        async function loadData() {
-          const rawResponse = await fetch(
-            `${config.base_url}/api/materials?limit=60`,
-            {
-              headers: {
-                Authorization: `Bearer ${data}`,
-              },
-            }
+    async function loadData() {
+      const rawResponse = await fetch(
+        `${config.base_url}/api/materials?limit=60`
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${data}`,
+        //   },
+        // }
+      );
+
+      const response = await rawResponse.json();
+
+      const newCategoriesTab = [];
+      const newBrandsTab = [];
+      const materialListArr = [];
+
+      if (response.data) {
+        response.data.map((item) => {
+          newCategoriesTab.push(item.type);
+          newBrandsTab.push(item.brand);
+        });
+
+        response.data.map((item, index) => {
+          return materialListArr.push(
+            <ListItem
+              key={index}
+              title={item.type}
+              content={item.description}
+              btnType='next'
+            />
           );
-
-          const response = await rawResponse.json();
-
-          const newCategoriesTab = [];
-          const newBrandsTab = [];
-          const materialListArr = [];
-
-          if (response.data) {
-            response.data.map((item) => {
-              newCategoriesTab.push(item.type);
-              newBrandsTab.push(item.brand);
-            });
-
-            response.data.map((item, index) => {
-              return materialListArr.push(
-                <ListItem
-                  key={index}
-                  title={item.type}
-                  content={item.description}
-                  btnType="next"
-                />
-              );
-            });
-          }
-          const uniqueCategoriesTab = [...new Set(newCategoriesTab)];
-          const uniqueBrandsTab = [...new Set(newBrandsTab)];
-
-          setCategories(uniqueCategoriesTab);
-          setBrand(uniqueBrandsTab);
-          setMaterialList(materialListArr);
-        }
-        loadData();
+        });
       }
-    });
+      const uniqueCategoriesTab = [...new Set(newCategoriesTab)];
+      const uniqueBrandsTab = [...new Set(newBrandsTab)];
+
+      setCategories(uniqueCategoriesTab);
+      setBrand(uniqueBrandsTab);
+      setMaterialList(materialListArr);
+    }
+    loadData();
   }, []);
 
   const getCategory = (element) => {
@@ -154,9 +150,8 @@ const ResourceEquipment = (props) => {
       </View>
       {/* Filter Btn */}
       <View style={{ alignItems: "center", marginTop: 50 }}>
-        <Text style={{ marginBottom: 15 }}>Parcourir les filtres</Text>
         <CustomButton
-          type={modalVisible ? "minus" : "add" }
+          title="Parcourir les filtres"
           onPress={() =>
             modalVisible ? setModalVisible(false) : setModalVisible(true)
           }
