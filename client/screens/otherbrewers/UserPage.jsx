@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, Dimensions, Image, Modal } from "react-native";
-import StyleGuide from "../../components/utils/StyleGuide";
-import config from "../../config/globalVariables";
-import ListItem from "../../components/lists/listItem";
-import CustomButton from "../../components/CustomButton";
-import Header from "../../components/headings/Header";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { connect } from 'react-redux';
+import { View, StyleSheet, Text, Dimensions, Image, Modal } from 'react-native';
+import StyleGuide from '../../components/utils/StyleGuide';
+import config from '../../config/globalVariables';
+import ListItem from '../../components/lists/listItem';
+import CustomButton from '../../components/CustomButton';
+import Header from '../../components/headings/Header';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const UserPage = ({ route }) => {
+const UserPage = ({ route, navigation, token }) => {
   const { userId } = route.params;
   const [modalVisible, setModalVisible] = useState(false);
   const [modal2Visible, setModal2Visible] = useState(false);
@@ -27,17 +28,17 @@ const UserPage = ({ route }) => {
       setUserAvatar(resultFind.data[0].avatar);
       setUserName(resultFind.data[0].username);
 
-      AsyncStorage.getItem("user", function (error, data) {
+      AsyncStorage.getItem('user', function (error, data) {
         if (data != null) {
           async function loadData() {
             // Find batches
             const rawResponse = await fetch(
               `${config.base_url}/api/batches/findbatches`,
               {
-                method: "POST",
+                method: 'POST',
                 headers: {
                   Authorization: `Bearer ${data}`,
-                  "Content-Type": "application/x-www-form-urlencoded",
+                  'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 body: `userId=${userId}`,
               }
@@ -58,10 +59,10 @@ const UserPage = ({ route }) => {
                 const rawResponse2 = await fetch(
                   `${config.base_url}/api/recipes/${id[i]}`,
                   {
-                    method: "GET",
+                    method: 'GET',
                     headers: {
                       Authorization: `Bearer ${data}`,
-                      "Content-Type": "application/x-www-form-urlencoded",
+                      'Content-Type': 'application/x-www-form-urlencoded',
                     },
                   }
                 );
@@ -82,16 +83,16 @@ const UserPage = ({ route }) => {
   }, [userId]);
 
   useEffect(() => {
-    AsyncStorage.getItem("user", function (error, data) {
+    AsyncStorage.getItem('user', function (error, data) {
       if (data != null) {
         async function loadData() {
           const rawResponse = await fetch(
             `${config.base_url}/api/materials/findmaterialbyid`,
             {
-              method: "POST",
+              method: 'POST',
               headers: {
                 Authorization: `Bearer ${data}`,
-                "Content-Type": "application/x-www-form-urlencoded",
+                'Content-Type': 'application/x-www-form-urlencoded',
               },
               body: `userId=${userId}`,
             }
@@ -111,6 +112,54 @@ const UserPage = ({ route }) => {
     return <ListItem key={i} title={user.name} content={user.description} />;
   });
 
+  const sendMessage = async () => {
+    const rawResponse = await fetch(`${config.base_url}/api/conversations`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const response = await rawResponse.json();
+
+    let isExist = false;
+
+    for (let item of response) {
+      if (item.members[1] === userId) {
+        isExist = true;
+        navigation.navigate('Chat', {
+          conversationId: item._id,
+          receiverAvatar: userAvatar
+            ? userAvatar
+            : 'https://icon-library.com/images/no-user-image-icon/no-user-image-icon-0.jpg',
+          receiverUsername: userName,
+        });
+      }
+    }
+
+    if (!isExist) {
+      const newRawResponse = await fetch(
+        `${config.base_url}/api/conversations`,
+        {
+          method: 'post',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: `receiverId=${userId}`,
+        }
+      );
+
+      const newResponse = await newRawResponse.json();
+
+      navigation.navigate('Chat', {
+        conversationId: newResponse._id,
+        receiverAvatar: userAvatar
+          ? userAvatar
+          : 'https://icon-library.com/images/no-user-image-icon/no-user-image-icon-0.jpg',
+        receiverUsername: userName,
+      });
+    }
+  };
+
   return (
     <View style={styles.formContainer}>
       <View style={{ paddingLeft: 25 }}>
@@ -119,9 +168,9 @@ const UserPage = ({ route }) => {
       <View>
         <Image
           style={{
-            width: Dimensions.get("window").width / 2,
-            height: Dimensions.get("window").width / 2,
-            marginBottom: Dimensions.get("window").width / 10,
+            width: Dimensions.get('window').width / 2,
+            height: Dimensions.get('window').width / 2,
+            marginBottom: Dimensions.get('window').width / 10,
             borderRadius: 8,
           }}
           source={{ uri: userAvatar }}
@@ -135,20 +184,20 @@ const UserPage = ({ route }) => {
       </View>
       <View
         style={{
-          marginBottom: Dimensions.get("window").width / 10,
+          marginBottom: Dimensions.get('window').width / 10,
         }}
       >
         <CustomButton
-          title="Mon installation"
+          title='Mon installation'
           onPress={() => setModalVisible(true)}
         />
       </View>
       <Modal
         transparent={true}
-        animationType="slide"
+        animationType='slide'
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
+          Alert.alert('Modal has been closed.');
           setModalVisible(!modalVisible);
         }}
       >
@@ -157,8 +206,8 @@ const UserPage = ({ route }) => {
             <View style={styles.modal}>{userMaterial}</View>
             <View style={styles.modal}>
               <CustomButton
-                type="Convert"
-                title="Fermer"
+                type='Convert'
+                title='Fermer'
                 onPress={() => setModalVisible(false)}
               />
             </View>
@@ -167,19 +216,19 @@ const UserPage = ({ route }) => {
       </Modal>
       <View
         style={{
-          marginBottom: Dimensions.get("window").width / 10,
+          marginBottom: Dimensions.get('window').width / 10,
         }}
       >
         <CustomButton
-          title="Mes dernières recettes"
+          title='Mes dernières recettes'
           onPress={() => setModal2Visible(true)}
         />
         <Modal
           transparent={true}
-          animationType="slide"
+          animationType='slide'
           visible={modal2Visible}
           onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
+            Alert.alert('Modal has been closed.');
             setModal2Visible(!modalVisible);
           }}
         >
@@ -188,8 +237,8 @@ const UserPage = ({ route }) => {
               <View style={styles.modal}>{userRecipesList}</View>
               <View style={styles.modal}>
                 <CustomButton
-                  type="Convert"
-                  title="Fermer"
+                  type='Convert'
+                  title='Fermer'
                   onPress={() => setModal2Visible(false)}
                 />
               </View>
@@ -198,7 +247,11 @@ const UserPage = ({ route }) => {
         </Modal>
       </View>
       <View style={styles.button}>
-        <CustomButton type="Convert" title="Envoyer un message" />
+        <CustomButton
+          type='Convert'
+          title='Envoyer un message'
+          onPress={() => sendMessage()}
+        />
       </View>
     </View>
   );
@@ -207,20 +260,20 @@ const UserPage = ({ route }) => {
 const styles = StyleSheet.create({
   formContainer: {
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
     paddingTop: 45,
-    backgroundColor: "#FFFDFB",
+    backgroundColor: '#FFFDFB',
   },
   container: {
     paddingHorizontal: 20,
     paddingVertical: 10,
-    textAlign: "left",
+    textAlign: 'left',
     borderColor: StyleGuide.colors.secondary,
     borderRadius: StyleGuide.borderRadius,
     backgroundColor: StyleGuide.colors.secondary,
     elevation: 10,
     marginBottom: 40,
-    width: "90%",
+    width: '90%',
   },
   text: {
     color: StyleGuide.colors.white,
@@ -229,23 +282,23 @@ const styles = StyleSheet.create({
     color: StyleGuide.colors.primary,
   },
   button: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 50,
     zIndex: 10,
-    left: "65%",
+    left: '65%',
     marginLeft: -100,
   },
   centeredView: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   modalView: {
-    backgroundColor: "#FFFDFB",
+    backgroundColor: '#FFFDFB',
     borderRadius: 8,
     padding: 5,
-    alignItems: "center",
-    shadowColor: "rgba(0, 0, 0, 0.25)",
+    alignItems: 'center',
+    shadowColor: 'rgba(0, 0, 0, 0.25)',
     shadowOffset: {
       width: 0,
       height: 0,
@@ -259,4 +312,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserPage;
+const mapStateToProps = (state) => {
+  return { token: state.token };
+};
+
+export default connect(mapStateToProps, null)(UserPage);

@@ -133,11 +133,7 @@ const Home = ({ navigation, saveToken }) => {
         <View style={{ marginBottom: Dimensions.get('window').width / 12 }}>
           <CustomButton
             title='Mes messages'
-            onPress={() =>
-              navigation.navigate('Recipe', {
-                recipeId: '6221fc055223412400e58d53',
-              })
-            }
+            onPress={() => navigation.navigate('MyMessages')}
           />
         </View>
         <View style={{ marginBottom: Dimensions.get('window').width / 15 }}>

@@ -22,6 +22,7 @@ import Other from "./screens/otherBrewery.jsx/Other";
 import Settings from "./screens/Settings";
 import MyInstallation from "./screens/myBrewery/MyInstallation";
 import Chat from "./screens/otherBrewery.jsx/Chat";
+import MyMessages from "./screens/otherBrewery.jsx/MyMessages";
 
 import Navbar from "./components/layouts/navbar/Navbar";
 
@@ -91,6 +92,7 @@ const App = () => {
                   component={MyInstallation}
                 />
                 <Stack.Screen name="Chat" component={Chat} />
+                  <Stack.Screen name="MyMessages" component={MyMessages} />
               </>
             )}
           </Stack.Navigator>
