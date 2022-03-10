@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Svg, { Circle, AnimateTransform } from 'react-native-svg';
 
 const Spinner = (props) => {
