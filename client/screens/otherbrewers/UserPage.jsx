@@ -76,7 +76,6 @@ const UserPage = ({ route }) => {
         }
       });
     }
-
     // Run main function of useEffect
     findUser();
   }, [userId]);

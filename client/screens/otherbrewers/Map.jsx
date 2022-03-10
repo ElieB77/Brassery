@@ -1,6 +1,6 @@
 
 import React, {useEffect, useState} from 'react';
-import { View, StyleSheet, Text, Modal } from 'react-native';
+import { View, StyleSheet, Text, Modal, Pressable } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import config from '../../config/globalVariables';
 import Header from '../../components/headings/Header';
@@ -8,6 +8,7 @@ import Input from '../../components/utils/form-elements/Input';
 import CustomButton from '../../components/CustomButton';
 import StyleGuide from '../../components/utils/StyleGuide';
 import Geocode from "react-geocode";
+import Search from "../../components/utils/icons/Search";
 
 
 const Location = ({ navigation }) => {
@@ -97,6 +98,12 @@ const Location = ({ navigation }) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
+            <View style={styles.closeBtn}>
+              <CustomButton
+                type='close'
+                onPress={() => setModalVisible(false)}
+              />
+            </View>
             <View style={styles.modal}>
               <Text style={StyleGuide.typography.text3}>
                 Positionner votre Brasserie!
@@ -192,6 +199,10 @@ const styles = StyleSheet.create({
   },
   modal: {
     padding: 20,
+  },
+  closeBtn: {
+    paddingRight: 10,
+    marginLeft: 'auto'
   }
 });
 
