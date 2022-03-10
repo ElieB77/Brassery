@@ -158,9 +158,12 @@ const ResourceIngredient = (props) => {
       </View>
       {/* Filter Btn */}
       <View style={{ alignItems: "center", marginTop: 50 }}>
-        <Text style={{ marginBottom: 15 }}>Parcourir les filtres</Text>
         <CustomButton
+<<<<<<< HEAD
           type={modalVisible ? "minus" : "add" }
+=======
+          title="Parcourir les filtres"
+>>>>>>> mes-brassins
           onPress={() =>
             modalVisible ? setModalVisible(false) : setModalVisible(true)
           }
