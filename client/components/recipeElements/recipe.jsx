@@ -8,6 +8,7 @@ import RecipeItem from "./recipeItem";
 import RecipeDescription from "./recipeDescription";
 import RecipeIngredients from "./recipeIngredients";
 
+import Spinner from "../utils/Spinner";
 import Header from "../headings/Header";
 import CustomButton from "../CustomButton";
 import ActionOverlay from "../overlays/actionOverlay";
@@ -276,8 +277,14 @@ const Recipe = ({ id, readOnly, navigation, token }) => {
     const recipeDescription = `${recipe?.description}\n\nCouleur: ${recipe?.colorEstimate} EBC\nAmertume: ${recipe?.ibuEstimate} IBU\nAlcool: ${recipe?.alcoholByVolume} %\nDensité de départ: ${recipe?.originalGravity}\nDensité de fin: ${recipe?.finalGravity}`;
     if (!recipe)
         return (
-            <View>
-                <Text>No recipe found 🤷</Text>
+            <View
+                style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}
+            >
+                <Spinner />
             </View>
         );
     return (
