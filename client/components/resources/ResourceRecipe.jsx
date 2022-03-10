@@ -41,7 +41,7 @@ const ResourceRecipe = (props) => {
 
           if (response.data) {
             response.data.map((item) => {
-              newRecipesTab.push(item.type);
+              newRecipesTab.push(item.style);
             });
 
             response.data.map((item, index) => {
@@ -79,7 +79,7 @@ const ResourceRecipe = (props) => {
   const search = () => {
     let request;
     if (getRecipeType) {
-      request = `${config.base_url}/api/recipes?type=${getRecipeType}`;
+      request = `${config.base_url}/api/recipes?style=${getRecipeType}`;
     }
     if (searchInput) {
       request = `${config.base_url}/api/recipes?name=${searchInput}`;
@@ -143,9 +143,8 @@ const ResourceRecipe = (props) => {
       </View>
       {/* Filter Btn */}
       <View style={{ alignItems: "center", marginTop: 50 }}>
-        <Text style={{ marginBottom: 15 }}>Parcourir les filtres</Text>
         <CustomButton
-          type="add"
+          title="Parcourir les filtres"
           onPress={() =>
             modalVisible ? setModalVisible(false) : setModalVisible(true)
           }
@@ -166,52 +165,15 @@ const ResourceRecipe = (props) => {
         </View>
         <View style={{ position: "relative", zIndex: 10 }}>
           <Text style={[StyleGuide.typography.text3, styles.filterLabel]}>
-            Type de bière
+            Style de bière
           </Text>
           <Dropdown
-            title={"Choisissez un type de bière "}
+            title={"Choisissez un style de bière "}
             item={recipesType}
             getValue={getRecipe}
           />
         </View>
 
-        {/* Slider */}
-        <View style={{ marginTop: 20 }}>
-          <View>
-            <Text style={[StyleGuide.typography.text3, styles.filterLabel]}>
-              Couleur de la bière
-            </Text>
-            <Slider
-              style={{ width: 300 }}
-              minimumValue={0}
-              maximumValue={1}
-              value={0.5}
-              minimumTrackTintColor={StyleGuide.colors.secondary}
-              maximumTrackTintColor="#000000"
-              thumbTintColor={StyleGuide.colors.primary}
-              onValueChange={(value) => setRange(Math.floor(value * 100) + "%")}
-            />
-            <Text style={{ textAlign: "center" }}>{range}</Text>
-          </View>
-          <View>
-            <Text style={[StyleGuide.typography.text3, styles.filterLabel]}>
-              Amertume de la bière
-            </Text>
-            <Slider
-              style={{ width: 300 }}
-              minimumValue={0}
-              maximumValue={1}
-              value={0.5}
-              minimumTrackTintColor={StyleGuide.colors.secondary}
-              maximumTrackTintColor="#000000"
-              thumbTintColor={StyleGuide.colors.primary}
-              onValueChange={(value) =>
-                setBitternessRange(Math.floor(value * 100) + "%")
-              }
-            />
-            <Text style={{ textAlign: "center" }}>{bitternessRange}</Text>
-          </View>
-        </View>
         <View style={{ alignItems: "flex-end", marginTop: 10 }}>
           <CustomButton type="search" onPress={() => search()} />
         </View>
@@ -225,6 +187,7 @@ const ResourceRecipe = (props) => {
           width: 300,
           alignItems: "center",
           marginTop: 25,
+          zIndex: -1,
         }}
       >
         <List>{recipeList}</List>
@@ -274,7 +237,7 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: StyleGuide.colors.black,
     position: "relative",
-    zIndex: 10,
+    zIndex: -1,
   },
 });
 export default ResourceRecipe;

@@ -1,16 +1,12 @@
 const express = require("express");
-const {
-    getRecipe,
-    getRecipes,
-    insertNote,
-} = require("../controllers/recipes");
+const { getRecipe, getRecipes, insertNote } = require("../controllers/recipes");
 const router = express.Router();
 const Recipe = require("../models/Recipe");
 
 const advancedResults = require("../middlewares/advancedResults");
-const { protect } = require("../middlewares/authentification");
+// const { protect } = require("../middlewares/authentification");
 
-router.use(protect);
+// router.use(protect);
 
 router.route("/").get(advancedResults(Recipe), getRecipes);
 

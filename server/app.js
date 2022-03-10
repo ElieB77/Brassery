@@ -2,7 +2,7 @@ const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-const fileUpload = require('express-fileupload')
+const fileUpload = require("express-fileupload");
 const mongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
 const xss = require("xss-clean");
@@ -27,11 +27,14 @@ const users = require("./routes/users");
 const recipes = require("./routes/recipes");
 const materials = require("./routes/materials");
 const batches = require("./routes/batches");
+const hops = require("./routes/hops");
+const fermentables = require("./routes/fermentables");
+const cultures = require("./routes/cultures");
 
 const app = express();
 
 // file upload
-app.use(fileUpload())
+app.use(fileUpload());
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -54,8 +57,8 @@ app.use(xss());
 
 // Rate limiting
 const limiter = rateLimit({
-    windowMs: 10 * 60 * 1000, // 10 mins
-    max: 100,
+  windowMs: 10 * 60 * 1000, // 10 mins
+  max: 500,
 });
 app.use(limiter);
 
@@ -71,23 +74,26 @@ app.use("/api/users", users);
 app.use("/api/recipes", recipes);
 app.use("/api/materials", materials);
 app.use("/api/batches", batches);
+app.use("/api/hops", hops);
+app.use("/api/fermentables", fermentables);
+app.use("/api/cultures", cultures);
 
 app.use(errorHandler);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-    next(createError(404));
+  next(createError(404));
 });
 
 // error handler
 app.use(function (err, req, res, next) {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get("env") === "development" ? err : {};
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get("env") === "development" ? err : {};
 
-    // render the error page
-    res.status(err.status || 500);
-    res.render("error");
+  // render the error page
+  res.status(err.status || 500);
+  res.render("error");
 });
 
 module.exports = app;

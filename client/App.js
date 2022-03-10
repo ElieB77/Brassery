@@ -16,6 +16,7 @@ import Resources from "./screens/Resources";
 import BeerLiked from "./screens/myBrewery/BeerLiked";
 import Beer from "./screens/myBrewery/Beer";
 import Other from "./screens/otherBrewery.jsx/Other";
+import MyBatches from "./screens/myBrewery/MyBatches";
 
 import Navbar from "./components/layouts/navbar/Navbar";
 
@@ -36,7 +37,7 @@ const store = createStore(combineReducers({ token, user }));
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // AsyncStorage.clear()
+  // AsyncStorage.clear();
   // AsyncStorage.removeItem('user')
 
   AsyncStorage.getItem("user", function (error, data) {
@@ -65,6 +66,7 @@ const App = () => {
                 <Stack.Screen name="Batch" component={Batch} />
                 <Stack.Screen name="Recipe" component={Recipe} />
                 <Stack.Screen name="Navbar" component={Navbar} />
+                <Stack.Screen name="MyBatches" component={MyBatches} />
               </>
             ) : (
               <>
@@ -75,6 +77,7 @@ const App = () => {
                 <Stack.Screen name="Other" component={Other} />
                 <Stack.Screen name="BeerLiked" component={BeerLiked} />
                 <Stack.Screen name="Beer" component={Beer} />
+                <Stack.Screen name="MyBatches" component={MyBatches} />
               </>
             )}
           </Stack.Navigator>
