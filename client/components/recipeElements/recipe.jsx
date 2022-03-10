@@ -77,10 +77,7 @@ const Recipe = ({ id, readOnly, navigation, token }) => {
         setMeasureOverlay(null);
     };
     let measureOverlayRender = (
-        <MeasureOverlay
-            closeAction={closeMeasureOverlay}
-            batch={batch?._id}
-        />
+        <MeasureOverlay closeAction={closeMeasureOverlay} batch={batch?._id} />
     );
 
     // Ingredients overlay
@@ -110,49 +107,60 @@ const Recipe = ({ id, readOnly, navigation, token }) => {
     // Getting the recipe
     useEffect(async () => {
         // Getting the data
-        const rawResponse = await fetch(
-            `${config.base_url}/api/${readOnly ? "recipes" : "batches"}/${id}`,
-            {
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-            }
-        );
-        const result = await rawResponse.json();
-        if (readOnly) setRecipe(result);
-        if (!readOnly) {
-            setRecipe(result.recipe);
-            setBatch(result);
-        }
-
-        // Set up like status
-        if (readOnly && userId) {
+        const getData = async () => {
             const rawResponse = await fetch(
-                `${config.base_url}/api/users/${userId}`,
+                `${config.base_url}/api/${
+                    readOnly ? "recipes" : "batches"
+                }/${id}`,
                 {
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/x-www-form-urlencoded",
                     },
                 }
             );
-            const user = await rawResponse.json();
-            if (
-                user.data.likedRecipes.findIndex(
-                    (x) => x._id !== result._id
-                ) !== -1
-            ) {
-                setLikeOutline(false);
+            const result = await rawResponse.json();
+            if (readOnly) setRecipe(result);
+            if (!readOnly) {
+                setRecipe(result.recipe);
+                setBatch(result);
             }
-        }
-    }, [id]);
+            return result;
+        };
+        const result = await getData();
 
-    // Like or dislike recipe
-    const [likeOutline, setLikeOutline] = useState(false);
+        // Getting like status
+        const getLike = async () => {
+            if (userId) {
+                const userRawResponse = await fetch(
+                    `${config.base_url}/api/users/${userId}`,
+                    {
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+                const user = await userRawResponse.json();
+                if (
+                    user.data.likedRecipes.findIndex(
+                        (x) => x === result._id
+                    ) !== -1
+                ) {
+                    setLikeOutline(false);
+                } else {
+                    setLikeOutline(true);
+                }
+            }
+        };
+        await getLike();
+    }, [userId]);
+
+    // Set up like status
+    const [likeOutline, setLikeOutline] = useState(true);
     const toggleLikeRecipe = async () => {
-        const rawResponse = await fetch(
+        await fetch(
             `${config.base_url}/api/users/recipe/${userId}/${recipe._id}`,
             {
                 method: "PUT",
@@ -162,15 +170,7 @@ const Recipe = ({ id, readOnly, navigation, token }) => {
                 },
             }
         );
-        const result = await rawResponse.json();
-        if (
-            result.data.likedRecipes.findIndex((x) => x._id === recipe._id) !==
-            -1
-        ) {
-            setLikeOutline(false);
-        } else {
-            setLikeOutline(true);
-        }
+        setLikeOutline(!likeOutline);
     };
 
     /* BATCH */
