@@ -7,6 +7,7 @@ const {
   createBatch,
   deleteBatch,
   insertMeasure,
+  findBatchByUser
 } = require("../controllers/batches");
 const router = express.Router();
 const Batch = require("../models/Batch");
