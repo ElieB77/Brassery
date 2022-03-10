@@ -1,9 +1,15 @@
 import React, { useRef, useState } from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import {
+    View,
+    Text,
+    StyleSheet,
+    Pressable,
+    ScrollView,
+    Image,
+} from "react-native";
 import CustomButton from "../components/CustomButton";
 import StyleGuide from "../components/utils/StyleGuide";
 import Swipeable from "react-native-gesture-handler/Swipeable";
-import Header from "../components/headings/Header";
 
 const Discovering = ({ navigation, saveToken }) => {
     /* ACTIVE PAGE */
@@ -45,8 +51,8 @@ const Discovering = ({ navigation, saveToken }) => {
         swipeChildren: {
             width: "100%",
             height: "100%",
-            justifyContent: "center",
-            alignItems: "center",
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
             backgroundColor: StyleGuide.colors.white,
         },
         swipeContainer: {
@@ -55,13 +61,182 @@ const Discovering = ({ navigation, saveToken }) => {
             paddingBottom: 130,
             paddingTop: 50,
             paddingHorizontal: 20,
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
+        },
+        dividerColor: {
+            backgroundColor: StyleGuide.colors.primary,
+            alignSelf: "center",
+        },
+        mainContainer: { paddingHorizontal: 10 },
+        imageContainer: {
+            //flex: 1,
             justifyContent: "center",
             alignItems: "center",
         },
-        header: { top: 60, zIndex: 100 },
     });
 
-    const content = (text) => <Text>{text}</Text>;
+    const content = (text) => {
+        switch (text) {
+            case "BASIS":
+                return <Text>{text}</Text>;
+            case "MORE":
+                return <Text>{text}</Text>;
+            case "RECIPE":
+                return (
+                    <ScrollView style={style.mainContainer}>
+                        <View style={style.imageContainer}>
+                            <Image
+                                source={require("../assets/beer_process_explanation.jpg")}
+                                style={[
+                                    {
+                                        resizeMode: "contain",
+                                        width: "100%",
+                                        height:400,
+                                        borderRadius: StyleGuide.borderRadius,
+                                    },
+                                ]}
+                            />
+                        </View>
+                        <View
+                            style={[StyleGuide.divider, style.dividerColor]}
+                        />
+                        <View>
+                            <Text style={StyleGuide.typography.text1}>
+                                Empatage / Saccharification
+                            </Text>
+                            <Text>
+                                Dans cette phase, on mélange le malt avec de
+                                l'eau chaude pour transformer l'amidon des
+                                grains de malt en sucres. On obtient une sorte
+                                de gruau épais, la maische.
+                            </Text>
+                        </View>
+                        <View
+                            style={[StyleGuide.divider, style.dividerColor]}
+                        />
+                        <View>
+                            <Text style={StyleGuide.typography.text1}>
+                                Filtration et rinçage
+                            </Text>
+                            <Text>
+                                L'objectif ici est de séparer les dréches (malt
+                                cuit formant une matière solide) du moût obtenu
+                                (liquide). On rince avec de l'eau pour extraire
+                                un maximum de sucres.
+                            </Text>
+                        </View>
+                        <View
+                            style={[StyleGuide.divider, style.dividerColor]}
+                        />
+                        <View>
+                            <Text style={StyleGuide.typography.text1}>
+                                Ébullition / Houblonnage
+                            </Text>
+                            <Text>
+                                L'ébullition est nécessaire pour clarifier le
+                                moût et extraire les substances amères du
+                                houblon.
+                            </Text>
+                        </View>
+                        <View
+                            style={[StyleGuide.divider, style.dividerColor]}
+                        />
+                        <View>
+                            <Text style={StyleGuide.typography.text1}>
+                                Refroidissement
+                            </Text>
+                            <Text>
+                                Cette phase permet d'atteindre une température
+                                favorable à la fermentation. On passe d'un moût
+                                bouillant à un moût à 20 à 25 °C.
+                            </Text>
+                        </View>
+                        <View
+                            style={[StyleGuide.divider, style.dividerColor]}
+                        />
+                        <View>
+                            <Text style={StyleGuide.typography.text1}>
+                                Ajout de levures
+                            </Text>
+                            <Text>
+                                Après le refroidissement, on peut ajouter les
+                                levures de bière nécessaires à la fermentation.
+                            </Text>
+                        </View>
+                        <View
+                            style={[StyleGuide.divider, style.dividerColor]}
+                        />
+                        <View>
+                            <Text style={StyleGuide.typography.text1}>
+                                Fermentaion primaire
+                            </Text>
+                            <Text>
+                                Cette phase permet de transformer les sucres du
+                                moût de bière en alcool. Il se forme une mousse
+                                effervescente en surface, signe que les levures
+                                travaillent.
+                            </Text>
+                        </View>
+                        <View
+                            style={[StyleGuide.divider, style.dividerColor]}
+                        />
+                        <View>
+                            <Text style={StyleGuide.typography.text1}>
+                                Fermentaion secondaire ou garde
+                            </Text>
+                            <Text>
+                                Au cours de cette phase de garde, la
+                                fermentation se termine tranquillement, la bière
+                                se clarifie et entre dans cycle de maturation.
+                            </Text>
+                        </View>
+                        <View
+                            style={[StyleGuide.divider, style.dividerColor]}
+                        />
+                        <View>
+                            <Text style={StyleGuide.typography.text1}>
+                                Resucrage et conditionnement
+                            </Text>
+                            <Text>
+                                Une petite dose de sucre est ajoutée pour qu'une
+                                nouvelle fermentation ait lieu dans la bouteille
+                                et produise le gaz nécessaire à la formation de
+                                bulles.
+                            </Text>
+                        </View>
+                        <View
+                            style={[StyleGuide.divider, style.dividerColor]}
+                        />
+                        <View>
+                            <Text style={StyleGuide.typography.text1}>
+                                Mise en bouteille et encapsulage
+                            </Text>
+                            <Text>
+                                Le moût est réparti dans les bouteilles, qui
+                                sont ensuite encapsulées.
+                            </Text>
+                        </View>
+                        <View
+                            style={[StyleGuide.divider, style.dividerColor]}
+                        />
+                        <View>
+                            <Text style={StyleGuide.typography.text1}>
+                                Maturation
+                            </Text>
+                            <Text>
+                                C'est la période durant laquelle les bulles se
+                                forment et la bière s'affine. On peut enfin
+                                boire sa bière !
+                            </Text>
+                        </View>
+                        <View
+                            style={[StyleGuide.divider, style.dividerColor]}
+                        />
+                    </ScrollView>
+                );
+        }
+    };
 
     const LeftSwipeActions = () => {
         return <View style={style.swipeContainer}>{content("BASIS")}</View>;
@@ -103,9 +278,6 @@ const Discovering = ({ navigation, saveToken }) => {
                 backgroundColor: StyleGuide.colors.white,
             }}
         >
-            <View style={style.header}>
-                <Header title="Le brassage amateur" />
-            </View>
             <Swipeable
                 containerStyle={style.swipeContainer}
                 childrenContainerStyle={style.swipeChildren}
@@ -175,10 +347,7 @@ const Discovering = ({ navigation, saveToken }) => {
                         </Text>
                     </Pressable>
                 </View>
-                <CustomButton
-                    title="Créer ma Brassery"
-                    onPress={() => navigation.navigate("SignUp")}
-                />
+                <CustomButton title="Créer ma Brassery" />
             </View>
         </View>
     );
