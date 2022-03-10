@@ -8,6 +8,8 @@ dotenv.config({ path: './config/config.env' })
 
 // Load models
 const User = require('./models/User')
+const Conversation = require('./models/Conversation')
+const Message = require('./models/Message')
 
 // Connect to DB
 const options = {
@@ -43,6 +45,8 @@ const importData = async () => {
 const deleteData = async () => {
     try {
         await User.deleteMany()
+        await Conversation.deleteMany()
+        await Message.deleteMany()
         console.log('Data Destroyed...'.red)
         process.exit();
     } catch (error) {

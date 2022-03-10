@@ -86,6 +86,7 @@ const MyMessages = ({ navigation, token }) => {
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Image
                   style={{
+                    borderRadius: Dimensions.get('window').width / 8 / 2,
                     width: Dimensions.get('window').width / 8,
                     height: Dimensions.get('window').width / 8,
                   }}
