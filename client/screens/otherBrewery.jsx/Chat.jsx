@@ -64,7 +64,7 @@ const Chat = ({ route, token }) => {
   }, []);
 
   const sendMessage = async () => {
-    await fetch(`${config.base_url}/api/messages`, {
+    const rawResponse = await fetch(`${config.base_url}/api/messages`, {
       method: 'post',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -72,6 +72,10 @@ const Chat = ({ route, token }) => {
       },
       body: `conversationId=${conversationId}&sender=${userId}&text=${text}`,
     });
+
+    const response = await rawResponse.json();
+
+    setMessages((prevState) => [...prevState, response]);
 
     setText(null);
   };

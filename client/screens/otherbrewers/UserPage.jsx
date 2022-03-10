@@ -25,7 +25,12 @@ const UserPage = ({ route, navigation, token }) => {
       const reqFind = await fetch(`${config.base_url}/api/users?_id=${userId}`);
       const resultFind = await reqFind.json();
       setUserBio(resultFind.data[0].brewDescription);
-      setUserAvatar(resultFind.data[0].avatar);
+
+      let avatar = resultFind.data[0].avatar.split('/');
+      avatar[5] = `${avatar[5]}/w_200,h_200,c_fill,r_max`;
+      avatar = avatar.join('/');
+
+      setUserAvatar(avatar);
       setUserName(resultFind.data[0].username);
 
       AsyncStorage.getItem('user', function (error, data) {
