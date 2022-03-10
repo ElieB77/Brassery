@@ -192,7 +192,7 @@ const CreateRecipe = (props) => {
                 <ListItem
                     title={el.name}
                     btnType="minus"
-                    key={j + i}
+                    key={j.toString() + i.toString()}
                     onPress={() => removeItem(j, i)}
                 />
             );
