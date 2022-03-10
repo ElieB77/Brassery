@@ -78,10 +78,103 @@ const Discovering = ({ navigation, saveToken }) => {
 
     const content = (text) => {
         switch (text) {
-            case "BASIS":
-                return <Text>{text}</Text>;
             case "MORE":
                 return <Text>{text}</Text>;
+            case "BASIS":
+                return (
+                    <ScrollView style={style.mainContainer}>
+                        <View style={style.imageContainer}>
+                            <Image
+                                source={require("../assets/hops.jpg")}
+                                style={[
+                                    {
+                                        resizeMode: "cover",
+                                        width: "100%",
+                                        height: 400,
+                                        borderRadius: StyleGuide.borderRadius,
+                                    },
+                                ]}
+                            />
+                        </View>
+                        <View
+                            style={[StyleGuide.divider, style.dividerColor]}
+                        />
+                        <View>
+                            <Text style={StyleGuide.typography.text1}>
+                                Houblon
+                            </Text>
+                            <Text>
+                                Dans cette phase, on mélange le malt avec de
+                                l'eau chaude pour transformer l'amidon des
+                                grains de malt en sucres. On obtient une sorte
+                                de gruau épais, la maische.
+                            </Text>
+                        </View>
+                        <View
+                            style={[StyleGuide.divider, style.dividerColor]}
+                        />
+                        <View style={style.imageContainer}>
+                            <Image
+                                source={require("../assets/yeasts.jpg")}
+                                style={[
+                                    {
+                                        resizeMode: "cover",
+                                        width: "100%",
+                                        height: 400,
+                                        borderRadius: StyleGuide.borderRadius,
+                                    },
+                                ]}
+                            />
+                        </View>
+                        <View
+                            style={[StyleGuide.divider, style.dividerColor]}
+                        />
+                        <View>
+                            <Text style={StyleGuide.typography.text1}>
+                                Levure
+                            </Text>
+                            <Text>
+                                Dans cette phase, on mélange le malt avec de
+                                l'eau chaude pour transformer l'amidon des
+                                grains de malt en sucres. On obtient une sorte
+                                de gruau épais, la maische.
+                            </Text>
+                        </View>
+                        <View
+                            style={[StyleGuide.divider, style.dividerColor]}
+                        />
+                        <View style={style.imageContainer}>
+                            <Image
+                                source={require("../assets/barleys.jpg")}
+                                style={[
+                                    {
+                                        resizeMode: "cover",
+                                        width: "100%",
+                                        height: 400,
+                                        borderRadius: StyleGuide.borderRadius,
+                                    },
+                                ]}
+                            />
+                        </View>
+                        <View
+                            style={[StyleGuide.divider, style.dividerColor]}
+                        />
+                        <View>
+                            <Text style={StyleGuide.typography.text1}>
+                                Malt
+                            </Text>
+                            <Text>
+                                Dans cette phase, on mélange le malt avec de
+                                l'eau chaude pour transformer l'amidon des
+                                grains de malt en sucres. On obtient une sorte
+                                de gruau épais, la maische.
+                            </Text>
+                        </View>
+                        <View
+                            style={[StyleGuide.divider, style.dividerColor]}
+                        />
+                    </ScrollView>
+                );
             case "RECIPE":
                 return (
                     <ScrollView style={style.mainContainer}>
@@ -92,7 +185,7 @@ const Discovering = ({ navigation, saveToken }) => {
                                     {
                                         resizeMode: "contain",
                                         width: "100%",
-                                        height:400,
+                                        height: 400,
                                         borderRadius: StyleGuide.borderRadius,
                                     },
                                 ]}
