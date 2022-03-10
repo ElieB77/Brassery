@@ -14,7 +14,7 @@ import config from '../../../config/globalVariables';
 const Step6 = ({ navigation, token, user }) => {
   const [userName, setUserName] = useState('');
   const [message, setMessage] = useState(
-    'Veuillez patienter, nous enregistrons vos informations... Fermez les yeux et comptez 25 secondes 😝'
+    'Veuillez patienter, nous enregistrons vos informations...'
   );
   const [isGood, setIsGood] = useState(false);
 
