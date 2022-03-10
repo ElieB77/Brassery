@@ -23,6 +23,7 @@ import Settings from "./screens/Settings";
 import MyInstallation from "./screens/myBrewery/MyInstallation";
 import Chat from "./screens/otherBrewery.jsx/Chat";
 import CreateRecipe from "./screens/functionalities/CreateRecipe";
+import MyMessages from "./screens/otherBrewery.jsx/MyMessages";
 
 import Navbar from "./components/layouts/navbar/Navbar";
 
@@ -142,6 +143,7 @@ const App = () => {
                                     name="CreateRecipe"
                                     component={CreateRecipe}
                                 />
+                                <Stack.Screen name="MyMessages" component={MyMessages} />
                             </>
                         )}
                     </Stack.Navigator>

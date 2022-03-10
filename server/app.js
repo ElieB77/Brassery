@@ -27,6 +27,8 @@ const users = require("./routes/users");
 const recipes = require("./routes/recipes");
 const materials = require("./routes/materials");
 const batches = require("./routes/batches");
+const conversations = require("./routes/conversations");
+const messages = require("./routes/messages");
 
 const app = express();
 
@@ -55,7 +57,7 @@ app.use(xss());
 // Rate limiting
 const limiter = rateLimit({
     windowMs: 10 * 60 * 1000, // 10 mins
-    max: 100,
+    max: 500,
 });
 app.use(limiter);
 
@@ -71,6 +73,8 @@ app.use("/api/users", users);
 app.use("/api/recipes", recipes);
 app.use("/api/materials", materials);
 app.use("/api/batches", batches);
+app.use("/api/conversations", conversations);
+app.use("/api/messages", messages);
 
 app.use(errorHandler);
 

@@ -1,47 +1,64 @@
-import {View, Text} from 'react-native';
+import { ScrollView, Text } from 'react-native';
 import StyleGuide from '../utils/StyleGuide';
 
-const Bubble = ({content, type}) => {
-    switch (type) {
-        case 'rigth':
-            return (
-                <View style={{
-                    maxWidth: 150,
-                    height: 75, 
-                    paddingLeft: 25,
-                    paddingRight: 25,
-                    justifyContent: 'center', 
-                    alignItems: 'center', 
-                    marginBottom: 25, 
-                    backgroundColor: StyleGuide.colors.secondary, 
-                    borderRadius: 20,
-                    borderTopRightRadius: 0,
-                    }}>
-                    <Text style={StyleGuide.typography.text3, {color: 'white'}}>
-                        Salut C'est moi
-                    </Text>
-                </View>
-            );
-        case 'left':
-        return (
-            <View style={{
-                maxWidth: 150,
-                height: 75, 
-                paddingLeft: 25,
-                paddingRight: 25,
-                justifyContent: 'center', 
-                alignItems: 'center', 
-                marginBottom: 25, 
-                backgroundColor: StyleGuide.colors.primary, 
-                borderRadius: 20,
-                borderTopLeftRadius: 0,
-                }}>
-                <Text style={StyleGuide.typography.text3, {color: 'white'}}>
-                    {content}
-                </Text>
-            </View>
-        );
-    };
+const Bubble = ({ content, type }) => {
+  switch (type) {
+    case 'right':
+      return (
+        <ScrollView
+          contentContainerStyle={[
+            StyleGuide.shadowProp,
+            {
+              minWidth: 50,
+              minHeight: 50,
+              maxWidth: 250,
+              paddingLeft: 25,
+              paddingRight: 25,
+              paddingTop: 20,
+              paddingBottom: 20,
+              marginBottom: 25,
+              justifyContent: 'center',
+              alignItems: 'center',
+              alignSelf: 'flex-end',
+              backgroundColor: StyleGuide.colors.secondary,
+              borderRadius: 20,
+              borderTopRightRadius: 0,
+            },
+          ]}
+        >
+          <Text style={[StyleGuide.typography.text3, { color: 'white' }]}>
+            {content}
+          </Text>
+        </ScrollView>
+      );
+    case 'left':
+      return (
+        <ScrollView
+          contentContainerStyle={[
+            StyleGuide.shadowProp,
+            {
+              minWidth: 50,
+              minHeight: 50,
+              maxWidth: 250,
+              paddingLeft: 25,
+              paddingRight: 25,
+              paddingTop: 20,
+              paddingBottom: 20,
+              marginBottom: 25,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: StyleGuide.colors.primary,
+              borderRadius: 20,
+              borderTopLeftRadius: 0,
+            },
+          ]}
+        >
+          <Text style={[StyleGuide.typography.text3, { color: 'white' }]}>
+            {content}
+          </Text>
+        </ScrollView>
+      );
+  }
 };
 
 export default Bubble;
