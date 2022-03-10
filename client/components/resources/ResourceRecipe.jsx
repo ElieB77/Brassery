@@ -25,50 +25,48 @@ const ResourceRecipe = (props) => {
     : styles.hideFilterContainer;
 
   useEffect(() => {
-    AsyncStorage.getItem("user", function (error, data) {
-      if (data != null) {
-        async function loadData() {
-          const rawResponse = await fetch(`${config.base_url}/api/recipes`, {
-            headers: {
-              Authorization: `Bearer ${data}`,
-            },
-          });
+    async function loadData() {
+      const rawResponse = await fetch(
+        `${config.base_url}/api/recipes`
+        //, {
+        // headers: {
+        //   Authorization: `Bearer ${data}`,
+        // },
+      );
 
-          const response = await rawResponse.json();
+      const response = await rawResponse.json();
 
-          let newRecipesTab = [];
-          let recipeListArr = [];
+      let newRecipesTab = [];
+      let recipeListArr = [];
 
-          if (response.data) {
-            response.data.map((item) => {
-              newRecipesTab.push(item.style);
-            });
+      if (response.data) {
+        response.data.map((item) => {
+          newRecipesTab.push(item.style);
+        });
 
-            response.data.map((item, index) => {
-              return recipeListArr.push(
-                <ListItem
-                  key={index}
-                  title={item.name}
-                  content={item.description}
-                  btnType="next"
-                  onPress={() =>
-                    props.navigation.navigate("Recipe", {
-                      recipeId: item._id,
-                    })
-                  }
-                />
-              );
-            });
-          }
-
-          setRecipeList(recipeListArr);
-
-          const uniqueRecipesTab = [...new Set(newRecipesTab)];
-          setRecipesType(uniqueRecipesTab);
-        }
-        loadData();
+        response.data.map((item, index) => {
+          return recipeListArr.push(
+            <ListItem
+              key={index}
+              title={item.name}
+              content={item.description}
+              btnType='next'
+              onPress={() =>
+                props.navigation.navigate('Recipe', {
+                  recipeId: item._id,
+                })
+              }
+            />
+          );
+        });
       }
-    });
+
+      setRecipeList(recipeListArr);
+
+      const uniqueRecipesTab = [...new Set(newRecipesTab)];
+      setRecipesType(uniqueRecipesTab);
+    }
+    loadData();
   }, []);
 
   const getRecipe = (element) => {
