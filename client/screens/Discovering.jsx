@@ -104,10 +104,10 @@ const Discovering = ({ navigation, saveToken }) => {
                                 Houblon
                             </Text>
                             <Text>
-                                Dans cette phase, on mélange le malt avec de
-                                l'eau chaude pour transformer l'amidon des
-                                grains de malt en sucres. On obtient une sorte
-                                de gruau épais, la maische.
+                                Le houblon est une plante grimpante de la
+                                famille des lianes. Ses cônes dont le cousin est
+                                le cannabis sont utilisés par le brasseur afin
+                                de donner de l'amertume et du parfum à la bière.
                             </Text>
                         </View>
                         <View
@@ -134,10 +134,12 @@ const Discovering = ({ navigation, saveToken }) => {
                                 Levure
                             </Text>
                             <Text>
-                                Dans cette phase, on mélange le malt avec de
-                                l'eau chaude pour transformer l'amidon des
-                                grains de malt en sucres. On obtient une sorte
-                                de gruau épais, la maische.
+                                La levure est un champignon microscopique,
+                                unicellulaire de forme ovoïde ou sphérique. La
+                                grande particularité de la levure est qu'il
+                                s'agit d'un organisme vivant ! Tout comme celles
+                                de l'homme, les cellules de levures sont
+                                vivantes et naturelles.
                             </Text>
                         </View>
                         <View
@@ -164,10 +166,16 @@ const Discovering = ({ navigation, saveToken }) => {
                                 Malt
                             </Text>
                             <Text>
-                                Dans cette phase, on mélange le malt avec de
-                                l'eau chaude pour transformer l'amidon des
-                                grains de malt en sucres. On obtient une sorte
-                                de gruau épais, la maische.
+                                Le malt est un ingrédient plutôt abstrait pour
+                                le commun des mortels. C'est pourtant
+                                l'ingrédient principal de la bière puisque c'est
+                                lui qui apporte le sucre indispensable à tous
+                                produits fermentés. Le malt, ce n'est pas bien
+                                compliqué, c'est en fin de compte une céréale
+                                préparée pour le brasseur. La plupart du temps
+                                de l'orge malté mais cela peut également être du
+                                blé malté, du seigle malté ou tout autre
+                                céréales.
                             </Text>
                         </View>
                         <View
