@@ -10,6 +10,7 @@ import {
 import CustomButton from "../components/CustomButton";
 import StyleGuide from "../components/utils/StyleGuide";
 import Swipeable from "react-native-gesture-handler/Swipeable";
+import Header from "../components/headings/Header";
 
 const Discovering = ({ navigation, saveToken }) => {
     /* ACTIVE PAGE */
@@ -379,6 +380,7 @@ const Discovering = ({ navigation, saveToken }) => {
                 backgroundColor: StyleGuide.colors.white,
             }}
         >
+            <Header title="Découvrir la bière" />
             <Swipeable
                 containerStyle={style.swipeContainer}
                 childrenContainerStyle={style.swipeChildren}
