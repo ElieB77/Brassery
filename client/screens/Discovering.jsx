@@ -378,6 +378,7 @@ const Discovering = ({ navigation, saveToken }) => {
                 justifyContent: "space-evenly",
                 alignItems: "center",
                 backgroundColor: StyleGuide.colors.white,
+                paddingTop: StyleGuide.container.paddingTop,
             }}
         >
             <Header title="Découvrir la bière" />
