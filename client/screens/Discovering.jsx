@@ -375,7 +375,7 @@ const Discovering = ({ navigation, saveToken }) => {
         <View
             style={{
                 flex: 1,
-                justifyContent: "space-evenly",
+                justifyContent: "flex-start",
                 alignItems: "center",
                 backgroundColor: StyleGuide.colors.white,
                 paddingTop: StyleGuide.container.paddingTop,
