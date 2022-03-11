@@ -177,21 +177,23 @@ const Recipe = ({ id, readOnly, navigation, token }) => {
     // Create
     const createNewBatch = async () => {
         if (!userId) navigation.navigate("SignUp");
-        const rawResponse = await fetch(
-            `${config.base_url}/api/batches/create`,
-            {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-                body: `recipeId=${recipe._id}&userId=${userId}`,
-            }
-        );
-        const result = await rawResponse.json();
-        navigation.navigate("Batch", {
-            batchId: result._id,
-        });
+        if (userId) {
+            const rawResponse = await fetch(
+                `${config.base_url}/api/batches/create`,
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: `recipeId=${recipe._id}&userId=${userId}`,
+                }
+            );
+            const result = await rawResponse.json();
+            navigation.navigate("Batch", {
+                batchId: result._id,
+            });
+        }
     };
 
     // Delete
