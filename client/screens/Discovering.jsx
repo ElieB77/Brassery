@@ -59,7 +59,7 @@ const Discovering = ({ navigation, saveToken }) => {
         swipeContainer: {
             width: "100%",
             height: "100%",
-            paddingBottom: 155,
+            paddingBottom: 165,
             paddingTop: 50,
             paddingHorizontal: 20,
             justifyContent: "flex-start",
