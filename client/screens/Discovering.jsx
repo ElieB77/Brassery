@@ -60,7 +60,7 @@ const Discovering = ({ navigation, saveToken }) => {
             width: "100%",
             height: "100%",
             paddingBottom: 165,
-            paddingTop: 50,
+            paddingTop: 30,
             paddingHorizontal: 20,
             justifyContent: "flex-start",
             alignItems: "flex-start",
