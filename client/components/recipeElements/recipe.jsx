@@ -8,7 +8,6 @@ import RecipeItem from "./recipeItem";
 import RecipeDescription from "./recipeDescription";
 import RecipeIngredients from "./recipeIngredients";
 
-import Spinner from "../utils/Spinner";
 import Header from "../headings/Header";
 import CustomButton from "../CustomButton";
 import ActionOverlay from "../overlays/actionOverlay";
@@ -177,6 +176,7 @@ const Recipe = ({ id, readOnly, navigation, token }) => {
     /* BATCH */
     // Create
     const createNewBatch = async () => {
+        if (!userId) navigation.navigate("SignUp");
         const rawResponse = await fetch(
             `${config.base_url}/api/batches/create`,
             {
@@ -283,9 +283,7 @@ const Recipe = ({ id, readOnly, navigation, token }) => {
                     justifyContent: "center",
                     alignItems: "center",
                 }}
-            >
-                <Spinner />
-            </View>
+            ></View>
         );
     return (
         <View style={style.mainContainer}>
