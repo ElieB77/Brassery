@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { connect } from "react-redux";
+import { useIsFocused } from "@react-navigation/native";
 
 import RecipeList from "./recipeList";
 import RecipeItem from "./recipeItem";
@@ -20,6 +21,8 @@ import config from "../../config/globalVariables";
 import StyleGuide from "../utils/StyleGuide";
 
 const Recipe = ({ id, readOnly, navigation, token }) => {
+    const isFocused = useIsFocused();
+
     // GET user ID
     const [userId, setUserId] = useState(null);
     useEffect(() => {
@@ -29,7 +32,7 @@ const Recipe = ({ id, readOnly, navigation, token }) => {
                     setUserId(data);
                 }
             });
-    }, [userId]);
+    }, [userId,isFocused]);
 
     // This function gets the status of the step according to the batch information
     const getStepStatus = (section, position) => {
@@ -176,21 +179,24 @@ const Recipe = ({ id, readOnly, navigation, token }) => {
     /* BATCH */
     // Create
     const createNewBatch = async () => {
-        const rawResponse = await fetch(
-            `${config.base_url}/api/batches/create`,
-            {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-                body: `recipeId=${recipe._id}&userId=${userId}`,
-            }
-        );
-        const result = await rawResponse.json();
-        navigation.navigate("Batch", {
-            batchId: result._id,
-        });
+        if (!userId) navigation.navigate("SignUp");
+        if (userId) {
+            const rawResponse = await fetch(
+                `${config.base_url}/api/batches/create`,
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: `recipeId=${recipe._id}&userId=${userId}`,
+                }
+            );
+            const result = await rawResponse.json();
+            navigation.navigate("Batch", {
+                batchId: result._id,
+            });
+        }
     };
 
     // Delete
