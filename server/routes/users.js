@@ -1,32 +1,30 @@
-const express = require('express');
+const express = require("express");
 const {
     getUsers,
     getUser,
     createUser,
     updateUser,
-    deleteUser
-} = require('../controllers/users')
+    deleteUser,
+    addLikeRecipe,
+} = require("../controllers/users");
 
-const User = require('../models/User')
+const User = require("../models/User");
 
 const router = express.Router();
 
 const advancedResults = require('../middlewares/advancedResults')
-const { protect, authorize } = require('../middlewares/authentification')
 
-router.use(protect)
-router.use(authorize('admin'))
+router.route("/recipe/:id/:recipeId").put(addLikeRecipe);
 
 router
-    .route('/')
+    .route("/")
     .get(advancedResults(User), getUsers)
-    .post(createUser)
+    .post(createUser);
 
 router
-    .route('/:id')
+    .route("/:id")
     .get(getUser)
     .put(updateUser)
-    .delete(deleteUser)
+    .delete(deleteUser);
 
-
-module.exports = router
+module.exports = router;

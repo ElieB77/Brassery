@@ -3,15 +3,27 @@ const ErrorResponse = require('../utils/errorResponse.js')
 const asyncHandler = require('../middlewares/async')
 const sendEmail = require('../utils/sendEmail')
 const User = require('../models/User')
+const Material = require('../models/Material')
+const Recipe = require('../models/Recipe')
+const fs = require('fs');
+const uniqid = require('uniqid');
+const cloudinary = require('cloudinary').v2
+
+cloudinary.config({
+    cloud_name: 'drp9cvlh2',
+    api_key: '367194621118956',
+    api_secret: '4YRuLzkx0RczySJ6iJMJTHPkEo4'
+});
+
 
 // *desc    Register user
 // *route   POST /api/v1/auth/register
 // *access  Public
 exports.register = asyncHandler(async (req, res, next) => {
-    const { name, email, password, role } = req.body
+    const { username, email, password } = req.body
 
     // Create user
-    const newUser = new User({ name, email, password, role })
+    const newUser = new User({ username, email, password })
     const user = await newUser.save()
 
     sendTokenResponse(user, 200, res)
@@ -130,8 +142,127 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
     })
 })
 
+// *desc    Update user details
+// *route   PUT /api/auth/updateonboarding
+// *access  Private
+exports.updateOnboarding = asyncHandler(async (req, res, next) => {
+    const avatarPath = `./temp/avatar/${uniqid()}.jpg`
+    const installationPath = `./temp/installation/${uniqid()}.jpg`
+    await req.files.avatar.mv(avatarPath);
+    await req.files.installationPicture.mv(installationPath);
+    const avatar = await cloudinary.uploader.upload(avatarPath);
+    const installationPicture = await cloudinary.uploader.upload(installationPath);
+
+    if (!avatar || !installationPicture) {
+        res.json({ result: false, message: 'error' });
+    } else {
+        const fielsToUpdate = {
+            brewedYet: Boolean(req.body.brewedYet),
+            localisation: JSON.parse(req.body.localisation),
+            avatar: avatar.url,
+            brewDescription: req.body.brewedDescription,
+            installationDescription: req.body.installationDescription,
+            installationPicture: installationPicture.url,
+        }
+
+        const user = await User.updateOne({ _id: req.user.id }, fielsToUpdate)
+
+        const beer = await Recipe.findOne({ name: req.body.favoriteBeer })
+        await User.updateOne({ _id: req.user.id }, { $push: { likedRecipes: beer } })
+
+        for (item of JSON.parse(req.body.materials)) {
+            const material = await Material.findOne({ name: item.title })
+            await User.updateOne({ _id: req.user.id }, { $push: { materials: material._id } })
+        }
+
+        res.status(200).json({
+            success: true,
+            data: user
+        })
+    }
+
+    fs.unlinkSync(avatarPath);
+    fs.unlinkSync(installationPath);
+})
+
+// *desc    Update user avatar
+// *route   PUT /api/auth/updateavatar
+// *access  Private
+exports.updateAvatarPicture = asyncHandler(async (req, res, next) => {
+    const avatarPath = `./temp/avatar/${uniqid()}.jpg`
+    await req.files.avatar.mv(avatarPath);
+    const avatar = await cloudinary.uploader.upload(avatarPath);
+
+    if (!avatar) {
+        res.json({ result: false, message: 'error' });
+    } else {
+        const user = await User.updateOne({ _id: req.user.id }, { avatar: avatar.url })
+
+        res.status(200).json({
+            success: true,
+            data: user
+        })
+    }
+
+    fs.unlinkSync(avatarPath);
+})
+
+// *desc    Update user brew description
+// *route   PUT /api/auth/updatebrewdescription
+// *access  Private
+exports.updateBrewDescription = asyncHandler(async (req, res, next) => {
+    const { brewDescription } = req.body
+
+    if (!brewDescription) {
+        res.status(400).json({ success: false, message: 'Please add a description' })
+    } else {
+        await User.updateOne({ _id: req.user.id }, { brewDescription })
+
+        res.status(200).json({
+            success: true,
+            data: req.user
+        })
+    }
+})
+
+// *desc    Update username
+// *route   PUT /api/auth/updateusername
+// *access  Private
+exports.updateUsername = asyncHandler(async (req, res, next) => {
+    const { username } = req.body
+
+    if (!username) {
+        res.status(400).json({ success: false, message: 'Please add a username' })
+    } else {
+        await User.updateOne({ _id: req.user.id }, { username })
+
+        res.status(200).json({
+            success: true,
+            data: req.user
+        })
+    }
+})
+
+// *desc    Update email
+// *route   PUT /api/auth/updateemail
+// *access  Private
+exports.updateEmail = asyncHandler(async (req, res, next) => {
+    const { email } = req.body
+
+    if (!email) {
+        res.status(400).json({ success: false, message: 'Please add an email' })
+    } else {
+        await User.updateOne({ _id: req.user.id }, { email })
+
+        res.status(200).json({
+            success: true,
+            data: req.user
+        })
+    }
+})
+
 // *desc    Update password
-// *route   PUT /api/v1/auth/updatepassword
+// *route   PUT /api/auth/updatepassword
 // *access  Private
 exports.updatePassword = asyncHandler(async (req, res, next) => {
     const user = await User.findById(req.user.id).select('+password')
@@ -182,9 +313,8 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 const sendTokenResponse = (user, statusCode, res) => {
     // Create token
     const token = user.getSignedJwtToken()
-
     res
         .status(statusCode)
-        .json({ success: true, token })
+        .json({ success: true, token, userId: user._id })
 
 }

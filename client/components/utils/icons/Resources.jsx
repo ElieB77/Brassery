@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Svg, { G, Path, Defs, ClipPath } from 'react-native-svg';
 
-const Ressources = (props) => {
+const Resources = (props) => {
   return (
     <Svg
       width={20}
@@ -25,4 +25,4 @@ const Ressources = (props) => {
   );
 };
 
-export default Ressources;
+export default Resources;
