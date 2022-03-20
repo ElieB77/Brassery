@@ -39,14 +39,17 @@ import { createStore, combineReducers } from "redux";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
+
 const Stack = createStackNavigator();
 const store = createStore(combineReducers({ token, user }));
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // AsyncStorage.clear();
-  // AsyncStorage.removeItem('user')
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    // AsyncStorage.clear();
+    // AsyncStorage.removeItem('user')
 
   AsyncStorage.getItem("user", function (error, data) {
     if (data != null) {
